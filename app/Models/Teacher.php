@@ -71,4 +71,12 @@ class Teacher extends Model
     {
         return $this->belongsToMany(UpdateCohort::class);
     }
+
+    /**
+     * Get the teacher's user account.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

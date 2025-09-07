@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TutitionLocation extends Model
+class TuitionLocation extends Model
 {
     //
 }

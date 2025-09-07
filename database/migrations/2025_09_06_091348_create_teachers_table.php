@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
+            $table->string('authorisation_cohort_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+            $table->string('business_email');
+            $table->string('business_phone');
+            $table->string('business_website');
             $table->foreignId('country_of_origin_id')
                 ->nullable()
                 ->constrained('countries')
@@ -21,19 +28,12 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('countries')
                 ->nullOnDelete();
-            $table->string('business_email');
-            $table->string('business_website');
-            $table->string('business_phone');
-            $table->string('gives_video_lessons');
             $table->string('description');
             $table->string('gender');
-            $table->string('authorisation_cohort_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
+            $table->string('gives_video_lessons');
+            $table->string('profile_image_path');
             $table->string('qualification_string');
             $table->string('teaches_at_cvi');
-            $table->string('profile_image_path');
             $table->timestamps();
         });
     }

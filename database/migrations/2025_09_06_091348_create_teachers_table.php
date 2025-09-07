@@ -34,6 +34,10 @@ return new class extends Migration
             $table->string('profile_image_path');
             $table->string('qualification_string');
             $table->string('teaches_at_cvi');
+            $table->string('user_id')
+                ->constrained()
+                ->nullable()
+                ->nullOnDelete();
             $table->timestamps();
         });
     }

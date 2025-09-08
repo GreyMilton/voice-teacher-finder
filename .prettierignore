@@ -1,2 +1,8 @@
+# Format /resources only.
+**/*
+!resources/
+!resources/**/*
+
+# Ignore shadcn-vue components and mail views.
 resources/js/components/ui/*
 resources/views/mail/*

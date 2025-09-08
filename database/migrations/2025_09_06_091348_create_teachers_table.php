@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('authorisation_cohort_id')
+            $table->foreignId('authorisation_cohort_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
@@ -30,11 +30,11 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->string('description');
             $table->string('gender');
-            $table->string('gives_video_lessons');
+            $table->boolean('gives_video_lessons');
             $table->string('profile_image_path');
             $table->string('qualification_string');
-            $table->string('teaches_at_cvi');
-            $table->string('user_id')
+            $table->boolean('teaches_at_cvi');
+            $table->foreignId('user_id')
                 ->constrained()
                 ->nullable()
                 ->nullOnDelete();

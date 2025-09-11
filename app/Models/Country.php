@@ -28,6 +28,6 @@ class Country extends Model
      */
     public function tuitionLocations(): HasMany
     {
-        return $this->hasMany(TutitionLocation::class);
+        return $this->hasMany(TuitionLocation::class);
     }
 }

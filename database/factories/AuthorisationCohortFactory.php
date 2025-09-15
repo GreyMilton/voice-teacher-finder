@@ -17,8 +17,7 @@ class AuthorisationCohortFactory extends Factory
     public function definition(): array
     {
         return [
-            'month' => fake()->month(),
-            'year' => fake()->year(),
+            'authorisation_date' => fake()->unique()->date(),
         ];
     }
 }

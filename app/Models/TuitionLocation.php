@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class TuitionLocation extends Model
@@ -10,9 +11,9 @@ class TuitionLocation extends Model
     /**
      * Get the country this location is in.
      */
-    public function country(): BelongsToMany
+    public function country(): BelongsTo
     {
-        return $this->belongsToMany(Country::class);
+        return $this->belongsTo(Country::class);
     }
 
     /**

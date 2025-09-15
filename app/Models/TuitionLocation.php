@@ -20,6 +20,7 @@ class TuitionLocation extends Model
      */
     public function teachers(): BelongsToMany
     {
-        return $this->belongsToMany(Teacher::class);
+        return $this->belongsToMany(Teacher::class)
+            ->withTimestamps();
     }
 }

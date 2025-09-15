@@ -12,7 +12,8 @@ class Language extends Model
      */
     public function teachersWhoSing(): BelongsToMany
     {
-        return $this->belongsToMany(Teacher::class, 'language_sung_teacher');
+        return $this->belongsToMany(Teacher::class, 'language_sung_teacher')
+            ->withTimestamps();
     }
 
     /**
@@ -20,6 +21,7 @@ class Language extends Model
      */
     public function teachersWhoTeachIn(): BelongsToMany
     {
-        return $this->belongsToMany(Teacher::class, 'language_taught_in_teacher');
+        return $this->belongsToMany(Teacher::class, 'language_taught_in_teacher')
+            ->withTimestamps();
     }
 }

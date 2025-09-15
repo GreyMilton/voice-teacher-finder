@@ -36,8 +36,8 @@ return new class extends Migration
             $table->string('qualification_string');
             $table->boolean('teaches_at_cvi');
             $table->foreignId('user_id')
-                ->constrained()
                 ->nullable()
+                ->constrained()
                 ->nullOnDelete();
             $table->timestamps();
         });

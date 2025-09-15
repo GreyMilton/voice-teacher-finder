@@ -37,7 +37,7 @@ class Teacher extends Model
      */
     public function instruments(): BelongsToMany
     {
-        return $this->belongsToMany(Instrument::class);
+        return $this->belongsToMany(Instrument::class)->withTimestamps();
     }
 
     /**
@@ -45,7 +45,8 @@ class Teacher extends Model
      */
     public function languagesSung(): BelongsToMany
     {
-        return $this->belongsToMany(Language::class, 'language_sung_teacher');
+        return $this->belongsToMany(Language::class, 'language_sung_teacher')
+            ->withTimestamps();
     }
 
     /**
@@ -53,7 +54,8 @@ class Teacher extends Model
      */
     public function languagesTeachesIn(): BelongsToMany
     {
-        return $this->belongsToMany(Language::class, 'language_taught_in_teacher');
+        return $this->belongsToMany(Language::class, 'language_taught_in_teacher')
+            ->withTimestamps();
     }
 
     /**
@@ -61,7 +63,7 @@ class Teacher extends Model
      */
     public function tuitionLocations(): BelongsToMany
     {
-        return $this->belongsToMany(TuitionLocation::class);
+        return $this->belongsToMany(TuitionLocation::class)->withTimestamps();
     }
 
     /**
@@ -69,7 +71,7 @@ class Teacher extends Model
      */
     public function updateCohorts(): BelongsToMany
     {
-        return $this->belongsToMany(UpdateCohort::class);
+        return $this->belongsToMany(UpdateCohort::class)->withTimestamps();
     }
 
     /**

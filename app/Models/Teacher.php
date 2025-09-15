@@ -29,7 +29,7 @@ class Teacher extends Model
      */
     public function countryOfResidence(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_of_residence');
+        return $this->belongsTo(Country::class, 'country_of_residence_id');
     }
 
     /**

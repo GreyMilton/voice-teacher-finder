@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('gender');
             $table->boolean('gives_video_lessons');
+            $table->string('name');
             $table->string('profile_image_path');
             $table->string('qualification_string');
             $table->boolean('teaches_at_cvi');

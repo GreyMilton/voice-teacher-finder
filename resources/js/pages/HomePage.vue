@@ -4,7 +4,7 @@ import { Head, Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-  <Head title="Welcome">
+  <Head title="Home">
     <link
       rel="preconnect"
       href="https://rsms.me/"

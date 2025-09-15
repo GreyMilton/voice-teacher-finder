@@ -10,13 +10,13 @@ Route::get('/', function () {
 
 Route::get('/teachers', function () {
     return Inertia::render('TeacherIndex');
-})->name('teachers');
+})->name('teacher.index');
 
 Route::get('/teachers/{teacher}', function (Teacher $teacher) {
     return Inertia::render('TeacherShow', [
         'teacher' => $teacher,
     ]);
-})->name('search');
+})->name('teacher.show');
 
 Route::get('/faqs', function () {
     return Inertia::render('FaqsPage');

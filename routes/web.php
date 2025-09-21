@@ -14,7 +14,16 @@ Route::get('/teachers', function () {
 
 Route::get('/teachers/{teacher}', function (Teacher $teacher) {
     return Inertia::render('TeacherShow', [
-        'teacher' => $teacher,
+        'teacher' => $teacher->load([
+            'authorisationCohort',
+            'countryOfOrigin',
+            'countryOfResidence',
+            'instruments',
+            'languagesSung',
+            'languagesTeachesIn',
+            'tuitionLocations.country',
+            'updateCohorts',
+        ])->toResource(),
     ]);
 })->name('teacher.show');
 

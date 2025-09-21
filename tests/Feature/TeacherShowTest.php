@@ -1,7 +1,14 @@
 <?php
 
+use App\Models\AuthorisationCohort;
+use App\Models\Country;
+use App\Models\Instrument;
+use App\Models\Language;
 use App\Models\Teacher;
+use App\Models\TuitionLocation;
+use App\Models\UpdateCohort;
 use App\Models\User;
+use Inertia\Testing\AssertableInertia as Assert;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
@@ -18,4 +25,65 @@ test('authenticated users can visit the teacher show', function () {
 
     $response = $this->get(route('teacher.show', ['teacher' => $teacher]));
     $response->assertStatus(200);
+});
+
+test('teacher show receives all required teacher data', function () {
+    // Seed teacher and relationships
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort()
+        ->forCountryOfOrigin()
+        ->forCountryOfResidence()
+        ->hasInstruments(2)
+        ->hasLanguagesSung(2)
+        ->hasLanguagesTeachesIn(2)
+        ->hasUpdateCohorts(2)
+        ->create();
+
+    $tuitionLocations = TuitionLocation::factory(2)
+        ->for($teacher->countryOfResidence)
+        ->create();
+    $teacher->tuitionLocations()
+        ->sync($tuitionLocations);
+
+    // Ensure seeding was done correctly.
+    expect($teacher->authorisationCohort)->toBeInstanceOf(AuthorisationCohort::class);
+    expect($teacher->countryOfOrigin)->toBeInstanceOf(Country::class);
+    expect($teacher->countryOfResidence)->toBeInstanceOf(Country::class);
+    expect($teacher->instruments->first())->toBeInstanceOf(Instrument::class);
+    expect($teacher->languagesSung->first())->toBeInstanceOf(Language::class);
+    expect($teacher->languagesTeachesIn->first())->toBeInstanceOf(Language::class);
+    expect($teacher->updateCohorts->first())->toBeInstanceOf(UpdateCohort::class);
+    expect($teacher->tuitionLocations->first())->toBeInstanceOf(TuitionLocation::class);
+
+    // Take route and assert passed data.
+    $this
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(200)
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('TeacherShow')
+            ->has('teacher', fn (Assert $page) => $page
+                ->where('id', $teacher->id)
+                ->where('authorisationDate', $teacher->authorisationCohort->authorisation_date)
+                ->where('business_email', $teacher->business_email)
+                ->where('business_phone', $teacher->business_phone)
+                ->where('business_website', $teacher->business_website)
+                ->where('countryOfOrigin', $teacher->countryOfOrigin->english_name)
+                ->where('countryOfResidence', $teacher->countryOfResidence->english_name)
+                ->where('description', $teacher->description)
+                ->where('gender', $teacher->gender)
+                ->where('gives_video_lessons', $teacher->gives_video_lessons)
+                ->where('instruments', $teacher->instruments->pluck('name'))
+                ->where('languagesSung', $teacher->languagesSung->pluck('english_name'))
+                ->where('languagesTeachesIn', $teacher->languagesTeachesIn->pluck('english_name'))
+                ->where('name', $teacher->name)
+                ->where('profile_image_path', $teacher->profile_image_path)
+                ->where('qualification_string', $teacher->qualification_string)
+                ->where('teaches_at_cvi', $teacher->teaches_at_cvi)
+                ->where('tuitionLocations', $teacher->tuitionLocations
+                    ->map(function (TuitionLocation $location) {
+                        return $location->suburb.', '.$location->country->english_name;
+                    }))
+                ->where('updateCohorts', $teacher->updateCohorts->pluck('course_date'))
+            )
+        );
 });

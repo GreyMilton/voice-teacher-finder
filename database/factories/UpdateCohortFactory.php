@@ -17,7 +17,7 @@ class UpdateCohortFactory extends Factory
     public function definition(): array
     {
         return [
-            'course_date' => fake()->dateTime(),
+            'course_date' => fake()->date(),
         ];
     }
 }

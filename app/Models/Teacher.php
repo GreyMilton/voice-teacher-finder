@@ -12,6 +12,26 @@ class Teacher extends Model
     use HasFactory;
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<string>
+     */
+    protected $hidden = ['user'];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'gives_video_lessons' => 'boolean',
+            'teaches_at_cvi' => 'boolean',
+        ];
+    }
+
+    /**
      * Get the teacher's authorisation cohort.
      */
     public function authorisationCohort(): BelongsTo

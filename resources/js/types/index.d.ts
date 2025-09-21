@@ -37,3 +37,25 @@ export interface User {
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
+
+export interface Teacher {
+  id: number;
+  authorisationDate: string;
+  business_email: string;
+  business_phone: string;
+  business_website: string;
+  countryOfOrigin: string;
+  countryOfResidence: string;
+  description: string;
+  gender: string;
+  gives_video_lessons: boolean;
+  instruments: string[];
+  languagesSung: string[];
+  languagesTeachesIn: string[];
+  name: string;
+  profile_image_path: string;
+  qualification_string: string;
+  teaches_at_cvi: boolean;
+  tuitionLocations: string[];
+  updateCohorts: string[];
+}

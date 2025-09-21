@@ -14,17 +14,20 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('guests can visit the teacher show', function () {
     $teacher = Teacher::factory()->create();
-    $response = $this->get(route('teacher.show', ['teacher' => $teacher]));
-    $response->assertStatus(200);
+
+    $this
+        ->assertGuest()
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(200);
 });
 
 test('authenticated users can visit the teacher show', function () {
     $teacher = Teacher::factory()->create();
-    $user = User::factory()->create();
-    $this->actingAs($user);
 
-    $response = $this->get(route('teacher.show', ['teacher' => $teacher]));
-    $response->assertStatus(200);
+    $this
+        ->actingAs(User::factory()->create())
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(200);
 });
 
 test('teacher show receives all required teacher data', function () {
@@ -55,7 +58,7 @@ test('teacher show receives all required teacher data', function () {
     expect($teacher->updateCohorts->first())->toBeInstanceOf(UpdateCohort::class);
     expect($teacher->tuitionLocations->first())->toBeInstanceOf(TuitionLocation::class);
 
-    // Take route and assert passed data.
+    // Take route and assert passed data is correct, matching seeded data.
     $this
         ->get(route('teacher.show', ['teacher' => $teacher]))
         ->assertStatus(200)

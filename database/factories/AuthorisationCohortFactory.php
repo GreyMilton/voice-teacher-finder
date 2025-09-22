@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AuthorisationCohort>
@@ -16,8 +17,11 @@ class AuthorisationCohortFactory extends Factory
      */
     public function definition(): array
     {
+        $monthAndYear = fake()->unique()->date('M Y');
+
         return [
-            'authorisation_date' => fake()->unique()->date(),
+            'authorisation_date' => Carbon::parse($monthAndYear)->format('Y-m-d'),
+            'name' => Carbon::parse($monthAndYear)->format('M y'),
         ];
     }
 }

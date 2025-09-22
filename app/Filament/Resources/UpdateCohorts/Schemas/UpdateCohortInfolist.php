@@ -11,6 +11,7 @@ class UpdateCohortInfolist
     {
         return $schema
             ->components([
+                TextEntry::make('name'),
                 TextEntry::make('course_date')
                     ->date(),
                 TextEntry::make('created_at')

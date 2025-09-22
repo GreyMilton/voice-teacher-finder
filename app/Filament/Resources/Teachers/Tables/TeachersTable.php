@@ -20,7 +20,7 @@ class TeachersTable
     {
         return $table
             ->columns([
-                TextColumn::make('authorisationCohort.title')
+                TextColumn::make('authorisationCohort.name')
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         try {
                             // If month can be parsed, search by month of Authorisation Cohort.
@@ -69,7 +69,7 @@ class TeachersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->searchable(['authorisationCohort.authorisation_date'])
+            ->searchable(['authorisationCohort.authorisation_date', 'authorisationCohort.name'])
             ->filters([
                 //
             ])

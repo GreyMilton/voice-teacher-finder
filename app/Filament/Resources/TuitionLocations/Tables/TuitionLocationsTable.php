@@ -17,7 +17,7 @@ class TuitionLocationsTable
             ->columns([
                 TextColumn::make('suburb')
                     ->searchable(),
-                TextColumn::make('country.id')
+                TextColumn::make('country.english_name')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

@@ -2,16 +2,29 @@
 
 namespace App\Models;
 
+use App\Enums\AuthorisationStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Support\Carbon;
 
 class Teacher extends Model
 {
     use HasFactory;
+
+    /**
+     * The months of validity given to an authorisation or update.
+     */
+    private const int MONTHS_VALIDITY = 36;
+
+    /**
+     * The months of warning given to admins an an expiring authorisation or update.
+     */
+    private const int MONTHS_WARNING = 6;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -31,6 +44,78 @@ class Teacher extends Model
             'gives_video_lessons' => 'boolean',
             'teaches_at_cvi' => 'boolean',
         ];
+    }
+
+    /**
+     * Get the teacher's authorisation status.
+     */
+    protected function authorisationStatus(): Attribute
+    {
+        return Attribute::make(
+            get: function (): AuthorisationStatus {
+                if (! $this->latestTrainingDate) {
+                    return AuthorisationStatus::Unauthorised;
+                }
+
+                $nextUpdate = Carbon::parse(
+                    $this->latestTrainingDate,
+                )->addMonths(self::MONTHS_VALIDITY);
+
+                if ($nextUpdate < now()) {
+                    return AuthorisationStatus::Unauthorised;
+                }
+
+                if ($nextUpdate < now()->addMonths(self::MONTHS_WARNING)) {
+                    return AuthorisationStatus::Warning;
+                }
+
+                return AuthorisationStatus::Authorised;
+            },
+        );
+    }
+
+    /**
+     * Get whether the teacher is curently authorised to teach.
+     */
+    protected function isAuthorised(): Attribute
+    {
+        return Attribute::make(
+            get: function (): bool {
+                return $this->authorisationStatus === AuthorisationStatus::Authorised
+                    || $this->authorisationStatus === AuthorisationStatus::Warning;
+            }
+        );
+    }
+
+    /**
+     * Get the teacher's latest training date from the later of:
+     * - AuthorisationStatus date
+     * - Latest update cohort date
+     */
+    protected function latestTrainingDate(): Attribute
+    {
+        return Attribute::make(
+            get: function (): ?string {
+                $authorisationDate = $this->authorisationCohort?->authorisation_date;
+                $latestUpdateDate = $this->latestUpdateCohort?->course_date;
+
+                if (! $authorisationDate && ! $latestUpdateDate) {
+                    return null;
+                }
+
+                if (! $latestUpdateDate) {
+                    return $authorisationDate;
+                }
+
+                if (! $authorisationDate) {
+                    return $latestUpdateDate;
+                }
+
+                return $authorisationDate > $latestUpdateDate
+                    ? $authorisationDate
+                    : $latestUpdateDate;
+            },
+        );
     }
 
     /**

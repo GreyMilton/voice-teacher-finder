@@ -22,6 +22,10 @@ class TeachersTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
+                IconColumn::make('isAuthorised')
+                    ->boolean(),
+                TextColumn::make('authorisationStatus')
+                    ->badge(),
                 TextColumn::make('authorisationCohort.name')
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         try {

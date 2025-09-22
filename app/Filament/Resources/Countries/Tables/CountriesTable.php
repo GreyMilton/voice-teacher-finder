@@ -18,7 +18,8 @@ class CountriesTable
                 TextColumn::make('english_name')
                     ->searchable(),
                 TextColumn::make('local_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

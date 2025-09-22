@@ -41,9 +41,9 @@ class TeachersTable
                     ->searchable(),
                 TextColumn::make('business_website')
                     ->searchable(),
-                TextColumn::make('countryOfOrigin.id')
+                TextColumn::make('countryOfOrigin.english_name')
                     ->searchable(),
-                TextColumn::make('countryOfResidence.id')
+                TextColumn::make('countryOfResidence.english_name')
                     ->searchable(),
                 TextColumn::make('description')
                     ->searchable(),

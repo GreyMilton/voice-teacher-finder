@@ -20,7 +20,7 @@ class UpdateCohortResource extends Resource
 {
     protected static ?string $model = UpdateCohort::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCheckCircle;
 
     protected static ?string $recordTitleAttribute = 'course_date';
 

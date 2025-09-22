@@ -20,7 +20,7 @@ class InstrumentResource extends Resource
 {
     protected static ?string $model = Instrument::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMusicalNote;
 
     protected static ?string $recordTitleAttribute = 'name';
 

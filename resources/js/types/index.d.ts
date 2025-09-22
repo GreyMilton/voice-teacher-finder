@@ -40,7 +40,7 @@ export type BreadcrumbItemType = BreadcrumbItem;
 
 export interface Teacher {
   id: number;
-  authorisationDate: string;
+  authorisationCohort: string;
   business_email: string;
   business_phone: string;
   business_website: string;

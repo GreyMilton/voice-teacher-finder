@@ -8,7 +8,7 @@ const { teacher } = defineProps<{ teacher: Teacher }>();
   <h1>Teacher: {{ teacher.name }}</h1>
   <ul class="p-5">
     <li>id: {{ teacher.id }}</li>
-    <li>authorisationDate: {{ teacher.authorisationDate }}</li>
+    <li>authorisationCohort: {{ teacher.authorisationCohort }}</li>
     <li>business_email: {{ teacher.business_email }}</li>
     <li>business_phone: {{ teacher.business_phone }}</li>
     <li>business_website: {{ teacher.business_website }}</li>

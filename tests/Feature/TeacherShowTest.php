@@ -66,7 +66,7 @@ test('teacher show receives all required teacher data', function () {
             ->component('TeacherShow')
             ->has('teacher', fn (Assert $page) => $page
                 ->where('id', $teacher->id)
-                ->where('authorisationDate', $teacher->authorisationCohort->authorisation_date)
+                ->where('authorisationCohort', $teacher->authorisationCohort->title)
                 ->where('business_email', $teacher->business_email)
                 ->where('business_phone', $teacher->business_phone)
                 ->where('business_website', $teacher->business_website)

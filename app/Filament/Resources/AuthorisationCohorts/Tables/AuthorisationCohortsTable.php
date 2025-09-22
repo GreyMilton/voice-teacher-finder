@@ -16,9 +16,11 @@ class AuthorisationCohortsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('authorisation_date')
                     ->date()
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

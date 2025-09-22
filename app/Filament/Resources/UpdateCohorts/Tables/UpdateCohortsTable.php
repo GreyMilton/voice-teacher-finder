@@ -16,9 +16,11 @@ class UpdateCohortsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('course_date')
                     ->date()
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

@@ -17,7 +17,7 @@ class TeacherResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'authorisationDate' => $this->authorisationCohort?->authorisation_date,
+            'authorisationCohort' => $this->authorisationCohort?->title,
             'business_email' => $this->business_email,
             'business_phone' => $this->business_phone,
             'business_website' => $this->business_website,

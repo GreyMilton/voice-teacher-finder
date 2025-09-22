@@ -33,10 +33,9 @@ class TeacherResource extends JsonResource
             'profile_image_path' => $this->profile_image_path,
             'qualification_string' => $this->qualification_string,
             'teaches_at_cvi' => $this->teaches_at_cvi,
-            'tuitionLocations' => $this->tuitionLocations
-                ?->map(function (TuitionLocation $location) {
-                    return $location->suburb.', '.$location->country->english_name;
-                }),
+            'tuitionLocations' => $this->tuitionLocations?->map(
+                fn (TuitionLocation $location) => $location->title,
+            ),
             'updateCohorts' => $this->updateCohorts?->pluck('course_date'),
         ];
     }

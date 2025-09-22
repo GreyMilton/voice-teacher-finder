@@ -21,7 +21,8 @@ class TeachersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 IconColumn::make('isAuthorised')
                     ->boolean()
                     ->toggleable(),
@@ -43,6 +44,7 @@ class TeachersTable
                             return $query;
                         }
                     })
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('latestUpdateCohort.name')
                     ->label('Latest update')
@@ -63,33 +65,42 @@ class TeachersTable
                     ->toggleable(),
                 IconColumn::make('teaches_at_cvi')
                     ->boolean()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('countryOfResidence.english_name')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('countryOfOrigin.english_name')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('gender')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('qualification_string')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('business_email')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('business_phone')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('business_website')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('description')
                     ->searchable()
                     ->toggleable(),
                 IconColumn::make('gives_video_lessons')
                     ->boolean()
+                    ->sortable()
                     ->toggleable(),
                 ImageColumn::make('profile_image_path')
                     ->toggleable(),

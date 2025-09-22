@@ -15,6 +15,7 @@ class UpdateCohortsTable
     {
         return $table
             ->columns([
+                TextColumn::make('title'),
                 TextColumn::make('course_date')
                     ->date()
                     ->sortable(),

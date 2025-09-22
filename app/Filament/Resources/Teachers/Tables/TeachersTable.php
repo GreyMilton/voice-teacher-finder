@@ -20,6 +20,8 @@ class TeachersTable
     {
         return $table
             ->columns([
+                TextColumn::make('name')
+                    ->searchable(),
                 TextColumn::make('authorisationCohort.name')
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         try {
@@ -36,6 +38,21 @@ class TeachersTable
                         }
                     })
                     ->toggleable(),
+                IconColumn::make('teaches_at_cvi')
+                    ->boolean()
+                    ->toggleable(),
+                TextColumn::make('countryOfResidence.english_name')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('countryOfOrigin.english_name')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('gender')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('qualification_string')
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('business_email')
                     ->searchable()
                     ->toggleable(),
@@ -45,30 +62,13 @@ class TeachersTable
                 TextColumn::make('business_website')
                     ->searchable()
                     ->toggleable(),
-                TextColumn::make('countryOfOrigin.english_name')
-                    ->searchable()
-                    ->toggleable(),
-                TextColumn::make('countryOfResidence.english_name')
-                    ->searchable()
-                    ->toggleable(),
                 TextColumn::make('description')
-                    ->searchable()
-                    ->toggleable(),
-                TextColumn::make('gender')
                     ->searchable()
                     ->toggleable(),
                 IconColumn::make('gives_video_lessons')
                     ->boolean()
                     ->toggleable(),
-                TextColumn::make('name')
-                    ->searchable(),
                 ImageColumn::make('profile_image_path')
-                    ->toggleable(),
-                TextColumn::make('qualification_string')
-                    ->searchable()
-                    ->toggleable(),
-                IconColumn::make('teaches_at_cvi')
-                    ->boolean()
                     ->toggleable(),
                 TextColumn::make('user.name')
                     ->searchable()

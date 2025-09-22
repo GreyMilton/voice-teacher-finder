@@ -18,7 +18,8 @@ class LanguagesTable
                 TextColumn::make('english_name')
                     ->searchable(),
                 TextColumn::make('native_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

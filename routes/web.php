@@ -21,7 +21,7 @@ Route::get('/teachers/{teacher}', function (Teacher $teacher) {
             'instruments',
             'languagesSung',
             'languagesTeachesIn',
-            'tuitionLocations.country',
+            'tuitionLocations',
             'updateCohorts',
         ])->toResource(),
     ]);

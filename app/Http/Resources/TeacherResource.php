@@ -36,7 +36,7 @@ class TeacherResource extends JsonResource
             'tuitionLocations' => $this->tuitionLocations?->map(
                 fn (TuitionLocation $location) => $location->title,
             ),
-            'updateCohorts' => $this->updateCohorts?->pluck('course_date'),
+            'updateCohorts' => $this->updateCohorts?->pluck('title'),
         ];
     }
 }

@@ -85,7 +85,7 @@ test('teacher show receives all required teacher data', function () {
                 ->where('tuitionLocations', $teacher->tuitionLocations?->map(
                     fn (TuitionLocation $location) => $location->title,
                 ))
-                ->where('updateCohorts', $teacher->updateCohorts->pluck('course_date'))
+                ->where('updateCohorts', $teacher->updateCohorts->pluck('title'))
             )
         );
 });

@@ -20,7 +20,7 @@ class AuthorisationCohortResource extends Resource
 {
     protected static ?string $model = AuthorisationCohort::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCheckBadge;
 
     protected static ?string $recordTitleAttribute = 'authorisation_date';
 

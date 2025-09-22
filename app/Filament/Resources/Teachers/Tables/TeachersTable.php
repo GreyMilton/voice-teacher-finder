@@ -38,6 +38,23 @@ class TeachersTable
                         }
                     })
                     ->toggleable(),
+                TextColumn::make('latestUpdateCohort.name')
+                    ->label('Latest update')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        try {
+                            // If month can be parsed, search by month of the latest Update Cohort.
+                            $month = Carbon::parse($search)->format('m');
+
+                            return $query->whereHas('latestUpdateCohort',
+                                fn (Builder $query): Builder => $query
+                                    ->whereMonth('course_date', $month)
+                            );
+                        } catch (InvalidFormatException $error) {
+                            // If month cannot be parsed, do not modify query.
+                            return $query;
+                        }
+                    })
+                    ->toggleable(),
                 IconColumn::make('teaches_at_cvi')
                     ->boolean()
                     ->toggleable(),
@@ -82,7 +99,12 @@ class TeachersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->searchable(['authorisationCohort.authorisation_date', 'authorisationCohort.name'])
+            ->searchable([
+                'authorisationCohort.authorisation_date',
+                'authorisationCohort.name',
+                'latestUpdateCohort.course_date',
+                'latestUpdateCohort.name',
+            ])
             ->filters([
                 //
             ])

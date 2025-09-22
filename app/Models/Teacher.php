@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Teacher extends Model
 {
@@ -82,6 +84,14 @@ class Teacher extends Model
     }
 
     /**
+     * Get the teacher's most recent update cohort.
+     */
+    public function latestUpdateCohort(): HasOneThrough
+    {
+        return $this->updateCohortsHasManyThrough()->one()->ofMany('course_date', 'max');
+    }
+
+    /**
      * Get the teacher's tuition locations (where they teach).
      */
     public function tuitionLocations(): BelongsToMany
@@ -94,7 +104,26 @@ class Teacher extends Model
      */
     public function updateCohorts(): BelongsToMany
     {
-        return $this->belongsToMany(UpdateCohort::class)->withTimestamps();
+        return $this->belongsToMany(UpdateCohort::class)
+            ->withTimestamps();
+    }
+
+    /**
+     * Get the teacher's update cohorts using a hasManyThrough relationship.
+     * This is required for establishing the latestUpdateCohort above.
+     * Having a duplicate relationship for a perfectly good belongsToMany seems gross,
+     * but it is the only way I could get a latest model through a pivot.
+     */
+    public function updateCohortsHasManyThrough(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            UpdateCohort::class,
+            TeacherUpdateCohort::class,
+            'teacher_id',
+            'id',
+            'id',
+            'update_cohort_id',
+        );
     }
 
     /**

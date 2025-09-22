@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UpdateCohorts\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class UpdateCohortForm
@@ -11,6 +12,9 @@ class UpdateCohortForm
     {
         return $schema
             ->components([
+                TextInput::make('name')
+                    ->placeholder(now()->format('M, y'))
+                    ->required(),
                 DatePicker::make('course_date')
                     ->required(),
             ]);

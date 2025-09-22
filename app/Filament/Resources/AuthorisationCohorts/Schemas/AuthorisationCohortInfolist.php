@@ -11,6 +11,7 @@ class AuthorisationCohortInfolist
     {
         return $schema
             ->components([
+                TextEntry::make('name'),
                 TextEntry::make('authorisation_date')
                     ->date(),
                 TextEntry::make('created_at')

@@ -66,7 +66,7 @@ test('teacher show receives all required teacher data', function () {
             ->component('TeacherShow')
             ->has('teacher', fn (Assert $page) => $page
                 ->where('id', $teacher->id)
-                ->where('authorisationCohort', $teacher->authorisationCohort->title)
+                ->where('authorisationCohort', $teacher->authorisationCohort->name)
                 ->where('business_email', $teacher->business_email)
                 ->where('business_phone', $teacher->business_phone)
                 ->where('business_website', $teacher->business_website)
@@ -85,7 +85,7 @@ test('teacher show receives all required teacher data', function () {
                 ->where('tuitionLocations', $teacher->tuitionLocations?->map(
                     fn (TuitionLocation $location) => $location->title,
                 ))
-                ->where('updateCohorts', $teacher->updateCohorts->pluck('title'))
+                ->where('updateCohorts', $teacher->updateCohorts->pluck('name'))
             )
         );
 });

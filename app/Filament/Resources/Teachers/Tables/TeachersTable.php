@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Teachers\Tables;
 
+use Carbon\Exceptions\InvalidFormatException;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -10,6 +11,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 
 class TeachersTable
 {
@@ -17,8 +20,21 @@ class TeachersTable
     {
         return $table
             ->columns([
-                TextColumn::make('authorisationCohort.id')
-                    ->searchable(),
+                TextColumn::make('authorisationCohort.title')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        try {
+                            // If month can be parsed, search by month of Authorisation Cohort.
+                            $month = Carbon::parse($search)->format('m');
+
+                            return $query->whereHas('authorisationCohort',
+                                fn (Builder $query): Builder => $query
+                                    ->whereMonth('authorisation_date', $month)
+                            );
+                        } catch (InvalidFormatException $error) {
+                            // If month cannot be parsed, do not modify query.
+                            return $query;
+                        }
+                    }),
                 TextColumn::make('business_email')
                     ->searchable(),
                 TextColumn::make('business_phone')
@@ -53,6 +69,7 @@ class TeachersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->searchable(['authorisationCohort.authorisation_date'])
             ->filters([
                 //
             ])

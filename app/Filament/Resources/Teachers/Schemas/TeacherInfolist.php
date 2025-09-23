@@ -13,34 +13,34 @@ class TeacherInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('authorisationCohort.name')
-                    ->label('Authorisation cohort')
-                    ->placeholder('-'),
+                TextEntry::make('name'),
                 IconEntry::make('isAuthorised')
                     ->boolean(),
                 IconEntry::make('authorisationStatus')
                     ->boolean(),
+                TextEntry::make('authorisationCohort.name')
+                    ->label('Authorisation cohort')
+                    ->placeholder('-'),
                 TextEntry::make('latestUpdateCohort.name')
                     ->label('Latest update')
                     ->placeholder('-'),
-                TextEntry::make('business_email'),
-                TextEntry::make('business_phone'),
-                TextEntry::make('business_website'),
-                TextEntry::make('countryOfOrigin.english_name')
-                    ->label('Country of origin')
-                    ->placeholder('-'),
+                IconEntry::make('teaches_at_cvi')
+                    ->boolean(),
                 TextEntry::make('countryOfResidence.english_name')
                     ->label('Country of residence')
                     ->placeholder('-'),
-                TextEntry::make('description'),
+                TextEntry::make('countryOfOrigin.english_name')
+                    ->label('Country of origin')
+                    ->placeholder('-'),
                 TextEntry::make('gender'),
+                TextEntry::make('qualification_string'),
+                TextEntry::make('business_email'),
+                TextEntry::make('business_phone'),
+                TextEntry::make('business_website'),
+                TextEntry::make('description'),
                 IconEntry::make('gives_video_lessons')
                     ->boolean(),
-                TextEntry::make('name'),
                 ImageEntry::make('profile_image_path'),
-                TextEntry::make('qualification_string'),
-                IconEntry::make('teaches_at_cvi')
-                    ->boolean(),
                 TextEntry::make('user.name')
                     ->label('User')
                     ->placeholder('-'),

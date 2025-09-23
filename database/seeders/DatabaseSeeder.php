@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Teacher;
 use App\Models\UpdateCohort;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -30,8 +31,8 @@ class DatabaseSeeder extends Seeder
         $users = User::factory(10)
             ->has(
                 Teacher::factory()
-                    ->state(function (array $attributes, User $user) {
-                        return ['name' => $user->name];
+                    ->state(function (array $attributes, ?Model $model) {
+                        return $model instanceof User ? ['name' => $model->name] : [];
                     })
                     ->sequence(
                         fn () => [

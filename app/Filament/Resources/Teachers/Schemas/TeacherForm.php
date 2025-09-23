@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Teachers\Schemas;
 
+use App\Enums\Gender;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -31,7 +32,8 @@ class TeacherForm
                     ->relationship('countryOfResidence', 'id'),
                 TextInput::make('description')
                     ->required(),
-                TextInput::make('gender')
+                Select::make('gender')
+                    ->options(Gender::class)
                     ->required(),
                 Toggle::make('gives_video_lessons')
                     ->required(),

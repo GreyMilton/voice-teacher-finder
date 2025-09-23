@@ -8,6 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 
 class TeacherForm
 {
@@ -16,7 +17,7 @@ class TeacherForm
         return $schema
             ->components([
                 Select::make('authorisation_cohort_id')
-                    ->relationship('authorisationCohort', 'id'),
+                    ->relationship('authorisationCohort', 'name'),
                 TextInput::make('business_email')
                     ->email()
                     ->required(),
@@ -27,9 +28,9 @@ class TeacherForm
                     ->url()
                     ->required(),
                 Select::make('country_of_origin_id')
-                    ->relationship('countryOfOrigin', 'id'),
+                    ->relationship('countryOfOrigin', 'english_name'),
                 Select::make('country_of_residence_id')
-                    ->relationship('countryOfResidence', 'id'),
+                    ->relationship('countryOfResidence', 'english_name'),
                 TextInput::make('description')
                     ->required(),
                 Select::make('gender')
@@ -47,7 +48,11 @@ class TeacherForm
                 Toggle::make('teaches_at_cvi')
                     ->required(),
                 Select::make('user_id')
-                    ->relationship('user', 'name'),
+                    ->relationship(
+                        'user',
+                        'name',
+                        fn (Builder $query) => $query->doesntHave('teacher'),
+                    ),
             ]);
     }
 }

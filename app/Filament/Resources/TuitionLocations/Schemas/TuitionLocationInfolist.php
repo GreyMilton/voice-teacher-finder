@@ -12,7 +12,7 @@ class TuitionLocationInfolist
         return $schema
             ->components([
                 TextEntry::make('suburb'),
-                TextEntry::make('country.id')
+                TextEntry::make('country.english_name')
                     ->label('Country'),
                 TextEntry::make('created_at')
                     ->dateTime()

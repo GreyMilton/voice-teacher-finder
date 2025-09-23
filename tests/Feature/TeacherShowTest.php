@@ -82,7 +82,7 @@ test('teacher show receives all required teacher data', function () {
                 ->where('profile_image_path', $teacher->profile_image_path)
                 ->where('qualification_string', $teacher->qualification_string)
                 ->where('teaches_at_cvi', $teacher->teaches_at_cvi)
-                ->where('tuitionLocations', $teacher->tuitionLocations?->map(
+                ->where('tuitionLocations', $teacher->tuitionLocations->map(
                     fn (TuitionLocation $location) => $location->title,
                 ))
                 ->where('updateCohorts', $teacher->updateCohorts->pluck('name'))

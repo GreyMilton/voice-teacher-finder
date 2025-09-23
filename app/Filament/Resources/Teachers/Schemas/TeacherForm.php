@@ -16,8 +16,21 @@ class TeacherForm
     {
         return $schema
             ->components([
+                TextInput::make('name')
+                    ->required(),
                 Select::make('authorisation_cohort_id')
                     ->relationship('authorisationCohort', 'name'),
+                Toggle::make('teaches_at_cvi')
+                    ->required(),
+                Select::make('country_of_residence_id')
+                    ->relationship('countryOfResidence', 'english_name'),
+                Select::make('country_of_origin_id')
+                    ->relationship('countryOfOrigin', 'english_name'),
+                Select::make('gender')
+                    ->options(Gender::class)
+                    ->required(),
+                TextInput::make('qualification_string')
+                    ->required(),
                 TextInput::make('business_email')
                     ->email()
                     ->required(),
@@ -27,25 +40,12 @@ class TeacherForm
                 TextInput::make('business_website')
                     ->url()
                     ->required(),
-                Select::make('country_of_origin_id')
-                    ->relationship('countryOfOrigin', 'english_name'),
-                Select::make('country_of_residence_id')
-                    ->relationship('countryOfResidence', 'english_name'),
                 TextInput::make('description')
-                    ->required(),
-                Select::make('gender')
-                    ->options(Gender::class)
                     ->required(),
                 Toggle::make('gives_video_lessons')
                     ->required(),
-                TextInput::make('name')
-                    ->required(),
                 FileUpload::make('profile_image_path')
                     ->image()
-                    ->required(),
-                TextInput::make('qualification_string')
-                    ->required(),
-                Toggle::make('teaches_at_cvi')
                     ->required(),
                 Select::make('user_id')
                     ->relationship(

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachers
  * @property-read int|null $teachers_count
  * @property-read mixed $title
+ *
  * @method static \Database\Factories\TuitionLocationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation newQuery()
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereSuburb($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class TuitionLocation extends Model
@@ -36,7 +38,7 @@ class TuitionLocation extends Model
     /**
      * The relationships that should always be loaded.
      *
-     * @var array
+     * @var list<string>
      */
     protected $with = ['country'];
 

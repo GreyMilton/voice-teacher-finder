@@ -6,6 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $authorisation_date
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachers
+ * @property-read int|null $teachers_count
+ * @method static \Database\Factories\AuthorisationCohortFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereAuthorisationDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class AuthorisationCohort extends Model
 {
     use HasFactory;

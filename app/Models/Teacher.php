@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AuthorisationStatus;
+use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,7 @@ class Teacher extends Model
     protected function casts(): array
     {
         return [
+            'gender' => Gender::class,
             'gives_video_lessons' => 'boolean',
             'teaches_at_cvi' => 'boolean',
         ];

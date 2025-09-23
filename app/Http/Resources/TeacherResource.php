@@ -24,7 +24,7 @@ class TeacherResource extends JsonResource
             'countryOfOrigin' => $this->countryOfOrigin?->english_name,
             'countryOfResidence' => $this->countryOfResidence?->english_name,
             'description' => $this->description,
-            'gender' => $this->gender,
+            'gender' => $this->gender->getLabel(),
             'gives_video_lessons' => $this->gives_video_lessons,
             'instruments' => $this->instruments?->pluck('name'),
             'languagesSung' => $this->languagesSung?->pluck('english_name'),

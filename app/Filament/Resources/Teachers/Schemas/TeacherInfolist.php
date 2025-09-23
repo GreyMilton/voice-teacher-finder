@@ -32,7 +32,8 @@ class TeacherInfolist
                 TextEntry::make('countryOfOrigin.english_name')
                     ->label('Country of origin')
                     ->placeholder('-'),
-                TextEntry::make('gender'),
+                TextEntry::make('gender')
+                    ->badge(),
                 TextEntry::make('qualification_string'),
                 TextEntry::make('business_email'),
                 TextEntry::make('business_phone'),

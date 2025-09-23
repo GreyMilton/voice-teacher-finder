@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AuthorisationStatus;
 use App\Enums\Gender;
+use Database\Factories\TeacherFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -77,6 +78,9 @@ use Illuminate\Support\Carbon;
  */
 class Teacher extends Model
 {
+    /**
+     * @use HasFactory<TeacherFactory>
+     */
     use HasFactory;
 
     /**
@@ -112,6 +116,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's authorisation status.
+     *
+     * @return Attribute<AuthorisationStatus, null>
      */
     protected function authorisationStatus(): Attribute
     {
@@ -140,6 +146,8 @@ class Teacher extends Model
 
     /**
      * Get whether the teacher is curently authorised to teach.
+     *
+     * @return Attribute<bool, null>
      */
     protected function isAuthorised(): Attribute
     {
@@ -155,6 +163,8 @@ class Teacher extends Model
      * Get the teacher's latest training date from the later of:
      * - AuthorisationStatus date
      * - Latest update cohort date
+     *
+     * @return Attribute<?string, null>
      */
     protected function latestTrainingDate(): Attribute
     {
@@ -184,6 +194,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's authorisation cohort.
+     *
+     * @return BelongsTo<AuthorisationCohort, $this>
      */
     public function authorisationCohort(): BelongsTo
     {
@@ -192,6 +204,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's country of origin.
+     *
+     * @return BelongsTo<Country, $this>
      */
     public function countryOfOrigin(): BelongsTo
     {
@@ -200,6 +214,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's country of residence.
+     *
+     * @return BelongsTo<Country, $this>
      */
     public function countryOfResidence(): BelongsTo
     {
@@ -208,6 +224,8 @@ class Teacher extends Model
 
     /**
      * Get the instruments the teacher plays.
+     *
+     * @return BelongsToMany<Instrument, $this>
      */
     public function instruments(): BelongsToMany
     {
@@ -216,6 +234,8 @@ class Teacher extends Model
 
     /**
      * Get the languages the teacher sings in.
+     *
+     * @return BelongsToMany<Language, $this>
      */
     public function languagesSung(): BelongsToMany
     {
@@ -225,6 +245,8 @@ class Teacher extends Model
 
     /**
      * Get the languages the teacher gives lessons in.
+     *
+     * @return BelongsToMany<Language, $this>
      */
     public function languagesTeachesIn(): BelongsToMany
     {
@@ -239,6 +261,8 @@ class Teacher extends Model
      * rather than the `BelongsToMany` 'updateCohorts' already defined on the model.
      * This is due to the existence of `HasOneThrough, yet
      * absence of `HasOneOfBelongsToMany` in Laravel.
+     *
+     * @return HasOneThrough<UpdateCohort, TeacherUpdateCohort ,$this>
      */
     public function latestUpdateCohort(): HasOneThrough
     {
@@ -257,6 +281,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's tuition locations (where they teach).
+     *
+     * @return BelongsToMany<TuitionLocation, $this>
      */
     public function tuitionLocations(): BelongsToMany
     {
@@ -265,6 +291,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's update cohorts.
+     *
+     * @return BelongsToMany<UpdateCohort, $this>
      */
     public function updateCohorts(): BelongsToMany
     {
@@ -274,6 +302,8 @@ class Teacher extends Model
 
     /**
      * Get the teacher's user account.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

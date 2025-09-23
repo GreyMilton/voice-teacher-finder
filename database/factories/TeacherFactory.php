@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TeacherFactory extends Factory
 {
+    /**
+     * Qualifications to select from.
+     *
+     * @var string[]
+     */
     private $qualifications = ['Cert', 'Dip', 'AdvDip', 'AssocDeg', 'BA', 'MD', 'PhD'];
 
     /**

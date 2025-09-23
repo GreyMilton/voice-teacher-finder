@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\UpdateCohortFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachers
  * @property-read int|null $teachers_count
+ *
  * @method static \Database\Factories\UpdateCohortFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort newQuery()
@@ -23,14 +25,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class UpdateCohort extends Model
 {
+    /**
+     * @use HasFactory<UpdateCohortFactory>
+     */
     use HasFactory;
 
     /**
      * Get the teachers from the update cohort.
+     *
+     * @return BelongsToMany<Teacher, $this>
      */
     public function teachers(): BelongsToMany
     {

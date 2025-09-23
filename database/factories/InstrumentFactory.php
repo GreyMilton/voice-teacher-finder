@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InstrumentFactory extends Factory
 {
-    private $instruments = [
+    /**
+     * Instruments to select from.
+     *
+     * @var string[]
+     */
+    private array $instruments = [
         'drums',
         'guitar',
         'harpsichord',

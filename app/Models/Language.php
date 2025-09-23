@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\LanguageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int|null $teachers_who_sing_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachersWhoTeachIn
  * @property-read int|null $teachers_who_teach_in_count
+ *
  * @method static \Database\Factories\LanguageFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language newQuery()
@@ -25,14 +27,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereNativeName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Language extends Model
 {
+    /**
+     * @use HasFactory<LanguageFactory>
+     */
     use HasFactory;
 
     /**
      * Get the teachers who sing in this language.
+     *
+     * @return BelongsToMany<Teacher, $this>
      */
     public function teachersWhoSing(): BelongsToMany
     {
@@ -42,6 +50,8 @@ class Language extends Model
 
     /**
      * Get the teachers who teach in this language.
+     *
+     * @return BelongsToMany<Teacher, $this>
      */
     public function teachersWhoTeachIn(): BelongsToMany
     {

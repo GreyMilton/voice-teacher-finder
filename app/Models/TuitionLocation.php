@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\TuitionLocationFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class TuitionLocation extends Model
 {
+    /**
+     * @use HasFactory<TuitionLocationFactory>
+     */
     use HasFactory;
 
     /**
@@ -44,6 +48,8 @@ class TuitionLocation extends Model
 
     /**
      * Get the location's title - the suburb and the country's english name combined.
+     *
+     * @return Attribute<string, null>
      */
     protected function title(): Attribute
     {
@@ -54,6 +60,8 @@ class TuitionLocation extends Model
 
     /**
      * Get the country this location is in.
+     *
+     * @return BelongsTo<Country, $this>
      */
     public function country(): BelongsTo
     {
@@ -62,6 +70,8 @@ class TuitionLocation extends Model
 
     /**
      * Get the teachers who teach at this location.
+     *
+     * @return BelongsToMany<Teacher, $this>
      */
     public function teachers(): BelongsToMany
     {

@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CountryFactory extends Factory
 {
-    private $countries = [
+    /**
+     * Countries to select from.
+     *
+     * @var array<array<string, string>>
+     */
+    private array $countries = [
         ['english_name' => 'Australia', 'local_name' => 'Australia'],
         ['english_name' => 'Belgium', 'local_name' => 'Belgique / Belgie'],
         ['english_name' => 'Denmark', 'local_name' => 'Danmark'],

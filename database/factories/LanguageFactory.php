@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LanguageFactory extends Factory
 {
-    private $languages = [
+    /**
+     * Languages to select from.
+     *
+     * @var array<array<string, string>>
+     */
+    private array $languages = [
         ['english_name' => 'Danish', 'native_name' => 'Dansk'],
         ['english_name' => 'Dutch', 'native_name' => 'Nederlands'],
         ['english_name' => 'English', 'native_name' => 'English'],

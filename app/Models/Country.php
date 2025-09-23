@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\CountryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $teachers_residing_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
+ *
  * @method static \Database\Factories\CountryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country newQuery()
@@ -27,14 +29,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereLocalName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Country extends Model
 {
+    /**
+     * @use HasFactory<CountryFactory>
+     */
     use HasFactory;
 
     /**
      * Get the teachers originally from the country.
+     *
+     * @return HasMany<Teacher, $this>
      */
     public function teachersFrom(): HasMany
     {
@@ -43,6 +51,8 @@ class Country extends Model
 
     /**
      * Get the teachers who reside in the country.
+     *
+     * @return HasMany<Teacher, $this>
      */
     public function teachersResiding(): HasMany
     {
@@ -51,6 +61,8 @@ class Country extends Model
 
     /**
      * Get the tuition locations in the country.
+     *
+     * @return HasMany<TuitionLocation, $this>
      */
     public function tuitionLocations(): HasMany
     {

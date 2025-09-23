@@ -32,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read \App\Models\AuthorisationCohort|null $authorisationCohort
  * @property-read AuthorisationStatus $authorisation_status
+ * @property-read AuthorisationStatus $authorisationStatus
  * @property-read \App\Models\Country|null $countryOfOrigin
  * @property-read \App\Models\Country|null $countryOfResidence
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Instrument> $instruments
@@ -42,12 +43,14 @@ use Illuminate\Support\Carbon;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesTeachesIn
  * @property-read int|null $languages_teaches_in_count
  * @property-read string|null $latest_training_date
+ * @property-read string|null $latestTrainingDate
  * @property-read \App\Models\UpdateCohort|null $latestUpdateCohort
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UpdateCohort> $updateCohorts
  * @property-read int|null $update_cohorts_count
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Database\Factories\TeacherFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher newQuery()
@@ -69,6 +72,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereTeachesAtCvi($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Teacher extends Model
@@ -88,7 +92,7 @@ class Teacher extends Model
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $hidden = ['user'];
 

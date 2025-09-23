@@ -22,7 +22,7 @@ class Teacher extends Model
     private const int MONTHS_VALIDITY = 36;
 
     /**
-     * The months of warning given to admins an an expiring authorisation or update.
+     * The months of warning given to admins of an expiring authorisation / update.
      */
     private const int MONTHS_WARNING = 6;
 

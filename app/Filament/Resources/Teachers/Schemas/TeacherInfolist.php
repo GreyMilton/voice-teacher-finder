@@ -16,8 +16,8 @@ class TeacherInfolist
                 TextEntry::make('name'),
                 IconEntry::make('isAuthorised')
                     ->boolean(),
-                IconEntry::make('authorisationStatus')
-                    ->boolean(),
+                TextEntry::make('authorisationStatus')
+                    ->badge(),
                 TextEntry::make('authorisationCohort.name')
                     ->label('Authorisation cohort')
                     ->placeholder('-'),

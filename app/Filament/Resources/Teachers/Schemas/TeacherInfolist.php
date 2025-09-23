@@ -13,7 +13,7 @@ class TeacherInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('authorisationCohort.id')
+                TextEntry::make('authorisationCohort.name')
                     ->label('Authorisation cohort')
                     ->placeholder('-'),
                 IconEntry::make('isAuthorised')
@@ -26,10 +26,10 @@ class TeacherInfolist
                 TextEntry::make('business_email'),
                 TextEntry::make('business_phone'),
                 TextEntry::make('business_website'),
-                TextEntry::make('countryOfOrigin.id')
+                TextEntry::make('countryOfOrigin.english_name')
                     ->label('Country of origin')
                     ->placeholder('-'),
-                TextEntry::make('countryOfResidence.id')
+                TextEntry::make('countryOfResidence.english_name')
                     ->label('Country of residence')
                     ->placeholder('-'),
                 TextEntry::make('description'),

@@ -16,6 +16,13 @@ class TeacherInfolist
                 TextEntry::make('authorisationCohort.id')
                     ->label('Authorisation cohort')
                     ->placeholder('-'),
+                IconEntry::make('isAuthorised')
+                    ->boolean(),
+                IconEntry::make('authorisationStatus')
+                    ->boolean(),
+                TextEntry::make('latestUpdateCohort.name')
+                    ->label('Latest update')
+                    ->placeholder('-'),
                 TextEntry::make('business_email'),
                 TextEntry::make('business_phone'),
                 TextEntry::make('business_website'),

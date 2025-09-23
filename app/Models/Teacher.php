@@ -170,10 +170,25 @@ class Teacher extends Model
 
     /**
      * Get the teacher's most recent update cohort.
+     *
+     * Uses `HasManyThrough` under the hood for the update cohorts relationship,
+     * rather than the `BelongsToMany` 'updateCohorts' already defined on the model.
+     * This is due to the existence of `HasOneThrough, yet
+     * absence of `HasOneOfBelongsToMany` in Laravel.
      */
     public function latestUpdateCohort(): HasOneThrough
     {
-        return $this->updateCohortsHasManyThrough()->one()->ofMany('course_date', 'max');
+        return $this
+            ->hasManyThrough(
+                UpdateCohort::class,
+                TeacherUpdateCohort::class,
+                'teacher_id',
+                'id',
+                'id',
+                'update_cohort_id',
+            )
+            ->one()
+            ->ofMany('course_date', 'max');
     }
 
     /**
@@ -191,24 +206,6 @@ class Teacher extends Model
     {
         return $this->belongsToMany(UpdateCohort::class)
             ->withTimestamps();
-    }
-
-    /**
-     * Get the teacher's update cohorts using a hasManyThrough relationship.
-     * This is required for establishing the latestUpdateCohort above.
-     * Having a duplicate relationship for a perfectly good belongsToMany seems gross,
-     * but it is the only way I could get a latest model through a pivot.
-     */
-    public function updateCohortsHasManyThrough(): HasManyThrough
-    {
-        return $this->hasManyThrough(
-            UpdateCohort::class,
-            TeacherUpdateCohort::class,
-            'teacher_id',
-            'id',
-            'id',
-            'update_cohort_id',
-        );
     }
 
     /**

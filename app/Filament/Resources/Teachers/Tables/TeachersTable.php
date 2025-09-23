@@ -76,6 +76,7 @@ class TeachersTable
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('gender')
+                    ->badge()
                     ->searchable()
                     ->sortable()
                     ->toggleable(),

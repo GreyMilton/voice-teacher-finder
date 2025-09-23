@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,8 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TeacherFactory extends Factory
 {
-    private $genders = ['male', 'female', 'non-binary'];
-
     private $qualifications = ['Cert', 'Dip', 'AdvDip', 'AssocDeg', 'BA', 'MD', 'PhD'];
 
     /**
@@ -30,7 +29,7 @@ class TeacherFactory extends Factory
             // 'country_of_origin_id' => '',
             // 'country_of_residence_id' => '',
             'description' => fake()->paragraph(),
-            'gender' => fake()->randomElement($this->genders),
+            'gender' => Gender::random()->value,
             'gives_video_lessons' => fake()->boolean(),
             'name' => fake()->unique()->name(),
             'profile_image_path' => fake()->imageUrl(),

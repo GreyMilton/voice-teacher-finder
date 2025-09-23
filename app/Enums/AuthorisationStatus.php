@@ -12,7 +12,7 @@ enum AuthorisationStatus: string implements HasColor, HasIcon, HasLabel
     case Warning = 'Warning';
     case Unauthorised = 'Unauthorised';
 
-    public function getColor(): string|array|null
+    public function getColor(): string
     {
         return match ($this) {
             self::Authorised => 'success',
@@ -21,7 +21,7 @@ enum AuthorisationStatus: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getIcon(): ?string
+    public function getIcon(): string
     {
         return match ($this) {
             self::Authorised => 'heroicon-c-check-badge',
@@ -30,7 +30,7 @@ enum AuthorisationStatus: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Authorised => 'Authorised',

@@ -12,7 +12,7 @@ enum Gender: string implements HasColor, HasLabel
     case NonBinary = 'non-binary';
     case PreferNotToSay = 'prefer-not-to-say';
 
-    public function getColor(): string|array|null
+    public function getColor(): string
     {
         return match ($this) {
             self::Male => 'cyan',
@@ -22,7 +22,7 @@ enum Gender: string implements HasColor, HasLabel
         };
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Male => 'Male',

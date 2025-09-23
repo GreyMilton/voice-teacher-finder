@@ -15,7 +15,7 @@ class TuitionLocationForm
                 TextInput::make('suburb')
                     ->required(),
                 Select::make('country_id')
-                    ->relationship('country', 'id')
+                    ->relationship('country', 'english_name')
                     ->required(),
             ]);
     }

@@ -30,17 +30,17 @@ class TeacherResource extends JsonResource
             'description' => $this->description,
             'gender' => $this->gender->getLabel(),
             'gives_video_lessons' => $this->gives_video_lessons,
-            'instruments' => $this->instruments?->pluck('name'),
-            'languagesSung' => $this->languagesSung?->pluck('english_name'),
-            'languagesTeachesIn' => $this->languagesTeachesIn?->pluck('english_name'),
+            'instruments' => $this->instruments->pluck('name'),
+            'languagesSung' => $this->languagesSung->pluck('english_name'),
+            'languagesTeachesIn' => $this->languagesTeachesIn->pluck('english_name'),
             'name' => $this->name,
             'profile_image_path' => $this->profile_image_path,
             'qualification_string' => $this->qualification_string,
             'teaches_at_cvi' => $this->teaches_at_cvi,
-            'tuitionLocations' => $this->tuitionLocations?->map(
+            'tuitionLocations' => $this->tuitionLocations->map(
                 fn (TuitionLocation $location) => $location->title,
             ),
-            'updateCohorts' => $this->updateCohorts?->pluck('name'),
+            'updateCohorts' => $this->updateCohorts->pluck('name'),
         ];
     }
 }

@@ -34,14 +34,20 @@ class TeacherInfolist
                     ->placeholder('-'),
                 TextEntry::make('gender')
                     ->badge(),
-                TextEntry::make('qualification_string'),
-                TextEntry::make('business_email'),
-                TextEntry::make('business_phone'),
-                TextEntry::make('business_website'),
-                TextEntry::make('description'),
+                TextEntry::make('qualification_string')
+                    ->placeholder('-'),
+                TextEntry::make('business_email')
+                    ->placeholder('-'),
+                TextEntry::make('business_phone')
+                    ->placeholder('-'),
+                TextEntry::make('business_website')
+                    ->placeholder('-'),
+                TextEntry::make('description')
+                    ->placeholder('-'),
                 IconEntry::make('gives_video_lessons')
                     ->boolean(),
-                ImageEntry::make('profile_image_path'),
+                ImageEntry::make('profile_image_path')
+                    ->placeholder('-'),
                 TextEntry::make('user.name')
                     ->label('User')
                     ->placeholder('-'),

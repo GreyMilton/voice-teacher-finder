@@ -17,9 +17,9 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
-            $table->string('business_email');
-            $table->string('business_phone');
-            $table->string('business_website');
+            $table->string('business_email')->nullable();
+            $table->string('business_phone')->nullable();
+            $table->string('business_website')->nullable();
             $table->foreignId('country_of_origin_id')
                 ->nullable()
                 ->constrained('countries')
@@ -28,12 +28,12 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('countries')
                 ->nullOnDelete();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('gender');
             $table->boolean('gives_video_lessons');
             $table->string('name');
-            $table->string('profile_image_path');
-            $table->string('qualification_string');
+            $table->string('profile_image_path')->nullable();
+            $table->string('qualification_string')->nullable();
             $table->boolean('teaches_at_cvi');
             $table->foreignId('user_id')
                 ->nullable()

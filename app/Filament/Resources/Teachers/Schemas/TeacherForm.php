@@ -29,24 +29,18 @@ class TeacherForm
                 Select::make('gender')
                     ->options(Gender::class)
                     ->required(),
-                TextInput::make('qualification_string')
-                    ->required(),
+                TextInput::make('qualification_string'),
                 TextInput::make('business_email')
-                    ->email()
-                    ->required(),
+                    ->email(),
                 TextInput::make('business_phone')
-                    ->tel()
-                    ->required(),
+                    ->tel(),
                 TextInput::make('business_website')
-                    ->url()
-                    ->required(),
-                TextInput::make('description')
-                    ->required(),
+                    ->url(),
+                TextInput::make('description'),
                 Toggle::make('gives_video_lessons')
                     ->required(),
                 FileUpload::make('profile_image_path')
-                    ->image()
-                    ->required(),
+                    ->image(),
                 Select::make('user_id')
                     ->relationship(
                         'user',

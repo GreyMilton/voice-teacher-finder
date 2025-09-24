@@ -94,6 +94,13 @@ class Teacher extends Model
     private const int MONTHS_WARNING = 6;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $guarded = ['user_id'];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>

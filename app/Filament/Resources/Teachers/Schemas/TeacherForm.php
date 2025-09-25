@@ -45,7 +45,11 @@ class TeacherForm
                     ->relationship(
                         'user',
                         'name',
-                        fn (Builder $query) => $query->doesntHave('teacher'),
+                        fn (?string $state, Builder $query) => $query
+                            ->doesntHave('teacher')
+                            ->orWhereHas('teacher', fn (Builder $query) => $query
+                                ->where('user_id', '=', $state)
+                            ),
                     ),
             ]);
     }

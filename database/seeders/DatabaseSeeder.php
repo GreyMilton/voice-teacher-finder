@@ -7,6 +7,7 @@ use App\Models\Instrument;
 use App\Models\Language;
 use App\Models\Teacher;
 use App\Models\Territory;
+use App\Models\TuitionLocation;
 use App\Models\UpdateCohort;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -20,9 +21,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $territories = Territory::factory(10)
-            ->hasTuitionLocations(mt_rand(5, 10))
-            ->create();
+        $territories = Territory::inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        $territories->each(function (Territory $territory) {
+            TuitionLocation::factory(mt_rand(5, 10))
+                ->for($territory)
+                ->create();
+        });
+
         $authorisationCohorts = AuthorisationCohort::factory(5)->create();
         $instruments = Instrument::factory(5)->create();
         $languages = Language::factory(5)->create();

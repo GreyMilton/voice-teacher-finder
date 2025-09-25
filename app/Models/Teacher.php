@@ -16,17 +16,17 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $id
  * @property int|null $authorisation_cohort_id
- * @property string $business_email
- * @property string $business_phone
- * @property string $business_website
+ * @property string|null $business_email
+ * @property string|null $business_phone
+ * @property string|null $business_website
  * @property int|null $country_of_origin_id
  * @property int|null $country_of_residence_id
- * @property string $description
+ * @property string|null $description
  * @property Gender $gender
  * @property bool $gives_video_lessons
  * @property string $name
- * @property string $profile_image_path
- * @property string $qualification_string
+ * @property string|null $profile_image_path
+ * @property string|null $qualification_string
  * @property bool $teaches_at_cvi
  * @property int|null $user_id
  * @property Carbon|null $created_at

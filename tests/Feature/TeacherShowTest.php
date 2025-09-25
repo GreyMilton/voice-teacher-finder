@@ -32,15 +32,20 @@ test('authenticated users can visit the teacher show', function () {
 
 test('teacher show receives all required teacher data', function () {
     // Seed teacher and relationships
+    $territories = Territory::inRandomOrder()
+        ->limit(2)
+        ->get();
+
     $teacher = Teacher::factory()
         ->forAuthorisationCohort()
-        ->forTerritoryOfOrigin()
-        ->forTerritoryOfResidence()
         ->hasInstruments(2)
         ->hasLanguagesSung(2)
         ->hasLanguagesTeachesIn(2)
         ->hasUpdateCohorts(2)
-        ->create();
+        ->create([
+            'territory_of_origin_id' => $territories->first()->id,
+            'territory_of_residence_id' => $territories->first()->id,
+        ]);
 
     $tuitionLocations = TuitionLocation::factory(2)
         ->for($teacher->territoryOfResidence)

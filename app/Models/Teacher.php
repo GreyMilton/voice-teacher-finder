@@ -19,8 +19,8 @@ use Illuminate\Support\Carbon;
  * @property string|null $business_email
  * @property string|null $business_phone
  * @property string|null $business_website
- * @property int|null $country_of_origin_id
- * @property int|null $country_of_residence_id
+ * @property int|null $territory_of_origin_id
+ * @property int|null $territory_of_residence_id
  * @property string|null $description
  * @property Gender $gender
  * @property bool $gives_video_lessons
@@ -34,8 +34,8 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\AuthorisationCohort|null $authorisationCohort
  * @property-read AuthorisationStatus $authorisation_status
  * @property-read AuthorisationStatus $authorisationStatus
- * @property-read \App\Models\Country|null $countryOfOrigin
- * @property-read \App\Models\Country|null $countryOfResidence
+ * @property-read \App\Models\Territory|null $territoryOfOrigin
+ * @property-read \App\Models\Territory|null $territoryOfResidence
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Instrument> $instruments
  * @property-read int|null $instruments_count
  * @property-read bool $is_authorised
@@ -60,8 +60,8 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereBusinessEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereBusinessPhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereBusinessWebsite($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereCountryOfOriginId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereCountryOfResidenceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereTerritoryOfOriginId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereTerritoryOfResidenceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereGender($value)
@@ -210,23 +210,23 @@ class Teacher extends Model
     }
 
     /**
-     * Get the teacher's country of origin.
+     * Get the teacher's territory of origin.
      *
-     * @return BelongsTo<Country, $this>
+     * @return BelongsTo<Territory, $this>
      */
-    public function countryOfOrigin(): BelongsTo
+    public function territoryOfOrigin(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_of_origin_id');
+        return $this->belongsTo(Territory::class, 'territory_of_origin_id');
     }
 
     /**
-     * Get the teacher's country of residence.
+     * Get the teacher's territory of residence.
      *
-     * @return BelongsTo<Country, $this>
+     * @return BelongsTo<Territory, $this>
      */
-    public function countryOfResidence(): BelongsTo
+    public function territoryOfResidence(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_of_residence_id');
+        return $this->belongsTo(Territory::class, 'territory_of_residence_id');
     }
 
     /**

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Countries\Pages;
+namespace App\Filament\Resources\Territories\Pages;
 
-use App\Filament\Resources\Countries\CountryResource;
+use App\Filament\Resources\Territories\TerritoryResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditCountry extends EditRecord
+class EditTerritory extends EditRecord
 {
-    protected static string $resource = CountryResource::class;
+    protected static string $resource = TerritoryResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -5,16 +5,16 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Country>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Territory>
  */
-class CountryFactory extends Factory
+class TerritoryFactory extends Factory
 {
     /**
-     * Countries to select from.
+     * Territories to select from.
      *
      * @var array<array<string, string>>
      */
-    private array $countries = [
+    private array $territories = [
         ['english_name' => 'Australia', 'local_name' => 'Australia'],
         ['english_name' => 'Belgium', 'local_name' => 'Belgique / Belgie'],
         ['english_name' => 'Denmark', 'local_name' => 'Danmark'],
@@ -42,11 +42,11 @@ class CountryFactory extends Factory
      */
     public function definition(): array
     {
-        $country = fake()->unique()->randomElement($this->countries);
+        $territory = fake()->unique()->randomElement($this->territories);
 
         return [
-            'english_name' => $country['english_name'],
-            'local_name' => $country['local_name'],
+            'english_name' => $territory['english_name'],
+            'local_name' => $territory['local_name'],
         ];
     }
 }

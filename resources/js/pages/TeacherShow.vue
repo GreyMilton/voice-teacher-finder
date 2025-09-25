@@ -12,8 +12,8 @@ const { teacher } = defineProps<{ teacher: Teacher }>();
     <li>business_email: {{ teacher.business_email }}</li>
     <li>business_phone: {{ teacher.business_phone }}</li>
     <li>business_website: {{ teacher.business_website }}</li>
-    <li>countryOfOrigin: {{ teacher.countryOfOrigin }}</li>
-    <li>countryOfResidence: {{ teacher.countryOfResidence }}</li>
+    <li>territoryOfOrigin: {{ teacher.territoryOfOrigin }}</li>
+    <li>territoryOfResidence: {{ teacher.territoryOfResidence }}</li>
     <li>description: {{ teacher.description }}</li>
     <li>gender: {{ teacher.gender }}</li>
     <li>gives_video_lessons: {{ teacher.gives_video_lessons }}</li>

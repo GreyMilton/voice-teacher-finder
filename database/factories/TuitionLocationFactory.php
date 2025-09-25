@@ -18,7 +18,7 @@ class TuitionLocationFactory extends Factory
     {
         return [
             'suburb' => fake()->unique()->city(),
-            // 'country_id' => '',
+            // 'territory_id' => '',
         ];
     }
 }

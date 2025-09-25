@@ -44,8 +44,8 @@ export interface Teacher {
   business_email: string;
   business_phone: string;
   business_website: string;
-  countryOfOrigin: string;
-  countryOfResidence: string;
+  territoryOfOrigin: string;
+  territoryOfResidence: string;
   description: string;
   gender: string;
   gives_video_lessons: boolean;

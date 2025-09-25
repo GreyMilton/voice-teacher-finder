@@ -67,11 +67,11 @@ class TeachersTable
                     ->boolean()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('countryOfResidence.english_name')
+                TextColumn::make('territoryOfResidence.english_name')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                TextColumn::make('countryOfOrigin.english_name')
+                TextColumn::make('territoryOfOrigin.english_name')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),

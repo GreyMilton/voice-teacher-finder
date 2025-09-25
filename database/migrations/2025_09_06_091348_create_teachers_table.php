@@ -20,13 +20,13 @@ return new class extends Migration
             $table->string('business_email')->nullable();
             $table->string('business_phone')->nullable();
             $table->string('business_website')->nullable();
-            $table->foreignId('country_of_origin_id')
+            $table->foreignId('territory_of_origin_id')
                 ->nullable()
-                ->constrained('countries')
+                ->constrained('territories')
                 ->nullOnDelete();
-            $table->foreignId('country_of_residence_id')
+            $table->foreignId('territory_of_residence_id')
                 ->nullable()
-                ->constrained('countries')
+                ->constrained('territories')
                 ->nullOnDelete();
             $table->string('description')->nullable();
             $table->string('gender');

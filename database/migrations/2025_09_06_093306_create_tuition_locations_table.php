@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tuition_locations', function (Blueprint $table) {
             $table->id();
             $table->string('suburb');
-            $table->foreignId('country_id')
+            $table->foreignId('territory_id')
                 ->constrained()
                 ->cascadeOnDelete();
             $table->timestamps();

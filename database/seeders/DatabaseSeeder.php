@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\AuthorisationCohort;
-use App\Models\Country;
 use App\Models\Instrument;
 use App\Models\Language;
 use App\Models\Teacher;
+use App\Models\Territory;
 use App\Models\UpdateCohort;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $countries = Country::factory(10)
+        $territories = Territory::factory(10)
             ->hasTuitionLocations(mt_rand(5, 10))
             ->create();
         $authorisationCohorts = AuthorisationCohort::factory(5)->create();
@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
                     ->sequence(
                         fn () => [
                             'authorisation_cohort_id' => $authorisationCohorts->random()->id,
-                            'country_of_origin_id' => $countries->random()->id,
-                            'country_of_residence_id' => $countries->random()->id,
+                            'territory_of_origin_id' => $territories->random()->id,
+                            'territory_of_residence_id' => $territories->random()->id,
                         ],
                     )
             )
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             $teacher = $user->teacher;
 
             $tuitionLocations = $teacher
-                ->countryOfResidence
+                ->territoryOfResidence
                 ->tuitionLocations
                 ->random(mt_rand(1, 2));
 

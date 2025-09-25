@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\TerritoryFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -19,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
  *
- * @method static \Database\Factories\TerritoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory query()
@@ -33,11 +30,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Territory extends Model
 {
-    /**
-     * @use HasFactory<TerritoryFactory>
-     */
-    use HasFactory;
-
     /**
      * The attributes that aren't mass assignable.
      *

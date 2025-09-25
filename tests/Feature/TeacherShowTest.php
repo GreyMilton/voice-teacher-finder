@@ -1,10 +1,10 @@
 <?php
 
 use App\Models\AuthorisationCohort;
-use App\Models\Country;
 use App\Models\Instrument;
 use App\Models\Language;
 use App\Models\Teacher;
+use App\Models\Territory;
 use App\Models\TuitionLocation;
 use App\Models\UpdateCohort;
 use App\Models\User;
@@ -34,8 +34,8 @@ test('teacher show receives all required teacher data', function () {
     // Seed teacher and relationships
     $teacher = Teacher::factory()
         ->forAuthorisationCohort()
-        ->forCountryOfOrigin()
-        ->forCountryOfResidence()
+        ->forTerritoryOfOrigin()
+        ->forTerritoryOfResidence()
         ->hasInstruments(2)
         ->hasLanguagesSung(2)
         ->hasLanguagesTeachesIn(2)
@@ -43,15 +43,15 @@ test('teacher show receives all required teacher data', function () {
         ->create();
 
     $tuitionLocations = TuitionLocation::factory(2)
-        ->for($teacher->countryOfResidence)
+        ->for($teacher->territoryOfResidence)
         ->create();
     $teacher->tuitionLocations()
         ->sync($tuitionLocations);
 
     // Ensure seeding was done correctly.
     expect($teacher->authorisationCohort)->toBeInstanceOf(AuthorisationCohort::class);
-    expect($teacher->countryOfOrigin)->toBeInstanceOf(Country::class);
-    expect($teacher->countryOfResidence)->toBeInstanceOf(Country::class);
+    expect($teacher->territoryOfOrigin)->toBeInstanceOf(Territory::class);
+    expect($teacher->territoryOfResidence)->toBeInstanceOf(Territory::class);
     expect($teacher->instruments->first())->toBeInstanceOf(Instrument::class);
     expect($teacher->languagesSung->first())->toBeInstanceOf(Language::class);
     expect($teacher->languagesTeachesIn->first())->toBeInstanceOf(Language::class);
@@ -70,8 +70,8 @@ test('teacher show receives all required teacher data', function () {
                 ->where('business_email', $teacher->business_email)
                 ->where('business_phone', $teacher->business_phone)
                 ->where('business_website', $teacher->business_website)
-                ->where('countryOfOrigin', $teacher->countryOfOrigin->english_name)
-                ->where('countryOfResidence', $teacher->countryOfResidence->english_name)
+                ->where('territoryOfOrigin', $teacher->territoryOfOrigin->english_name)
+                ->where('territoryOfResidence', $teacher->territoryOfResidence->english_name)
                 ->where('description', $teacher->description)
                 ->where('gender', $teacher->gender->getLabel())
                 ->where('gives_video_lessons', $teacher->gives_video_lessons)

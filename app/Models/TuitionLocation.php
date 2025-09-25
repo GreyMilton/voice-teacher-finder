@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @property int $id
  * @property string $suburb
- * @property int $country_id
+ * @property int $territory_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Country $country
+ * @property-read \App\Models\Territory $territory
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachers
  * @property-read int|null $teachers_count
  * @property-read mixed $title
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereTerritoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereSuburb($value)
@@ -51,28 +51,28 @@ class TuitionLocation extends Model
      *
      * @var list<string>
      */
-    protected $with = ['country'];
+    protected $with = ['territory'];
 
     /**
-     * Get the location's title - the suburb and the country's english name combined.
+     * Get the location's title - the suburb and the territory's english name combined.
      *
      * @return Attribute<string, null>
      */
     protected function title(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->suburb.', '.$this->country->english_name,
+            get: fn () => $this->suburb.', '.$this->territory->english_name,
         );
     }
 
     /**
-     * Get the country this location is in.
+     * Get the territory this location is in.
      *
-     * @return BelongsTo<Country, $this>
+     * @return BelongsTo<Territory, $this>
      */
-    public function country(): BelongsTo
+    public function territory(): BelongsTo
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Territory::class);
     }
 
     /**

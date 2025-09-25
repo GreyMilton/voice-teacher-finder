@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Countries\Tables;
+namespace App\Filament\Resources\Territories\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -9,7 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CountriesTable
+class TerritoriesTable
 {
     public static function configure(Table $table): Table
     {
@@ -17,10 +17,6 @@ class CountriesTable
             ->columns([
                 TextColumn::make('english_name')
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('local_name')
-                    ->searchable()
-                    ->toggleable()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

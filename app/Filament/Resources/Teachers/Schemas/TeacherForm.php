@@ -22,10 +22,10 @@ class TeacherForm
                     ->relationship('authorisationCohort', 'name'),
                 Toggle::make('teaches_at_cvi')
                     ->required(),
-                Select::make('country_of_residence_id')
-                    ->relationship('countryOfResidence', 'english_name'),
-                Select::make('country_of_origin_id')
-                    ->relationship('countryOfOrigin', 'english_name'),
+                Select::make('territory_of_residence_id')
+                    ->relationship('territoryOfResidence', 'english_name'),
+                Select::make('territory_of_origin_id')
+                    ->relationship('territoryOfOrigin', 'english_name'),
                 Select::make('gender')
                     ->options(Gender::class)
                     ->required(),

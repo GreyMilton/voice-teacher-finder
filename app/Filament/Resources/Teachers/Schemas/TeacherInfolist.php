@@ -26,11 +26,11 @@ class TeacherInfolist
                     ->placeholder('-'),
                 IconEntry::make('teaches_at_cvi')
                     ->boolean(),
-                TextEntry::make('countryOfResidence.english_name')
-                    ->label('Country of residence')
+                TextEntry::make('territoryOfResidence.english_name')
+                    ->label('Territory of residence')
                     ->placeholder('-'),
-                TextEntry::make('countryOfOrigin.english_name')
-                    ->label('Country of origin')
+                TextEntry::make('territoryOfOrigin.english_name')
+                    ->label('Territory of origin')
                     ->placeholder('-'),
                 TextEntry::make('gender')
                     ->badge(),

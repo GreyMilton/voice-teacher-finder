@@ -36,6 +36,13 @@ class AuthorisationCohort extends Model
     use HasFactory;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $guarded = [];
+
+    /**
      * Get the teachers from the authorisation cohort.
      *
      * @return HasMany<Teacher, $this>

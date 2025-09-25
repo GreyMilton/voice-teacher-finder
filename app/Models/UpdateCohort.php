@@ -36,6 +36,13 @@ class UpdateCohort extends Model
     use HasFactory;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $guarded = [];
+
+    /**
      * Get the teachers from the update cohort.
      *
      * @return BelongsToMany<Teacher, $this>

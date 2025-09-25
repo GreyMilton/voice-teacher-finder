@@ -40,6 +40,13 @@ class TuitionLocation extends Model
     use HasFactory;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $guarded = [];
+
+    /**
      * The relationships that should always be loaded.
      *
      * @var list<string>

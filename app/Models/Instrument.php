@@ -34,6 +34,13 @@ class Instrument extends Model
     use HasFactory;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $guarded = [];
+
+    /**
      * Get the teachers who play the instrument.
      *
      * @return BelongsToMany<Teacher, $this>

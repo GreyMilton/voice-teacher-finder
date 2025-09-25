@@ -40,6 +40,13 @@ class Country extends Model
     use HasFactory;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $guarded = [];
+
+    /**
      * Get the teachers originally from the country.
      *
      * @return HasMany<Teacher, $this>

@@ -13,8 +13,6 @@ class LanguageForm
             ->components([
                 TextInput::make('english_name')
                     ->required(),
-                TextInput::make('native_name')
-                    ->required(),
             ]);
     }
 }

@@ -12,7 +12,6 @@ class LanguageInfolist
         return $schema
             ->components([
                 TextEntry::make('english_name'),
-                TextEntry::make('native_name'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

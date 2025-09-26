@@ -32,7 +32,9 @@ class DatabaseSeeder extends Seeder
         });
 
         $authorisationCohorts = AuthorisationCohort::factory(5)->create();
-        $instruments = Instrument::factory(5)->create();
+        $instruments = Instrument::inRandomOrder()
+            ->limit(6)
+            ->get();
         $languages = Language::factory(5)->create();
         $updateCohorts = UpdateCohort::factory(10)->create();
 

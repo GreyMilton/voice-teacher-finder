@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\InstrumentFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -15,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachers
  * @property-read int|null $teachers_count
  *
- * @method static \Database\Factories\InstrumentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument query()
@@ -28,11 +25,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Instrument extends Model
 {
-    /**
-     * @use HasFactory<InstrumentFactory>
-     */
-    use HasFactory;
-
     /**
      * The attributes that aren't mass assignable.
      *

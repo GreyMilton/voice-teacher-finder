@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Instrument;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,12 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        $instruments = require database_path('initial_data/instruments.php');
+
+        foreach ($instruments as $instrument) {
+            Instrument::create($instrument);
+        }
     }
 
     /**

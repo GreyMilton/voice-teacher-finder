@@ -27,6 +27,12 @@ class TuitionLocationsTable
                 TextColumn::make('territory.region.continent.english_name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('teachers_count')
+                    ->badge()
+                    ->color(fn (int $state) => $state > 0 ? 'info' : 'gray')
+                    ->counts('teachers')
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

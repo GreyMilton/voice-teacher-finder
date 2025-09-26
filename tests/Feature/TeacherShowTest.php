@@ -38,7 +38,6 @@ test('teacher show receives all required teacher data', function () {
 
     $teacher = Teacher::factory()
         ->forAuthorisationCohort()
-        ->hasInstruments(2)
         ->hasLanguagesSung(2)
         ->hasLanguagesTeachesIn(2)
         ->hasUpdateCohorts(2)
@@ -52,6 +51,12 @@ test('teacher show receives all required teacher data', function () {
         ->create();
     $teacher->tuitionLocations()
         ->sync($tuitionLocations);
+
+    $instruments = Instrument::inRandomOrder()
+        ->limit(2)
+        ->get();
+    $teacher->instruments()
+        ->sync($instruments);
 
     // Ensure seeding was done correctly.
     expect($teacher->authorisationCohort)->toBeInstanceOf(AuthorisationCohort::class);

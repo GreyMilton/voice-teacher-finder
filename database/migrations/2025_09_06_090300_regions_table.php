@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Territory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,23 +12,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('territories', function (Blueprint $table) {
+
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('geo_point');
-            $table->string('iso_3_country_code');
             $table->string('english_name');
-            $table->foreignId('region_id')
+            $table->foreignId('continent_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->string('french_name');
             $table->timestamps();
         });
 
-        $territories = require database_path('initial_data/territories.php');
+        $regions = require database_path('initial_data/regions.php');
 
-        foreach ($territories as $territory) {
-            Territory::create($territory);
-        }
+        DB::table('regions')->insert($regions);
     }
 
     /**
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('territories');
+        //
     }
 };

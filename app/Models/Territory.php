@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -39,10 +40,19 @@ class Territory extends Model
         'geo_point',
         'iso_3_country_code',
         'english_name',
-        'continent',
-        'region',
+        'region_id',
         'french_name',
     ];
+
+    /**
+     * Get the region this territory is in.
+     *
+     * @return BelongsTo<Region, $this>
+     */
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
+    }
 
     /**
      * Get the teachers originally from the territory.

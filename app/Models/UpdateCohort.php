@@ -36,11 +36,11 @@ class UpdateCohort extends Model
     use HasFactory;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
-    protected $guarded = [];
+    protected $fillable = ['course_date', 'name'];
 
     /**
      * Get the teachers from the update cohort.

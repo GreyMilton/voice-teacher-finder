@@ -31,11 +31,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Territory extends Model
 {
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'geo_point',
+        'iso_3_country_code',
+        'english_name',
+        'continent',
+        'region',
+        'french_name',
+    ];
 
     /**
      * Get the teachers originally from the territory.

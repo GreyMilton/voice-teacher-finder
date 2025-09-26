@@ -29,11 +29,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Language extends Model
 {
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
-    protected $guarded = [];
+    protected $fillable = ['english_name'];
 
     /**
      * Get the teachers who sing in this language.

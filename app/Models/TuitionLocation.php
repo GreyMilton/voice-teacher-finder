@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
- * @property string $suburb
+ * @property string $area
  * @property int $territory_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereTerritoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereSuburb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereArea($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|TuitionLocation whereUpdatedAt($value)
  *
  * @mixin \Eloquent
@@ -54,14 +54,14 @@ class TuitionLocation extends Model
     protected $with = ['territory'];
 
     /**
-     * Get the location's title - the suburb and the territory's english name combined.
+     * Get the location's title - the area and the territory's english name combined.
      *
      * @return Attribute<string, null>
      */
     protected function title(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->suburb.', '.$this->territory->english_name,
+            get: fn () => $this->area.', '.$this->territory->english_name,
         );
     }
 

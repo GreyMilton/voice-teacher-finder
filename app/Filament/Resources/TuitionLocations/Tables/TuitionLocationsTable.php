@@ -15,7 +15,7 @@ class TuitionLocationsTable
     {
         return $table
             ->columns([
-                TextColumn::make('suburb')
+                TextColumn::make('area')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('territory.english_name')

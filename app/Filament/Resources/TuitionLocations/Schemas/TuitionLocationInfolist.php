@@ -14,6 +14,10 @@ class TuitionLocationInfolist
                 TextEntry::make('area'),
                 TextEntry::make('territory.title')
                     ->label('Territory'),
+                TextEntry::make('teachers_count')
+                    ->badge()
+                    ->color(fn (int $state) => $state > 0 ? 'info' : 'gray')
+                    ->counts('teachers'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

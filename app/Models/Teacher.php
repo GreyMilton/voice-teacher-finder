@@ -94,11 +94,25 @@ class Teacher extends Model
     private const int MONTHS_WARNING = 6;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
-    protected $guarded = ['user_id'];
+    protected $fillable = [
+        'authorisation_cohort_id',
+        'business_email',
+        'business_phone',
+        'business_website',
+        'description',
+        'gender',
+        'gives_video_lessons',
+        'name',
+        'profile_image_path',
+        'qualification_string',
+        'teaches_at_cvi',
+        'territory_of_origin_id',
+        'territory_of_residence_id',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

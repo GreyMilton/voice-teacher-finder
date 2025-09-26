@@ -16,6 +16,12 @@ class TerritoryInfolist
                     ->label('Region'),
                 TextEntry::make('region.continent.english_name')
                     ->label('Continent'),
+                TextEntry::make('teachers_teaching_count')
+                    ->badge()
+                    ->color(function (int $state) {
+                        return $state > 0 ? 'info' : 'gray';
+                    })
+                    ->label('Teachers Teaching In'),
                 TextEntry::make('teachers_from_count')
                     ->badge()
                     ->color(function (int $state) {

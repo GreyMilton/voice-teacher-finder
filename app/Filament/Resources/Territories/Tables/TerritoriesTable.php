@@ -24,6 +24,14 @@ class TerritoriesTable
                 TextColumn::make('region.continent.english_name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('teachers_teaching_count')
+                    ->badge()
+                    ->color(function (int $state) {
+                        return $state > 0 ? 'info' : 'gray';
+                    })
+                    ->label('Teachers Teaching In')
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('teachers_from_count')
                     ->badge()
                     ->color(function (int $state) {

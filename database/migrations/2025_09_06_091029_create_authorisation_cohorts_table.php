@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('authorisation_cohorts', function (Blueprint $table) {
             $table->id();
             $table->date('authorisation_date');
-            $table->date('name');
+            $table->string('name');
             $table->timestamps();
         });
     }

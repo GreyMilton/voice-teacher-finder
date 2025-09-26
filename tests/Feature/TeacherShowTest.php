@@ -38,8 +38,6 @@ test('teacher show receives all required teacher data', function () {
 
     $teacher = Teacher::factory()
         ->forAuthorisationCohort()
-        ->hasLanguagesSung(2)
-        ->hasLanguagesTeachesIn(2)
         ->hasUpdateCohorts(2)
         ->create([
             'territory_of_origin_id' => $territories->first()->id,
@@ -57,6 +55,14 @@ test('teacher show receives all required teacher data', function () {
         ->get();
     $teacher->instruments()
         ->sync($instruments);
+
+    $languages = Language::inRandomOrder()
+        ->limit(3)
+        ->get();
+    $teacher->languagesSung()
+        ->sync($languages->random(2));
+    $teacher->languagesTeachesIn()
+        ->sync($languages->random(2));
 
     // Ensure seeding was done correctly.
     expect($teacher->authorisationCohort)->toBeInstanceOf(AuthorisationCohort::class);

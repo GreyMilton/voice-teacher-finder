@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\LanguageFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -17,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachersWhoTeachIn
  * @property-read int|null $teachers_who_teach_in_count
  *
- * @method static \Database\Factories\LanguageFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language query()
@@ -31,11 +28,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Language extends Model
 {
-    /**
-     * @use HasFactory<LanguageFactory>
-     */
-    use HasFactory;
-
     /**
      * The attributes that aren't mass assignable.
      *

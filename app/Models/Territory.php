@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,6 +44,27 @@ class Territory extends Model
         'region_id',
         'french_name',
     ];
+
+    /**
+     * Get the territory's title, which is a concatenation of:
+     * - Territory 'english_name'
+     * - Region 'english_name'
+     * - Continent 'english name'.
+     *
+     * @return Attribute<string, null>
+     */
+    protected function title(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $name = $this->english_name;
+                $region = $this->region->english_name;
+                $continent = $this->region->continent->english_name;
+
+                return $name.', '.$region.', '.$continent;
+            }
+        );
+    }
 
     /**
      * Get the region this territory is in.

@@ -18,6 +18,12 @@ class TerritoriesTable
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('region.english_name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('region.continent.english_name')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

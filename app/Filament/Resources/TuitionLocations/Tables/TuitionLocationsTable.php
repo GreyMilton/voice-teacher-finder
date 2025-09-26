@@ -21,6 +21,12 @@ class TuitionLocationsTable
                 TextColumn::make('territory.english_name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('territory.region.english_name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('territory.region.continent.english_name')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

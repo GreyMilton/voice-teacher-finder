@@ -17,7 +17,7 @@ class TuitionLocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'suburb' => fake()->unique()->city(),
+            'area' => fake()->unique()->city(),
             // 'territory_id' => '',
         ];
     }

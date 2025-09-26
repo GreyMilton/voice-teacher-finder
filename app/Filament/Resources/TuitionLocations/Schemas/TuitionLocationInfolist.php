@@ -11,7 +11,7 @@ class TuitionLocationInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('suburb'),
+                TextEntry::make('area'),
                 TextEntry::make('territory.english_name')
                     ->label('Territory'),
                 TextEntry::make('created_at')

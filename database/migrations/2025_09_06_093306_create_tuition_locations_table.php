@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tuition_locations', function (Blueprint $table) {
             $table->id();
-            $table->string('suburb');
+            $table->string('area');
             $table->foreignId('territory_id')
                 ->constrained()
                 ->cascadeOnDelete();

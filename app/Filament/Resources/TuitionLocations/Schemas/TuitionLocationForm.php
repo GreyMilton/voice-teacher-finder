@@ -12,7 +12,7 @@ class TuitionLocationForm
     {
         return $schema
             ->components([
-                TextInput::make('suburb')
+                TextInput::make('area')
                     ->required(),
                 Select::make('territory_id')
                     ->relationship('territory', 'english_name')

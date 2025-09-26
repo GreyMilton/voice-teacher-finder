@@ -20,6 +20,13 @@ return new class extends Migration
             $table->string('business_email')->nullable();
             $table->string('business_phone')->nullable();
             $table->string('business_website')->nullable();
+            $table->string('description')->nullable();
+            $table->string('gender');
+            $table->boolean('gives_video_lessons');
+            $table->string('name');
+            $table->string('profile_image_path')->nullable();
+            $table->string('qualification_string')->nullable();
+            $table->boolean('teaches_at_cvi');
             $table->foreignId('territory_of_origin_id')
                 ->nullable()
                 ->constrained('territories')
@@ -28,13 +35,6 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('territories')
                 ->nullOnDelete();
-            $table->string('description')->nullable();
-            $table->string('gender');
-            $table->boolean('gives_video_lessons');
-            $table->string('name');
-            $table->string('profile_image_path')->nullable();
-            $table->string('qualification_string')->nullable();
-            $table->boolean('teaches_at_cvi');
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()

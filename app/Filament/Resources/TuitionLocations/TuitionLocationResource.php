@@ -24,6 +24,11 @@ class TuitionLocationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['suburb', 'territory.english_name'];
+    }
+
     public static function form(Schema $schema): Schema
     {
         return TuitionLocationForm::configure($schema);

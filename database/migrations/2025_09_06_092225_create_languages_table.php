@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Language;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,12 @@ return new class extends Migration
             $table->string('english_name');
             $table->timestamps();
         });
+
+        $languages = require database_path('initial_data/languages.php');
+
+        foreach ($languages as $language) {
+            Language::create($language);
+        }
     }
 
     /**

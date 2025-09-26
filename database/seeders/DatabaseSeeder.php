@@ -35,7 +35,9 @@ class DatabaseSeeder extends Seeder
         $instruments = Instrument::inRandomOrder()
             ->limit(6)
             ->get();
-        $languages = Language::factory(5)->create();
+        $languages = Language::inRandomOrder()
+            ->limit(6)
+            ->get();
         $updateCohorts = UpdateCohort::factory(10)->create();
 
         $users = User::factory(10)

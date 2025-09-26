@@ -22,7 +22,7 @@ class InstrumentResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMusicalNote;
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'english_name';
 
     public static function form(Schema $schema): Schema
     {

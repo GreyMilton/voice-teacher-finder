@@ -30,7 +30,7 @@ class TeacherResource extends JsonResource
             'description' => $this->description,
             'gender' => $this->gender->getLabel(),
             'gives_video_lessons' => $this->gives_video_lessons,
-            'instruments' => $this->instruments->pluck('name'),
+            'instruments' => $this->instruments->pluck('english_name'),
             'languagesSung' => $this->languagesSung->pluck('english_name'),
             'languagesTeachesIn' => $this->languagesTeachesIn->pluck('english_name'),
             'name' => $this->name,

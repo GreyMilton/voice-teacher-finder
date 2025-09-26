@@ -15,7 +15,7 @@ class InstrumentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('english_name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')

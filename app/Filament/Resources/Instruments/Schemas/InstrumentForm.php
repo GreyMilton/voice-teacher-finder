@@ -11,7 +11,7 @@ class InstrumentForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
+                TextInput::make('english_name')
                     ->required(),
             ]);
     }

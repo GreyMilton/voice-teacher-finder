@@ -91,7 +91,7 @@ test('teacher show receives all required teacher data', function () {
                 ->where('description', $teacher->description)
                 ->where('gender', $teacher->gender->getLabel())
                 ->where('gives_video_lessons', $teacher->gives_video_lessons)
-                ->where('instruments', $teacher->instruments->pluck('name'))
+                ->where('instruments', $teacher->instruments->pluck('english_name'))
                 ->where('languagesSung', $teacher->languagesSung->pluck('english_name'))
                 ->where('languagesTeachesIn', $teacher->languagesTeachesIn->pluck('english_name'))
                 ->where('name', $teacher->name)

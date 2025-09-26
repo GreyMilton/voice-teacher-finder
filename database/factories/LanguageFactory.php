@@ -15,15 +15,15 @@ class LanguageFactory extends Factory
      * @var array<array<string, string>>
      */
     private array $languages = [
-        ['english_name' => 'Danish', 'native_name' => 'Dansk'],
-        ['english_name' => 'Dutch', 'native_name' => 'Nederlands'],
-        ['english_name' => 'English', 'native_name' => 'English'],
-        ['english_name' => 'French', 'native_name' => 'Francais'],
-        ['english_name' => 'German', 'native_name' => 'Deutsch'],
-        ['english_name' => 'Italian', 'native_name' => 'Italiano'],
-        ['english_name' => 'Japanese', 'native_name' => 'Nihongo'],
-        ['english_name' => 'Portugese', 'native_name' => 'Portugues'],
-        ['english_name' => 'Spanish', 'native_name' => 'Espanol'],
+        ['english_name' => 'Danish'],
+        ['english_name' => 'Dutch'],
+        ['english_name' => 'English'],
+        ['english_name' => 'French'],
+        ['english_name' => 'German'],
+        ['english_name' => 'Italian'],
+        ['english_name' => 'Japanese'],
+        ['english_name' => 'Portugese'],
+        ['english_name' => 'Spanish'],
     ];
 
     /**
@@ -37,7 +37,6 @@ class LanguageFactory extends Factory
 
         return [
             'english_name' => $language['english_name'],
-            'native_name' => $language['native_name'],
         ];
     }
 }

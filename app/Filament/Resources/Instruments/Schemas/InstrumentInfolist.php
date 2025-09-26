@@ -11,7 +11,7 @@ class InstrumentInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
+                TextEntry::make('english_name'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

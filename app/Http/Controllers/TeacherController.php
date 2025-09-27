@@ -15,7 +15,7 @@ class TeacherController extends Controller
     public function index(): Response
     {
         return Inertia::render('TeacherIndex', [
-            'teachers' => TeacherResource::collection(Teacher::all()),
+            'teachers' => TeacherResource::collection(Teacher::visible()->get()),
         ]);
     }
 

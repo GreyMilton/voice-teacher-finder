@@ -9,13 +9,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
+ * @property string $geo_point
+ * @property string $iso_3_country_code
  * @property string $english_name
+ * @property int $region_id
+ * @property string $french_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Region $region
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachersFrom
  * @property-read int|null $teachers_from_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Teacher> $teachersResiding
  * @property-read int|null $teachers_residing_count
+ * @property-read mixed $title
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
  *
@@ -24,8 +30,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereEnglishName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereFrenchName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereGeoPoint($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereLocalName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereIso3CountryCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereRegionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory whereUpdatedAt($value)
  *
  * @mixin \Eloquent

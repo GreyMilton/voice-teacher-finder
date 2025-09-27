@@ -21,8 +21,6 @@ use Illuminate\Support\Carbon;
  * @property string|null $business_email
  * @property string|null $business_phone
  * @property string|null $business_website
- * @property int|null $territory_of_origin_id
- * @property int|null $territory_of_residence_id
  * @property string|null $description
  * @property Gender $gender
  * @property bool $gives_video_lessons
@@ -30,24 +28,25 @@ use Illuminate\Support\Carbon;
  * @property string|null $profile_image_path
  * @property string|null $qualification_string
  * @property bool $teaches_at_cvi
+ * @property int|null $territory_of_origin_id
+ * @property int|null $territory_of_residence_id
  * @property int|null $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read \App\Models\AuthorisationCohort|null $authorisationCohort
  * @property-read AuthorisationStatus $authorisation_status
- * @property-read AuthorisationStatus $authorisationStatus
- * @property-read \App\Models\Territory|null $territoryOfOrigin
- * @property-read \App\Models\Territory|null $territoryOfResidence
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Instrument> $instruments
  * @property-read int|null $instruments_count
  * @property-read bool $is_authorised
+ * @property-read bool $is_visible
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesSung
  * @property-read int|null $languages_sung_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesTeachesIn
  * @property-read int|null $languages_teaches_in_count
  * @property-read string|null $latest_training_date
- * @property-read string|null $latestTrainingDate
  * @property-read \App\Models\UpdateCohort|null $latestUpdateCohort
+ * @property-read \App\Models\Territory|null $territoryOfOrigin
+ * @property-read \App\Models\Territory|null $territoryOfResidence
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UpdateCohort> $updateCohorts
@@ -55,26 +54,27 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\User|null $user
  *
  * @method static \Database\Factories\TeacherFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereAuthorisationCohortId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereBusinessEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereBusinessPhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereBusinessWebsite($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereTerritoryOfOriginId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereTerritoryOfResidenceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereGender($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereGivesVideoLessons($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereProfileImagePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereQualificationString($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereTeachesAtCvi($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Teacher whereUserId($value)
+ * @method static Builder<static>|Teacher newModelQuery()
+ * @method static Builder<static>|Teacher newQuery()
+ * @method static Builder<static>|Teacher query()
+ * @method static Builder<static>|Teacher visible()
+ * @method static Builder<static>|Teacher whereAuthorisationCohortId($value)
+ * @method static Builder<static>|Teacher whereBusinessEmail($value)
+ * @method static Builder<static>|Teacher whereBusinessPhone($value)
+ * @method static Builder<static>|Teacher whereBusinessWebsite($value)
+ * @method static Builder<static>|Teacher whereCreatedAt($value)
+ * @method static Builder<static>|Teacher whereDescription($value)
+ * @method static Builder<static>|Teacher whereGender($value)
+ * @method static Builder<static>|Teacher whereGivesVideoLessons($value)
+ * @method static Builder<static>|Teacher whereId($value)
+ * @method static Builder<static>|Teacher whereName($value)
+ * @method static Builder<static>|Teacher whereProfileImagePath($value)
+ * @method static Builder<static>|Teacher whereQualificationString($value)
+ * @method static Builder<static>|Teacher whereTeachesAtCvi($value)
+ * @method static Builder<static>|Teacher whereTerritoryOfOriginId($value)
+ * @method static Builder<static>|Teacher whereTerritoryOfResidenceId($value)
+ * @method static Builder<static>|Teacher whereUpdatedAt($value)
+ * @method static Builder<static>|Teacher whereUserId($value)
  *
  * @mixin \Eloquent
  */

@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereEnglishName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereNativeName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Language whereUpdatedAt($value)
  *
  * @mixin \Eloquent

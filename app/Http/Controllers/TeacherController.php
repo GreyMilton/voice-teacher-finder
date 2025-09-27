@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -11,9 +12,11 @@ class TeacherController extends Controller
     /**
      * Display a list of teachers.
      */
-    public function index()
+    public function index(): Response
     {
-        return Inertia::render('TeacherIndex');
+        return Inertia::render('TeacherIndex', [
+            'teachers' => TeacherResource::collection(Teacher::all()),
+        ]);
     }
 
     /**

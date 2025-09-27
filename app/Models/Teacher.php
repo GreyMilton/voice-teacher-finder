@@ -183,7 +183,7 @@ class Teacher extends Model
     }
 
     /**
-     * Get whether the teacher's listing is publically visible and searchable.
+     * Get whether the teacher's listing is publicly visible and searchable.
      *
      * @return Attribute<bool, null>
      */

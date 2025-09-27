@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Teacher;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -8,24 +8,11 @@ Route::get('/', function () {
     return Inertia::render('HomePage');
 })->name('home');
 
-Route::get('/teachers', function () {
-    return Inertia::render('TeacherIndex');
-})->name('teacher.index');
+Route::get('/teachers', [TeacherController::class, 'index'])
+    ->name('teacher.index');
 
-Route::get('/teachers/{teacher}', function (Teacher $teacher) {
-    return Inertia::render('TeacherShow', [
-        'teacher' => $teacher->load([
-            'authorisationCohort',
-            'territoryOfOrigin',
-            'territoryOfResidence',
-            'instruments',
-            'languagesSung',
-            'languagesTeachesIn',
-            'tuitionLocations',
-            'updateCohorts',
-        ])->toResource(),
-    ]);
-})->name('teacher.show');
+Route::get('/teachers/{teacher}', [TeacherController::class, 'show'])
+    ->name('teacher.show');
 
 Route::get('/faqs', function () {
     return Inertia::render('FaqsPage');

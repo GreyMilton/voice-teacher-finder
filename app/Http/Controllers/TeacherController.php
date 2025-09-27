@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Teacher;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class TeacherController extends Controller
+{
+    /**
+     * Display a list of teachers.
+     */
+    public function index()
+    {
+        return Inertia::render('TeacherIndex');
+    }
+
+    /**
+     * Show the listing for a given teacher.
+     */
+    public function show(Teacher $teacher): Response
+    {
+        return Inertia::render('TeacherShow', [
+            'teacher' => $teacher->load([
+                'authorisationCohort',
+                'territoryOfOrigin',
+                'territoryOfResidence',
+                'instruments',
+                'languagesSung',
+                'languagesTeachesIn',
+                'tuitionLocations',
+                'updateCohorts',
+            ])->toResource(),
+        ]);
+    }
+}

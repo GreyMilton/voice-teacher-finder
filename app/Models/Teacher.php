@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Enums\AuthorisationStatus;
 use App\Enums\Gender;
+use App\Models\Scopes\VisibleTeacherScope;
 use Database\Factories\TeacherFactory;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -76,6 +78,7 @@ use Illuminate\Support\Carbon;
  *
  * @mixin \Eloquent
  */
+#[ScopedBy([VisibleTeacherScope::class])]
 class Teacher extends Model
 {
     /**

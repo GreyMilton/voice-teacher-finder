@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Enums\AuthorisationStatus;
 use App\Enums\Gender;
-use App\Models\Scopes\VisibleTeacherScope;
 use Database\Factories\TeacherFactory;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,7 +78,6 @@ use Illuminate\Support\Carbon;
  *
  * @mixin \Eloquent
  */
-#[ScopedBy([VisibleTeacherScope::class])]
 class Teacher extends Model
 {
     /**
@@ -191,6 +190,26 @@ class Teacher extends Model
     protected function isVisible(): Attribute
     {
         return Attribute::make(get: fn (): bool => $this->isAuthorised);
+    }
+
+    /**
+     * Scope a query to only include teachers permitted to be publicly visible.
+     *
+     * @param  Builder<Teacher>  $query
+     */
+    #[Scope]
+    protected function visible(Builder $query): void
+    {
+        $earliestValidDate = now()->subMonths(Teacher::MONTHS_VALIDITY);
+
+        $query->where(fn ($query) => $query
+            ->whereHas('authorisationCohort', fn ($q) => $q
+                ->where('authorisation_date', '>', $earliestValidDate)
+            )
+            ->orWhereHas('latestUpdateCohort', fn ($q) => $q
+                ->where('course_date', '>', $earliestValidDate)
+            )
+        );
     }
 
     /**

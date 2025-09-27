@@ -25,6 +25,9 @@ class TerritoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'english_name';
 
+    /**
+     * @return Builder<Territory>
+     */
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

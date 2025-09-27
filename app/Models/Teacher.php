@@ -86,7 +86,7 @@ class Teacher extends Model
     /**
      * The months of validity given to an authorisation or update.
      */
-    private const int MONTHS_VALIDITY = 36;
+    const int MONTHS_VALIDITY = 36;
 
     /**
      * The months of warning given to admins of an expiring authorisation / update.
@@ -178,6 +178,16 @@ class Teacher extends Model
                     || $this->authorisationStatus === AuthorisationStatus::Warning;
             }
         );
+    }
+
+    /**
+     * Get whether the teacher's listing is publically visible and searchable.
+     *
+     * @return Attribute<bool, null>
+     */
+    protected function isVisible(): Attribute
+    {
+        return Attribute::make(get: fn (): bool => $this->isAuthorised);
     }
 
     /**

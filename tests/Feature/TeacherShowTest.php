@@ -12,8 +12,10 @@ use Inertia\Testing\AssertableInertia as Assert;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-test('guests can visit the teacher show', function () {
-    $teacher = Teacher::factory()->create();
+test('guests can visit the teacher show for an authorised teacher', function () {
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort(['authorisation_date' => now()])
+        ->create();
 
     $this
         ->assertGuest()
@@ -21,8 +23,38 @@ test('guests can visit the teacher show', function () {
         ->assertStatus(200);
 });
 
-test('authenticated users can visit the teacher show', function () {
-    $teacher = Teacher::factory()->create();
+test('guests can visit the teacher show for an updated teacher', function () {
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort([
+            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+        ])
+        ->hasUpdateCohorts(['course_date' => now()->subMonths(1)])
+        ->create();
+
+    $this
+        ->assertGuest()
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(200);
+});
+
+test('authenticated users can visit the teacher show for an authorised teacher', function () {
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort(['authorisation_date' => now()])
+        ->create();
+
+    $this
+        ->actingAs(User::factory()->create())
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(200);
+});
+
+test('authenticated users can visit the teacher show for an updated teacher', function () {
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort([
+            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+        ])
+        ->hasUpdateCohorts(['course_date' => now()->subMonths(1)])
+        ->create();
 
     $this
         ->actingAs(User::factory()->create())
@@ -37,7 +69,7 @@ test('teacher show receives all required teacher data', function () {
         ->get();
 
     $teacher = Teacher::factory()
-        ->forAuthorisationCohort()
+        ->forAuthorisationCohort(['authorisation_date' => now()])
         ->hasUpdateCohorts(2)
         ->create([
             'territory_of_origin_id' => $territories->first()->id,
@@ -104,4 +136,39 @@ test('teacher show receives all required teacher data', function () {
                 ->where('updateCohorts', $teacher->updateCohorts->pluck('name'))
             )
         );
+});
+
+test('teacher show for a teacher that has not been authorised returns 404', function () {
+    $teacher = Teacher::factory()->create();
+
+    $this
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(404);
+});
+
+test('teacher show for teacher whose authorisation has expired returns 404', function () {
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort([
+            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+        ])
+        ->create();
+
+    $this
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(404);
+});
+
+test('teacher show for teacher whose latest update has expired returns 404', function () {
+    $teacher = Teacher::factory()
+        ->forAuthorisationCohort([
+            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+        ])
+        ->hasUpdateCohorts([
+            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+        ])
+        ->create();
+
+    $this
+        ->get(route('teacher.show', ['teacher' => $teacher]))
+        ->assertStatus(404);
 });

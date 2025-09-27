@@ -21,6 +21,10 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher): Response
     {
+        if (! $teacher->isVisible) {
+            abort(404);
+        }
+
         return Inertia::render('TeacherShow', [
             'teacher' => $teacher->load([
                 'authorisationCohort',

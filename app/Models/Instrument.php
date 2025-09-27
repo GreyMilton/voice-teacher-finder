@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument whereEnglishName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Instrument whereUpdatedAt($value)
  *
  * @mixin \Eloquent

@@ -166,7 +166,7 @@ class Teacher extends Model
     }
 
     /**
-     * Get whether the teacher is curently authorised to teach.
+     * Get whether the teacher is currently authorised to teach.
      *
      * @return Attribute<bool, null>
      */

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AuthorisationCohort;
+use App\Models\FrequentlyAskedQuestion;
 use App\Models\Instrument;
 use App\Models\Language;
 use App\Models\Teacher;
@@ -78,6 +79,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        FrequentlyAskedQuestion::factory(10)->create();
     }
 
     /**

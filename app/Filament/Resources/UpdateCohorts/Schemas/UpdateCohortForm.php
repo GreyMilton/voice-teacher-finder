@@ -15,7 +15,7 @@ class UpdateCohortForm
                 TextInput::make('name')
                     ->placeholder(now()->format('M, y'))
                     ->required(),
-                DatePicker::make('course_date')
+                DatePicker::make('cohort_date')
                     ->required(),
             ]);
     }

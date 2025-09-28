@@ -22,39 +22,39 @@ test('authenticated users can visit the teacher index', function () {
 test('authorised teachers are visible on the teacher index', function () {
     // Just authorised teacher.
     Teacher::factory()
-        ->forAuthorisationCohort(['authorisation_date' => now()])
+        ->forAuthorisationCohort(['cohort_date' => now()])
         ->create();
 
     // Recently updated teacher.
     Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
         ])
         ->hasUpdateCohorts([
-            'course_date' => now()->subMonths(1),
+            'cohort_date' => now()->subMonths(1),
         ])
         ->create();
 
     // Almost unauthorised teacher.
     Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
         ])
         ->hasUpdateCohorts([
-            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY - 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY - 1),
         ])
         ->create();
 
     // Teacher after second update.
     Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 3),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 3),
         ])
         ->hasUpdateCohorts([
-            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
         ])
         ->hasUpdateCohorts([
-            'course_date' => now()->subMonths(1),
+            'cohort_date' => now()->subMonths(1),
         ])
         ->create();
 
@@ -71,17 +71,17 @@ test('unauthorised teachers are hidden from the teacher index', function () {
     // Authorisation expired.
     Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
         ])
         ->create();
 
     // Updated authorisation expired.
     Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
         ])
         ->hasUpdateCohorts([
-            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
         ])
         ->create();
 

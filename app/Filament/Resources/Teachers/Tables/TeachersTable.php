@@ -37,7 +37,7 @@ class TeachersTable
 
                             return $query->whereHas('authorisationCohort',
                                 fn (Builder $query): Builder => $query
-                                    ->whereMonth('authorisation_date', $month)
+                                    ->whereMonth('cohort_date', $month)
                             );
                         } catch (InvalidFormatException $error) {
                             // If month cannot be parsed, do not modify query.
@@ -55,7 +55,7 @@ class TeachersTable
 
                             return $query->whereHas('latestUpdateCohort',
                                 fn (Builder $query): Builder => $query
-                                    ->whereMonth('course_date', $month)
+                                    ->whereMonth('cohort_date', $month)
                             );
                         } catch (InvalidFormatException $error) {
                             // If month cannot be parsed, do not modify query.
@@ -118,9 +118,9 @@ class TeachersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->searchable([
-                'authorisationCohort.authorisation_date',
+                'authorisationCohort.cohort_date',
                 'authorisationCohort.name',
-                'latestUpdateCohort.course_date',
+                'latestUpdateCohort.cohort_date',
                 'latestUpdateCohort.name',
             ])
             ->filters([

@@ -12,7 +12,7 @@ class UpdateCohortInfolist
         return $schema
             ->components([
                 TextEntry::make('name'),
-                TextEntry::make('course_date')
+                TextEntry::make('cohort_date')
                     ->date(),
                 TextEntry::make('created_at')
                     ->dateTime()

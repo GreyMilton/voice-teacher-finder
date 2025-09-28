@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
- * @property string $course_date
+ * @property string $cohort_date
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereCourseDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereCohortDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UpdateCohort whereName($value)
@@ -40,7 +40,7 @@ class UpdateCohort extends Model
      *
      * @var list<string>
      */
-    protected $fillable = ['course_date', 'name'];
+    protected $fillable = ['cohort_date', 'name'];
 
     /**
      * Get the teachers from the update cohort.

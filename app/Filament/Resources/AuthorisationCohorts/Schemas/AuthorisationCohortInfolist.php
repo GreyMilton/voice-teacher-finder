@@ -12,7 +12,7 @@ class AuthorisationCohortInfolist
         return $schema
             ->components([
                 TextEntry::make('name'),
-                TextEntry::make('authorisation_date')
+                TextEntry::make('cohort_date')
                     ->date(),
                 TextEntry::make('created_at')
                     ->dateTime()

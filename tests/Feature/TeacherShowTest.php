@@ -14,7 +14,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('guests can visit the teacher show for an authorised teacher', function () {
     $teacher = Teacher::factory()
-        ->forAuthorisationCohort(['authorisation_date' => now()])
+        ->forAuthorisationCohort(['cohort_date' => now()])
         ->create();
 
     $this
@@ -26,9 +26,9 @@ test('guests can visit the teacher show for an authorised teacher', function () 
 test('guests can visit the teacher show for an updated teacher', function () {
     $teacher = Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
         ])
-        ->hasUpdateCohorts(['course_date' => now()->subMonths(1)])
+        ->hasUpdateCohorts(['cohort_date' => now()->subMonths(1)])
         ->create();
 
     $this
@@ -39,7 +39,7 @@ test('guests can visit the teacher show for an updated teacher', function () {
 
 test('authenticated users can visit the teacher show for an authorised teacher', function () {
     $teacher = Teacher::factory()
-        ->forAuthorisationCohort(['authorisation_date' => now()])
+        ->forAuthorisationCohort(['cohort_date' => now()])
         ->create();
 
     $this
@@ -51,9 +51,9 @@ test('authenticated users can visit the teacher show for an authorised teacher',
 test('authenticated users can visit the teacher show for an updated teacher', function () {
     $teacher = Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
         ])
-        ->hasUpdateCohorts(['course_date' => now()->subMonths(1)])
+        ->hasUpdateCohorts(['cohort_date' => now()->subMonths(1)])
         ->create();
 
     $this
@@ -69,7 +69,7 @@ test('teacher show receives all required teacher data', function () {
         ->get();
 
     $teacher = Teacher::factory()
-        ->forAuthorisationCohort(['authorisation_date' => now()])
+        ->forAuthorisationCohort(['cohort_date' => now()])
         ->hasUpdateCohorts(2)
         ->create([
             'territory_of_origin_id' => $territories->first()->id,
@@ -149,7 +149,7 @@ test('teacher show for a teacher that has not been authorised returns 404', func
 test('teacher show for teacher whose authorisation has expired returns 404', function () {
     $teacher = Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
         ])
         ->create();
 
@@ -161,10 +161,10 @@ test('teacher show for teacher whose authorisation has expired returns 404', fun
 test('teacher show for teacher whose latest update has expired returns 404', function () {
     $teacher = Teacher::factory()
         ->forAuthorisationCohort([
-            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
         ])
         ->hasUpdateCohorts([
-            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
         ])
         ->create();
 

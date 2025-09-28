@@ -18,7 +18,7 @@ class AuthorisationCohortsTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('authorisation_date')
+                TextColumn::make('cohort_date')
                     ->date()
                     ->searchable()
                     ->sortable(),

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('update_cohorts', function (Blueprint $table) {
             $table->id();
-            $table->date('course_date');
+            $table->date('cohort_date');
             $table->date('name');
             $table->timestamps();
         });

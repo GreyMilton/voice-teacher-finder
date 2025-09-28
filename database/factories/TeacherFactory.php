@@ -24,7 +24,7 @@ class TeacherFactory extends Factory
      */
     public function definition(): array
     {
-        $qualifications = fake()->randomElements($this->qualifications, mt_rand(2, 4));
+        $qualifications = fake()->randomElements($this->qualifications, random_int(2, 4));
 
         return [
             // 'authorisation_cohort_id' => '',

@@ -15,7 +15,7 @@ class AuthorisationCohortForm
                 TextInput::make('name')
                     ->placeholder(now()->format('M, y'))
                     ->required(),
-                DatePicker::make('authorisation_date')
+                DatePicker::make('cohort_date')
                     ->required(),
             ]);
     }

@@ -204,10 +204,10 @@ class Teacher extends Model
 
         $query->where(fn ($query) => $query
             ->whereHas('authorisationCohort', fn ($q) => $q
-                ->where('authorisation_date', '>', $earliestValidDate)
+                ->where('cohort_date', '>', $earliestValidDate)
             )
             ->orWhereHas('latestUpdateCohort', fn ($q) => $q
-                ->where('course_date', '>', $earliestValidDate)
+                ->where('cohort_date', '>', $earliestValidDate)
             )
         );
     }
@@ -223,8 +223,8 @@ class Teacher extends Model
     {
         return Attribute::make(
             get: function (): ?string {
-                $authorisationDate = $this->authorisationCohort?->authorisation_date;
-                $latestUpdateDate = $this->latestUpdateCohort?->course_date;
+                $authorisationDate = $this->authorisationCohort?->cohort_date;
+                $latestUpdateDate = $this->latestUpdateCohort?->cohort_date;
 
                 if (! $authorisationDate && ! $latestUpdateDate) {
                     return null;
@@ -329,7 +329,7 @@ class Teacher extends Model
                 'update_cohort_id',
             )
             ->one()
-            ->ofMany('course_date', 'max');
+            ->ofMany('cohort_date', 'max');
     }
 
     /**

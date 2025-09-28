@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Factories\Traits\SetsCohortTimestamps;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -10,6 +11,9 @@ use Illuminate\Support\Carbon;
  */
 class AuthorisationCohortFactory extends Factory
 {
+    /** @use SetsCohortTimestamps<AuthorisationCohortFactory> */
+    use SetsCohortTimestamps;
+
     /**
      * Define the model's default state.
      *
@@ -20,7 +24,7 @@ class AuthorisationCohortFactory extends Factory
         $monthAndYear = fake()->unique()->date('M Y');
 
         return [
-            'authorisation_date' => Carbon::parse($monthAndYear)->format('Y-m-d'),
+            'cohort_date' => Carbon::parse($monthAndYear)->format('Y-m-d'),
             'name' => Carbon::parse($monthAndYear)->format('M y'),
         ];
     }

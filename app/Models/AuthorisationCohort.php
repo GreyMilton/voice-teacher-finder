@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property string $authorisation_date
+ * @property string $cohort_date
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereAuthorisationDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereCohortDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AuthorisationCohort whereName($value)
@@ -40,7 +40,7 @@ class AuthorisationCohort extends Model
      *
      * @var list<string>
      */
-    protected $fillable = ['authorisation_date', 'name'];
+    protected $fillable = ['cohort_date', 'name'];
 
     /**
      * Get the teachers from the authorisation cohort.

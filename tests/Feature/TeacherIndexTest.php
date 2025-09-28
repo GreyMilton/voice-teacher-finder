@@ -35,12 +35,35 @@ test('authorised teachers are visible on the teacher index', function () {
         ])
         ->create();
 
+    // Almost unauthorised teacher.
+    Teacher::factory()
+        ->forAuthorisationCohort([
+            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+        ])
+        ->hasUpdateCohorts([
+            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY - 1),
+        ])
+        ->create();
+
+    // Teacher after second update.
+    Teacher::factory()
+        ->forAuthorisationCohort([
+            'authorisation_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 3),
+        ])
+        ->hasUpdateCohorts([
+            'course_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
+        ])
+        ->hasUpdateCohorts([
+            'course_date' => now()->subMonths(1),
+        ])
+        ->create();
+
     $this
         ->get(route('teacher.index'))
         ->assertStatus(200)
         ->assertInertia(fn (Assert $page) => $page
             ->component('TeacherIndex')
-            ->has('teachers', 2)
+            ->has('teachers', 4)
         );
 });
 

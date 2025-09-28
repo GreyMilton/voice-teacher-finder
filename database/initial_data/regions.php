@@ -38,42 +38,41 @@ return [
     ],
 
     [
-        'id' => 6,
-        'continent_id' => 2,
-        'english_name' => 'Antarctica',
-        'created_at' => now(),
-        'updated_at' => now(),
-    ],
-
-    [
         'id' => 7,
-        'continent_id' => 3,
+        'continent_id' => 2,
         'english_name' => 'Caribbean',
         'created_at' => now(),
         'updated_at' => now(),
     ],
     [
         'id' => 8,
-        'continent_id' => 3,
+        'continent_id' => 2,
         'english_name' => 'Central America',
         'created_at' => now(),
         'updated_at' => now(),
     ],
     [
         'id' => 9,
-        'continent_id' => 3,
+        'continent_id' => 2,
         'english_name' => 'Northern America',
         'created_at' => now(),
         'updated_at' => now(),
     ],
     [
         'id' => 10,
-        'continent_id' => 3,
+        'continent_id' => 2,
         'english_name' => 'South America',
         'created_at' => now(),
         'updated_at' => now(),
     ],
 
+    [
+        'id' => 6,
+        'continent_id' => 3,
+        'english_name' => 'Antarctica',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
     [
         'id' => 11,
         'continent_id' => 4,

@@ -38,6 +38,12 @@ export interface User {
 
 export type BreadcrumbItemType = BreadcrumbItem;
 
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
+}
+
 export interface Teacher {
   id: number;
   authorisationCohort: string;

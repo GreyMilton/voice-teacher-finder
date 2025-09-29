@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\TeacherController;
+use App\Http\Resources\FaqResource;
+use App\Models\Faq;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,7 +17,11 @@ Route::get('/teachers/{teacher}', [TeacherController::class, 'show'])
     ->name('teacher.show');
 
 Route::get('/faqs', function () {
-    return Inertia::render('FaqsPage');
+    return Inertia::render('FaqsPage', [
+        'faqs' => FaqResource::collection(
+            Faq::whereIsVisibleOnFaqsPage(true)->get(),
+        ),
+    ]);
 })->name('faqs');
 
 Route::get('/contact', function () {

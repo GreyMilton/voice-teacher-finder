@@ -7,16 +7,14 @@ use Inertia\Testing\AssertableInertia as Assert;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('guests can visit the teacher index', function () {
-    $response = $this->get(route('teacher.index'));
-    $response->assertStatus(200);
+    $this->get(route('teacher.index'))
+        ->assertStatus(200);
 });
 
 test('authenticated users can visit the teacher index', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
-
-    $response = $this->get(route('teacher.index'));
-    $response->assertStatus(200);
+    $this->actingAs(User::factory()->create())
+        ->get(route('teacher.index'))
+        ->assertStatus(200);
 });
 
 test('authorised teachers are visible on the teacher index', function () {

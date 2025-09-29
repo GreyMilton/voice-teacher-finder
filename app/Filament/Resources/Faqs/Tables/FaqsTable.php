@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class FaqsTable
@@ -22,6 +23,9 @@ class FaqsTable
                 TextColumn::make('answer')
                     ->limit(45)
                     ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                ToggleColumn::make('is_visible_on_faqs_page')
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('created_at')

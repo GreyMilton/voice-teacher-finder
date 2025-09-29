@@ -19,6 +19,7 @@ class FaqFactory extends Factory
         return [
             'question' => fake()->unique()->sentence(),
             'answer' => fake()->unique()->paragraph(),
+            'is_visible_on_faqs_page' => fake()->boolean(),
         ];
     }
 }

@@ -8,10 +8,10 @@ const { teachers } = defineProps<{ teachers: Teacher[] }>();
   <h1>Find a Teacher</h1>
   <ul>
     <li
-      v-for="teacher in teachers"
-      :key="teacher.id"
+      v-for="{ id, name } in teachers"
+      :key="id"
     >
-      {{ teacher.name }}
+      {{ name }}
     </li>
   </ul>
 </template>

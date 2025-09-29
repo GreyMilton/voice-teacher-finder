@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Resources\FrequentlyAskedQuestions\Schemas;
+namespace App\Filament\Resources\Faqs\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
-class FrequentlyAskedQuestionInfolist
+class FaqInfolist
 {
     public static function configure(Schema $schema): Schema
     {

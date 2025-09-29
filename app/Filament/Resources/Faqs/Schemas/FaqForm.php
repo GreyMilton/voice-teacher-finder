@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\FrequentlyAskedQuestions\Schemas;
+namespace App\Filament\Resources\Faqs\Schemas;
 
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class FrequentlyAskedQuestionForm
+class FaqForm
 {
     public static function configure(Schema $schema): Schema
     {

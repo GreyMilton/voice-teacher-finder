@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FrequentlyAskedQuestion extends Model
+class Faq extends Model
 {
     /**
-     * @use HasFactory<FrequentlyAskedQuestionFactory>
+     * @use HasFactory<FaqFactory>
      */
     use HasFactory;
 }

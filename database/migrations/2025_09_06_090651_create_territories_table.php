@@ -25,8 +25,11 @@ return new class extends Migration
         });
 
         $territories = require database_path('initial_data/territories.php');
+        $territoriesInAlphabeticalOrder = collect($territories)
+            ->sortBy('english_name')
+            ->values();
 
-        foreach ($territories as $territory) {
+        foreach ($territoriesInAlphabeticalOrder as $territory) {
             Territory::create($territory);
         }
     }

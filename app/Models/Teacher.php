@@ -149,8 +149,9 @@ class Teacher extends Model
     protected function isAlmostAuthorisationExpired(): Attribute
     {
         return Attribute::make(get: function (): bool {
-            $expirationDate = $this->latestCohort
-                ->completion_date
+            $expirationDate = $this
+                ->latestCohort
+                ?->completion_date
                 ->addMonths(Cohort::MONTHS_VALIDITY);
 
             return $expirationDate > now()

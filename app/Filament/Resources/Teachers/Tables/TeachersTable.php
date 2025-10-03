@@ -24,7 +24,7 @@ class TeachersTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                IconColumn::make('isAlmostAuthorisationExpired')
+                IconColumn::make('isNearAuthorisationExpiry')
                     ->boolean()
                     ->label('Nearing expiry')
                     ->toggleable(),

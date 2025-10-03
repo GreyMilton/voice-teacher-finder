@@ -49,7 +49,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $initial_authorisation_cohorts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Instrument> $instruments
  * @property-read int|null $instruments_count
- * @property-read bool $is_almost_authorisation_expired
+ * @property-read bool $is_near_authorisation_expiry
  * @property-read bool $is_authorised
  * @property-read bool $is_visible
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesSung
@@ -146,9 +146,13 @@ class Teacher extends Model
      *
      * @return Attribute<bool, null>
      */
-    protected function isAlmostAuthorisationExpired(): Attribute
+    protected function isNearAuthorisationExpiry(): Attribute
     {
         return Attribute::make(get: function (): bool {
+            if (! $this->isAuthorised) {
+                return false;
+            }
+
             $expirationDate = $this
                 ->latestCohort
                 ?->completion_date

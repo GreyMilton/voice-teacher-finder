@@ -80,6 +80,9 @@ class DatabaseSeeder extends Seeder
                 }
             });
 
+        // Some unauthorised teachers.
+        Teacher::factory(10)->create();
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

@@ -51,7 +51,6 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $instruments_count
  * @property-read bool $is_near_authorisation_expiry
  * @property-read bool $is_authorised
- * @property-read bool $is_visible
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesSung
  * @property-read int|null $languages_sung_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesTeachesIn
@@ -73,7 +72,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Teacher orderByFirstAuthorisationCohort(string $column, string $direction = 'asc')
  * @method static Builder<static>|Teacher orderByLatestUpdateCohort(string $column, string $direction = 'asc')
  * @method static Builder<static>|Teacher query()
- * @method static Builder<static>|Teacher visible()
+ * @method static Builder<static>|Teacher unauthorised()
+ * @method static Builder<static>|Teacher authorised()
+ * @method static Builder<static>|Teacher expired()
  * @method static Builder<static>|Teacher whereBusinessEmail($value)
  * @method static Builder<static>|Teacher whereBusinessPhone($value)
  * @method static Builder<static>|Teacher whereBusinessWebsite($value)
@@ -171,30 +172,76 @@ class Teacher extends Model
     protected function isAuthorised(): Attribute
     {
         return Attribute::make(get: function (): bool {
-            return $this->currentAuthorisationStatus->value === AuthorisationStatus::Authorised;
+            return $this->currentAuthorisationStatus?->value === AuthorisationStatus::Authorised;
         });
     }
 
     /**
-     * Get whether the teacher's listing is publicly visible and searchable.
-     *
-     * @return Attribute<bool, null>
-     */
-    protected function isVisible(): Attribute
-    {
-        return Attribute::make(get: fn (): bool => $this->isAuthorised);
-    }
-
-    /**
-     * Scope a query to only include teachers permitted to be publicly visible.
+     * Scope a query to only include unauthorised teachers.
      *
      * @param  Builder<Teacher>  $query
      */
     #[Scope]
-    protected function visible(Builder $query): void
+    protected function unauthorised(Builder $query): void
+    {
+        $query->whereHas('currentAuthorisationStatus', fn ($query) => $query
+            ->where('value', AuthorisationStatus::Unauthorised)
+        );
+    }
+
+    /**
+     * Scope a query to only include authorised teachers.
+     *
+     * @param  Builder<Teacher>  $query
+     */
+    #[Scope]
+    protected function authorised(Builder $query): void
     {
         $query->whereHas('currentAuthorisationStatus', fn ($query) => $query
             ->where('value', AuthorisationStatus::Authorised)
+        );
+    }
+
+    /**
+     * Scope a query to only include authorised teachers that are near their expiry.
+     *
+     * @param  Builder<Teacher>  $query
+     */
+    #[Scope]
+    protected function nearAuthorisationExpiry(Builder $query): void
+    {
+        $query->where(fn ($query) => $query
+            ->whereHas('currentAuthorisationStatus', fn ($query) => $query
+                ->where('value', AuthorisationStatus::Authorised)
+            )
+            ->whereHas('latestCohort', fn ($query) => $query
+                ->where(
+                    'completion_date',
+                    '>',
+                    // oldest completion date possible for validity
+                    now()->subMonths(Cohort::MONTHS_VALIDITY),
+                )
+                ->where(
+                    'completion_date',
+                    '<',
+                    // latest completion date possible for warning
+                    now()->subMonths(Cohort::MONTHS_VALIDITY)
+                        ->addMonths(Cohort::MONTHS_WARNING),
+                )
+            )
+        );
+    }
+
+    /**
+     * Scope a query to only include teachers with expired authorisation.
+     *
+     * @param  Builder<Teacher>  $query
+     */
+    #[Scope]
+    protected function authorisationExpired(Builder $query): void
+    {
+        $query->whereHas('currentAuthorisationStatus', fn ($query) => $query
+            ->where('value', AuthorisationStatus::Expired)
         );
     }
 

@@ -24,18 +24,26 @@ class ListTeachers extends ListRecords
     {
         return [
             'all' => Tab::make(),
-            'visible' => Tab::make()
+            'unauthorised' => Tab::make()
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Teacher> $query */
-                    $query->visible();
+                    $query->unauthorised();
                 }),
-            'hidden' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query
-                    ->whereNot(function (Builder $query) {
-                        /** @var Builder<Teacher> $query */
-                        $query->visible();
-                    })
-                ),
+            'authorised' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    /** @var Builder<Teacher> $query */
+                    $query->authorised();
+                }),
+            'near expiry' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    /** @var Builder<Teacher> $query */
+                    $query->nearAuthorisationExpiry();
+                }),
+            'expired' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    /** @var Builder<Teacher> $query */
+                    $query->authorisationExpired();
+                }),
         ];
     }
 }

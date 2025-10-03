@@ -15,7 +15,7 @@ class TeacherController extends Controller
     public function index(): Response
     {
         return Inertia::render('TeacherIndex', [
-            'teachers' => TeacherResource::collection(Teacher::visible()->get()),
+            'teachers' => TeacherResource::collection(Teacher::authorised()->get()),
         ]);
     }
 
@@ -24,7 +24,7 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher): Response
     {
-        if (! $teacher->isVisible) {
+        if (! $teacher->isAuthorised) {
             abort(404);
         }
 

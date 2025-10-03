@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teacher_update_cohort', function (Blueprint $table) {
+        Schema::create('cohorts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->foreignId('update_cohort_id')
-                ->constrained()
-                ->cascadeOnDelete();
+            $table->string('cohort_type');
+            $table->date('completion_date');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teacher_update_cohort');
+        Schema::dropIfExists('cohorts');
     }
 };

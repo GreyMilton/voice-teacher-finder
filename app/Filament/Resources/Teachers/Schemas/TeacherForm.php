@@ -18,8 +18,6 @@ class TeacherForm
             ->components([
                 TextInput::make('name')
                     ->required(),
-                Select::make('authorisation_cohort_id')
-                    ->relationship('authorisationCohort', 'name'),
                 Toggle::make('teaches_at_cvi')
                     ->required(),
                 Select::make('territory_of_residence_id')

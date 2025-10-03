@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Teachers\Tables;
 
+use App\Models\Teacher;
 use Carbon\Exceptions\InvalidFormatException;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -23,28 +24,41 @@ class TeachersTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
+                IconColumn::make('isAlmostAuthorisationExpired')
+                    ->boolean()
+                    ->label('Nearing expiry')
+                    ->toggleable(),
                 IconColumn::make('isAuthorised')
                     ->boolean()
                     ->toggleable(),
-                TextColumn::make('authorisationStatus')
+                TextColumn::make('currentAuthorisationStatus.value')
                     ->badge()
+                    ->label('Authorisation status')
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        /** @var Builder<Teacher> $query */
+                        return $query->orderByCurrentAuthorisationStatus($direction);
+                    })
                     ->toggleable(),
-                TextColumn::make('authorisationCohort.name')
+                TextColumn::make('firstAuthorisationCohort.name')
+                    ->label('First authorisation')
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         try {
                             // If month can be parsed, search by month of Authorisation Cohort.
                             $month = Carbon::parse($search)->format('m');
 
-                            return $query->whereHas('authorisationCohort',
+                            return $query->whereHas('firstAuthorisationCohort',
                                 fn (Builder $query): Builder => $query
-                                    ->whereMonth('cohort_date', $month)
+                                    ->whereMonth('completion_date', $month)
                             );
                         } catch (InvalidFormatException $error) {
                             // If month cannot be parsed, do not modify query.
                             return $query;
                         }
                     })
-                    ->sortable()
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        /** @var Builder<Teacher> $query */
+                        return $query->orderByFirstAuthorisationCohort('name', $direction);
+                    })
                     ->toggleable(),
                 TextColumn::make('latestUpdateCohort.name')
                     ->label('Latest update')
@@ -55,12 +69,16 @@ class TeachersTable
 
                             return $query->whereHas('latestUpdateCohort',
                                 fn (Builder $query): Builder => $query
-                                    ->whereMonth('cohort_date', $month)
+                                    ->whereMonth('completion_date', $month)
                             );
                         } catch (InvalidFormatException $error) {
                             // If month cannot be parsed, do not modify query.
                             return $query;
                         }
+                    })
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        /** @var Builder<Teacher> $query */
+                        return $query->orderByLatestUpdateCohort('name', $direction);
                     })
                     ->toggleable(),
                 IconColumn::make('teaches_at_cvi')
@@ -118,9 +136,9 @@ class TeachersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->searchable([
-                'authorisationCohort.cohort_date',
-                'authorisationCohort.name',
-                'latestUpdateCohort.cohort_date',
+                'firstAuthorisationCohort.completion_date',
+                'firstAuthorisationCohort.name',
+                'latestUpdateCohort.completion_date',
                 'latestUpdateCohort.name',
             ])
             ->filters([

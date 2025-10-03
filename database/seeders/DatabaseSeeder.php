@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\AuthorisationCohort;
+use App\Enums\CohortType;
+use App\Models\AuthorisationStatus;
+use App\Models\Cohort;
 use App\Models\Faq;
 use App\Models\Instrument;
 use App\Models\Language;
 use App\Models\Teacher;
 use App\Models\Territory;
 use App\Models\TuitionLocation;
-use App\Models\UpdateCohort;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -41,27 +42,31 @@ class DatabaseSeeder extends Seeder
         });
 
         $firstCohortTimestamp = now()->subYears(20)->timestamp;
-        AuthorisationCohort::factory()
+        Cohort::factory()
+            ->initialAuthorisation()
             ->date($firstCohortTimestamp)
             ->create();
-        AuthorisationCohort::factory(10)
+        Cohort::factory(10)
+            ->initialAuthorisation()
             ->between($firstCohortTimestamp, now()->subMonths(6)->timestamp)
             ->create();
-        AuthorisationCohort::factory()
+        Cohort::factory()
+            ->initialAuthorisation()
             ->after(now()->subMonths(6)->timestamp)
             ->create();
-        $authorisationCohorts = AuthorisationCohort::orderBy('cohort_date', 'asc')->get();
+        $authorisationCohorts = Cohort::orderBy('completion_date', 'asc')->get();
 
         $authorisationCohorts->each(
             function (
-                AuthorisationCohort $authorisationCohort,
+                Cohort $authorisationCohort,
             ) use (
                 $instruments,
                 $languages,
                 $territories,
             ) {
-                $start = Carbon::parse($authorisationCohort->cohort_date)->timestamp;
-                UpdateCohort::factory(2)
+                $start = Carbon::parse($authorisationCohort->completion_date)->timestamp;
+                Cohort::factory(2)
+                    ->updateCohort()
                     ->after($start)
                     ->create();
 
@@ -91,7 +96,7 @@ class DatabaseSeeder extends Seeder
      * @param  Collection<int, Territory>  $territories
      */
     private function seedTeacher(
-        AuthorisationCohort $authorisationCohort,
+        Cohort $authorisationCohort,
         Collection $instruments,
         Collection $languages,
         Collection $territories,
@@ -100,7 +105,6 @@ class DatabaseSeeder extends Seeder
             ->has(
                 Teacher::factory()
                     ->state(fn (array $attributes, ?Model $model) => [
-                        'authorisation_cohort_id' => $authorisationCohort->id,
                         'name' => $model instanceof User ? $model->name : '',
                         'territory_of_origin_id' => $territories->random()->id,
                         'territory_of_residence_id' => $territories->random()->id,
@@ -123,11 +127,28 @@ class DatabaseSeeder extends Seeder
             ->sync($languages->random(random_int(1, 3)));
         $teacher->tuitionLocations()
             ->sync($tuitionLocations);
-        $teacher->updateCohorts()->sync(
-            UpdateCohort::where('cohort_date', '>', $authorisationCohort->cohort_date)
-                ->inRandomOrder()
-                ->limit(random_int(1, 3))
-                ->get()
-        );
+        $cohorts = Cohort::whereCohortType(CohortType::Update)
+            ->where('completion_date', '>', $authorisationCohort->completion_date)
+            ->inRandomOrder()
+            ->limit(random_int(1, 3))
+            ->get();
+        $cohorts->prepend($authorisationCohort);
+        $teacher->cohorts()->sync($cohorts);
+
+        if ($teacher->latestCohort->completion_date >= now()->subMonths(Cohort::MONTHS_VALIDITY)) {
+            $teacher->authorisationStatuses()->create(
+                AuthorisationStatus::factory()
+                    ->authorised()
+                    ->make()
+                    ->toArray()
+            );
+        } elseif ($teacher->latestCohort->completion_date < now()->subMonths(Cohort::MONTHS_VALIDITY)) {
+            $teacher->authorisationStatuses()->create(
+                AuthorisationStatus::factory()
+                    ->expired()
+                    ->make()
+                    ->toArray()
+            );
+        }
     }
 }

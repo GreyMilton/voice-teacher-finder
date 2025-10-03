@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cohort;
 use App\Models\Teacher;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -17,42 +18,97 @@ test('authenticated users can visit the teacher index', function () {
         ->assertStatus(200);
 });
 
+test('unauthorised teachers are hidden from the teacher index', function () {
+    Teacher::factory(3)->create();
+
+    $this
+        ->get(route('teacher.index'))
+        ->assertStatus(200)
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('TeacherIndex')
+            ->has('teachers', 0)
+        );
+});
+
 test('authorised teachers are visible on the teacher index', function () {
     // Just authorised teacher.
     Teacher::factory()
-        ->forAuthorisationCohort(['cohort_date' => now()])
+        ->authorised()
+        ->has(
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->timestamp)
+        )
         ->create();
 
     // Recently updated teacher.
     Teacher::factory()
-        ->forAuthorisationCohort([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
-        ])
-        ->hasUpdateCohorts([
-            'cohort_date' => now()->subMonths(1),
+        ->authorised()
+        ->hasAttached([
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->create(),
+            Cohort::factory()
+                ->updateCohort()
+                ->date(now()->subMonths(1)->timestamp)
+                ->create(),
         ])
         ->create();
 
     // Almost unauthorised teacher.
     Teacher::factory()
-        ->forAuthorisationCohort([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
-        ])
-        ->hasUpdateCohorts([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY - 1),
+        ->authorised()
+        ->hasAttached([
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->create(),
+            Cohort::factory()
+                ->updateCohort()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY - 1)->timestamp)
+                ->create(),
         ])
         ->create();
 
     // Teacher after second update.
     Teacher::factory()
-        ->forAuthorisationCohort([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 3),
+        ->authorised()
+        ->hasAttached([
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+                ->create(),
+            Cohort::factory()
+                ->updateCohort()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->create(),
+            Cohort::factory()
+                ->updateCohort()
+                ->date(now()->subMonths(1)->timestamp)
+                ->create(),
         ])
-        ->hasUpdateCohorts([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
-        ])
-        ->hasUpdateCohorts([
-            'cohort_date' => now()->subMonths(1),
+        ->create();
+
+    // Authorised teacher with no cohorts (e.g. manually authorised by admin).
+    Teacher::factory()
+        ->authorised()
+        ->create();
+
+    // Authorised teacher past cohort expiry (e.g. manually authorised by admin).
+    Teacher::factory()
+        ->authorised()
+        ->expired()
+        ->authorised()
+        ->hasAttached([
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+                ->create(),
+            Cohort::factory()
+                ->updateCohort()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->create(),
         ])
         ->create();
 
@@ -61,25 +117,46 @@ test('authorised teachers are visible on the teacher index', function () {
         ->assertStatus(200)
         ->assertInertia(fn (Assert $page) => $page
             ->component('TeacherIndex')
-            ->has('teachers', 4)
+            ->has('teachers', 6)
         );
 });
 
-test('unauthorised teachers are hidden from the teacher index', function () {
-    // Authorisation expired.
+test('expired authorisation teachers are hidden from the teacher index', function () {
+    // Authorisation just expired.
     Teacher::factory()
-        ->forAuthorisationCohort([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
-        ])
+        ->authorised()
+        ->expired()
+        ->has(
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY)->timestamp)
+        )
+        ->create();
+
+    // Authorisation expired some time ago.
+    Teacher::factory()
+        ->authorised()
+        ->expired()
+        ->has(
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+        )
         ->create();
 
     // Updated authorisation expired.
     Teacher::factory()
-        ->forAuthorisationCohort([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY * 2),
-        ])
-        ->hasUpdateCohorts([
-            'cohort_date' => now()->subMonths(Teacher::MONTHS_VALIDITY + 1),
+        ->authorised()
+        ->expired()
+        ->hasAttached([
+            Cohort::factory()
+                ->initialAuthorisation()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->create(),
+            Cohort::factory()
+                ->updateCohort()
+                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY + 1)->timestamp)
+                ->create(),
         ])
         ->create();
 

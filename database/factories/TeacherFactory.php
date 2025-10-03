@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Enums\Gender;
+use App\Models\AuthorisationStatus;
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +29,7 @@ class TeacherFactory extends Factory
         $qualifications = fake()->randomElements($this->qualifications, random_int(2, 4));
 
         return [
-            // 'authorisation_cohort_id' => '',
+            // 'authorisation_status' => '',
             'business_email' => fake()->email(),
             'business_phone' => fake()->phoneNumber(),
             'business_website' => fake()->url(),
@@ -42,5 +44,54 @@ class TeacherFactory extends Factory
             'teaches_at_cvi' => fake()->boolean(),
             // 'user_id' => '',
         ];
+    }
+
+    /**
+     * Configure the model factory.
+     */
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Teacher $teacher) {
+            // create an authorisation status of unauthorised
+            $teacher->authorisationStatuses()->create(
+                AuthorisationStatus::factory()
+                    ->make()
+                    ->toArray()
+            );
+        });
+    }
+
+    /**
+     * Indicate that the teacher has the status 'Authorised'.
+     *
+     * @return Factory<Teacher>
+     */
+    public function authorised(): Factory
+    {
+        return $this->afterCreating(function (Teacher $teacher) {
+            $teacher->authorisationStatuses()->create(
+                AuthorisationStatus::factory()
+                    ->authorised()
+                    ->make()
+                    ->toArray()
+            );
+        });
+    }
+
+    /**
+     * Indicate that the teacher has the status 'Expired'.
+     *
+     * @return Factory<Teacher>
+     */
+    public function expired(): Factory
+    {
+        return $this->afterCreating(function (Teacher $teacher) {
+            $teacher->authorisationStatuses()->create(
+                AuthorisationStatus::factory()
+                    ->expired()
+                    ->make()
+                    ->toArray()
+            );
+        });
     }
 }

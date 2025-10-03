@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\AuthorisationStatus;
+use App\Enums\CohortType;
 use App\Enums\Gender;
+use App\Models\AuthorisationStatus as ModelsAuthorisationStatus;
 use Database\Factories\TeacherFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,12 +14,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property int|null $authorisation_cohort_id
  * @property string|null $business_email
  * @property string|null $business_phone
  * @property string|null $business_website
@@ -33,32 +37,43 @@ use Illuminate\Support\Carbon;
  * @property int|null $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\AuthorisationCohort|null $authorisationCohort
- * @property-read AuthorisationStatus $authorisation_status
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ModelsAuthorisationStatus> $authorisationStatuses
+ * @property-read int|null $authorisation_statuses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cohort> $cohorts
+ * @property-read int|null $cohorts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cohort> $cohortsHasManyThrough
+ * @property-read int|null $cohorts_has_many_through_count
+ * @property-read ModelsAuthorisationStatus|null $currentAuthorisationStatus
+ * @property-read \App\Models\Cohort|null $firstAuthorisationCohort
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cohort> $initialAuthorisationCohorts
+ * @property-read int|null $initial_authorisation_cohorts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Instrument> $instruments
  * @property-read int|null $instruments_count
+ * @property-read bool $is_almost_authorisation_expired
  * @property-read bool $is_authorised
  * @property-read bool $is_visible
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesSung
  * @property-read int|null $languages_sung_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesTeachesIn
  * @property-read int|null $languages_teaches_in_count
- * @property-read string|null $latest_training_date
- * @property-read \App\Models\UpdateCohort|null $latestUpdateCohort
+ * @property-read \App\Models\Cohort|null $latestCohort
+ * @property-read \App\Models\Cohort|null $latestUpdateCohort
  * @property-read \App\Models\Territory|null $territoryOfOrigin
  * @property-read \App\Models\Territory|null $territoryOfResidence
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UpdateCohort> $updateCohorts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cohort> $updateCohorts
  * @property-read int|null $update_cohorts_count
  * @property-read \App\Models\User|null $user
  *
  * @method static \Database\Factories\TeacherFactory factory($count = null, $state = [])
  * @method static Builder<static>|Teacher newModelQuery()
  * @method static Builder<static>|Teacher newQuery()
+ * @method static Builder<static>|Teacher orderByCurrentAuthorisationStatus(string $direction = 'asc')
+ * @method static Builder<static>|Teacher orderByFirstAuthorisationCohort(string $column, string $direction = 'asc')
+ * @method static Builder<static>|Teacher orderByLatestUpdateCohort(string $column, string $direction = 'asc')
  * @method static Builder<static>|Teacher query()
  * @method static Builder<static>|Teacher visible()
- * @method static Builder<static>|Teacher whereAuthorisationCohortId($value)
  * @method static Builder<static>|Teacher whereBusinessEmail($value)
  * @method static Builder<static>|Teacher whereBusinessPhone($value)
  * @method static Builder<static>|Teacher whereBusinessWebsite($value)
@@ -86,22 +101,11 @@ class Teacher extends Model
     use HasFactory;
 
     /**
-     * The months of validity given to an authorisation or update.
-     */
-    const int MONTHS_VALIDITY = 36;
-
-    /**
-     * The months of warning given to admins of an expiring authorisation / update.
-     */
-    private const int MONTHS_WARNING = 6;
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'authorisation_cohort_id',
         'business_email',
         'business_phone',
         'business_website',
@@ -138,33 +142,20 @@ class Teacher extends Model
     }
 
     /**
-     * Get the teacher's authorisation status.
+     * Get whether the teacher's authorisation is almost expired.
      *
-     * @return Attribute<AuthorisationStatus, null>
+     * @return Attribute<bool, null>
      */
-    protected function authorisationStatus(): Attribute
+    protected function isAlmostAuthorisationExpired(): Attribute
     {
-        return Attribute::make(
-            get: function (): AuthorisationStatus {
-                if (! $this->latestTrainingDate) {
-                    return AuthorisationStatus::Unauthorised;
-                }
+        return Attribute::make(get: function (): bool {
+            $expirationDate = $this->latestCohort
+                ->completion_date
+                ->addMonths(Cohort::MONTHS_VALIDITY);
 
-                $nextUpdate = Carbon::parse(
-                    $this->latestTrainingDate,
-                )->addMonths(self::MONTHS_VALIDITY);
-
-                if ($nextUpdate < now()) {
-                    return AuthorisationStatus::Unauthorised;
-                }
-
-                if ($nextUpdate < now()->addMonths(self::MONTHS_WARNING)) {
-                    return AuthorisationStatus::Warning;
-                }
-
-                return AuthorisationStatus::Authorised;
-            },
-        );
+            return $expirationDate > now()
+                && $expirationDate < now()->addMonths(Cohort::MONTHS_WARNING);
+        });
     }
 
     /**
@@ -174,12 +165,9 @@ class Teacher extends Model
      */
     protected function isAuthorised(): Attribute
     {
-        return Attribute::make(
-            get: function (): bool {
-                return $this->authorisationStatus === AuthorisationStatus::Authorised
-                    || $this->authorisationStatus === AuthorisationStatus::Warning;
-            }
-        );
+        return Attribute::make(get: function (): bool {
+            return $this->currentAuthorisationStatus->value === AuthorisationStatus::Authorised;
+        });
     }
 
     /**
@@ -200,59 +188,92 @@ class Teacher extends Model
     #[Scope]
     protected function visible(Builder $query): void
     {
-        $earliestValidDate = now()->subMonths(Teacher::MONTHS_VALIDITY);
-
-        $query->where(fn ($query) => $query
-            ->whereHas('authorisationCohort', fn ($q) => $q
-                ->where('cohort_date', '>', $earliestValidDate)
-            )
-            ->orWhereHas('latestUpdateCohort', fn ($q) => $q
-                ->where('cohort_date', '>', $earliestValidDate)
-            )
+        $query->whereHas('currentAuthorisationStatus', fn ($query) => $query
+            ->where('value', AuthorisationStatus::Authorised)
         );
     }
 
     /**
-     * Get the teacher's latest training date from the later of:
-     * - AuthorisationStatus date
-     * - Latest update cohort date
+     * Order teachers by a column on their first authorisation cohort.
      *
-     * @return Attribute<?string, null>
+     * @param  Builder<Teacher>  $query
+     * @return Builder<Teacher>
      */
-    protected function latestTrainingDate(): Attribute
-    {
-        return Attribute::make(
-            get: function (): ?string {
-                $authorisationDate = $this->authorisationCohort?->cohort_date;
-                $latestUpdateDate = $this->latestUpdateCohort?->cohort_date;
-
-                if (! $authorisationDate && ! $latestUpdateDate) {
-                    return null;
-                }
-
-                if (! $latestUpdateDate) {
-                    return $authorisationDate;
-                }
-
-                if (! $authorisationDate) {
-                    return $latestUpdateDate;
-                }
-
-                return $authorisationDate > $latestUpdateDate
-                    ? $authorisationDate
-                    : $latestUpdateDate;
-            },
+    #[Scope]
+    protected function orderByFirstAuthorisationCohort(
+        Builder $query,
+        string $column,
+        string $direction = 'asc',
+    ): Builder {
+        return $query->orderBy(
+            Cohort::select("cohorts.$column")
+                ->join('cohort_teacher', 'cohort_teacher.cohort_id', '=', 'cohorts.id')
+                ->whereColumn('cohort_teacher.teacher_id', 'teachers.id')
+                ->where('cohorts.cohort_type', CohortType::InitialAuthorisation)
+                ->orderBy('cohorts.completion_date', 'asc')
+                ->limit(1),
+            $direction
         );
     }
 
     /**
-     * Get the teacher's authorisation cohort.
+     * Order teachers by a column on their latest update cohort.
      *
-     * @return BelongsTo<AuthorisationCohort, $this>
+     * @param  Builder<Teacher>  $query
+     * @return Builder<Teacher>
      */
-    public function authorisationCohort(): BelongsTo
+    #[Scope]
+    protected function orderByLatestUpdateCohort(
+        Builder $query,
+        string $column,
+        string $direction = 'asc',
+    ): Builder {
+        return $query->orderBy(
+            Cohort::select("cohorts.$column")
+                ->join('cohort_teacher', 'cohort_teacher.cohort_id', '=', 'cohorts.id')
+                ->whereColumn('cohort_teacher.teacher_id', 'teachers.id')
+                ->where('cohorts.cohort_type', CohortType::Update)
+                ->orderBy('cohorts.completion_date', 'desc')
+                ->limit(1),
+            $direction
+        );
+    }
+
+    /**
+     * Get the teacher's current authorisation status.
+     *
+     * @return HasOne<ModelsAuthorisationStatus, $this>
+     */
+    public function currentAuthorisationStatus(): HasOne
     {
-        return $this->belongsTo(AuthorisationCohort::class);
+        return $this->hasOne(ModelsAuthorisationStatus::class)->latestOfMany();
+    }
+
+    /**
+     * Order teachers by their current authorisation status.
+     *
+     * @param  Builder<Teacher>  $query
+     * @return Builder<Teacher>
+     */
+    #[Scope]
+    protected function orderByCurrentAuthorisationStatus(Builder $query, string $direction = 'asc'): Builder
+    {
+        return $query->orderBy(
+            ModelsAuthorisationStatus::select('value')
+                ->whereColumn('teacher_id', 'teachers.id')
+                ->latest('id'),
+            $direction
+        );
+    }
+
+    /**
+     * Get all of the teacher's authorisation statuses.
+     *
+     * @return HasMany<ModelsAuthorisationStatus, $this>
+     */
+    public function authorisationStatuses(): HasMany
+    {
+        return $this->hasMany(ModelsAuthorisationStatus::class);
     }
 
     /**
@@ -308,31 +329,6 @@ class Teacher extends Model
     }
 
     /**
-     * Get the teacher's most recent update cohort.
-     *
-     * Uses `HasManyThrough` under the hood for the update cohorts relationship,
-     * rather than the `BelongsToMany` 'updateCohorts' already defined on the model.
-     * This is due to the existence of `HasOneThrough, yet
-     * absence of `HasOneOfBelongsToMany` in Laravel.
-     *
-     * @return HasOneThrough<UpdateCohort, TeacherUpdateCohort ,$this>
-     */
-    public function latestUpdateCohort(): HasOneThrough
-    {
-        return $this
-            ->hasManyThrough(
-                UpdateCohort::class,
-                TeacherUpdateCohort::class,
-                'teacher_id',
-                'id',
-                'id',
-                'update_cohort_id',
-            )
-            ->one()
-            ->ofMany('cohort_date', 'max');
-    }
-
-    /**
      * Get the teacher's tuition locations (where they teach).
      *
      * @return BelongsToMany<TuitionLocation, $this>
@@ -343,14 +339,101 @@ class Teacher extends Model
     }
 
     /**
+     * Get all the cohorts for the teacher.
+     *
+     * @return BelongsToMany<Cohort, $this>
+     */
+    public function cohorts(): BelongsToMany
+    {
+        return $this->belongsToMany(Cohort::class)
+            ->withTimestamps();
+    }
+
+    /**
+     * Get all the cohorts for the teacher using a 'HasManyThrough' relationship,
+     * using a pivot model.
+     *
+     * This relationship has been created in order to provide a basis for 'HasOneThrough'
+     * relationships on this model.
+     *
+     * It is necessary since 'HasOneOfBelongsToMany' does not exist in Laravel,
+     * though otherwise should probably be avoided, and the 'cohorts'
+     * 'BelongsToMany' relationship used wherever possible.
+     *
+     * @return HasManyThrough<Cohort, CohortTeacher, $this>
+     */
+    public function cohortsHasManyThrough(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Cohort::class,
+            CohortTeacher::class,
+            'teacher_id',
+            'id',
+            'id',
+            'cohort_id',
+        );
+    }
+
+    /**
+     * Get the teacher's initial authorisation cohorts.
+     *
+     * The teacher will usually only belong to one initial authorisation cohort,
+     * but the system has been designed to accommodate for the possibility of repeat training.
+     *
+     * @return BelongsToMany<Cohort, $this>
+     */
+    public function initialAuthorisationCohorts(): BelongsToMany
+    {
+        return $this->cohorts()
+            ->whereCohortType(CohortType::InitialAuthorisation);
+    }
+
+    /**
      * Get the teacher's update cohorts.
      *
-     * @return BelongsToMany<UpdateCohort, $this>
+     * @return BelongsToMany<Cohort, $this>
      */
     public function updateCohorts(): BelongsToMany
     {
-        return $this->belongsToMany(UpdateCohort::class)
-            ->withTimestamps();
+        return $this->cohorts()->whereCohortType(CohortType::Update);
+    }
+
+    /**
+     * Get the teacher's first authorisation cohort.
+     *
+     * @return HasOneThrough<Cohort, CohortTeacher ,$this>
+     */
+    public function firstAuthorisationCohort(): HasOneThrough
+    {
+        return $this->cohortsHasManyThrough()
+            ->whereCohortType(CohortType::InitialAuthorisation)
+            ->one()
+            ->ofMany('completion_date', 'min');
+    }
+
+    /**
+     * Get the teacher's most recent update cohort.
+     *
+     * @return HasOneThrough<Cohort, CohortTeacher ,$this>
+     */
+    public function latestUpdateCohort(): HasOneThrough
+    {
+        return $this->cohortsHasManyThrough()
+            ->whereCohortType(CohortType::Update)
+            ->one()
+            ->ofMany('completion_date', 'max');
+    }
+
+    /**
+     * Get the teacher's most recent cohort.
+     *
+     * @return HasOneThrough<Cohort, CohortTeacher ,$this>
+     */
+    public function latestCohort(): HasOneThrough
+    {
+        return $this->cohortsHasManyThrough()
+            ->one()
+            ->ofMany('completion_date', 'max');
     }
 
     /**

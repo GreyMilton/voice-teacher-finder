@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\UpdateCohorts\Pages;
+namespace App\Filament\Resources\Cohorts\Pages;
 
-use App\Filament\Resources\UpdateCohorts\UpdateCohortResource;
+use App\Filament\Resources\Cohorts\CohortResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditUpdateCohort extends EditRecord
+class EditCohort extends EditRecord
 {
-    protected static string $resource = UpdateCohortResource::class;
+    protected static string $resource = CohortResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\AuthorisationCohorts\Tables;
+namespace App\Filament\Resources\Cohorts\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -9,7 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class AuthorisationCohortsTable
+class CohortsTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,7 +18,7 @@ class AuthorisationCohortsTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('cohort_date')
+                TextColumn::make('completion_date')
                     ->date()
                     ->searchable()
                     ->sortable(),

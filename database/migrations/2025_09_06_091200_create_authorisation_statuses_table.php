@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('update_cohorts', function (Blueprint $table) {
+        Schema::create('authorisation_statuses', function (Blueprint $table) {
             $table->id();
-            $table->date('cohort_date');
-            $table->date('name');
+            $table->foreignId('teacher_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('update_cohorts');
+        Schema::dropIfExists('authorisation_statuses');
     }
 };

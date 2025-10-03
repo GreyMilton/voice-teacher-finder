@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('authorisation_cohort_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
             $table->string('business_email')->nullable();
             $table->string('business_phone')->nullable();
             $table->string('business_website')->nullable();

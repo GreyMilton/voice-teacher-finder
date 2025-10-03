@@ -30,7 +30,7 @@ class TeacherController extends Controller
 
         return Inertia::render('TeacherShow', [
             'teacher' => $teacher->load([
-                'authorisationCohort',
+                'firstAuthorisationCohort',
                 'territoryOfOrigin',
                 'territoryOfResidence',
                 'instruments',

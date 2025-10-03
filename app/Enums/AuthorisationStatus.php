@@ -8,34 +8,34 @@ use Filament\Support\Contracts\HasLabel;
 
 enum AuthorisationStatus: string implements HasColor, HasIcon, HasLabel
 {
-    case Authorised = 'Authorised';
-    case Warning = 'Warning';
     case Unauthorised = 'Unauthorised';
+    case Authorised = 'Authorised';
+    case Expired = 'Expired';
 
     public function getColor(): string
     {
         return match ($this) {
+            self::Unauthorised => 'gray',
             self::Authorised => 'success',
-            self::Warning => 'warning',
-            self::Unauthorised => 'danger',
+            self::Expired => 'danger',
         };
     }
 
     public function getIcon(): string
     {
         return match ($this) {
+            self::Unauthorised => 'heroicon-c-book-open',
             self::Authorised => 'heroicon-c-check-badge',
-            self::Warning => 'heroicon-c-exclamation-triangle',
-            self::Unauthorised => 'heroicon-c-x-circle',
+            self::Expired => 'heroicon-c-exclamation-triangle',
         };
     }
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::Authorised => 'Authorised',
-            self::Warning => 'Near expiry',
             self::Unauthorised => 'Unauthorised',
+            self::Authorised => 'Authorised',
+            self::Expired => 'Expired',
         };
     }
 }

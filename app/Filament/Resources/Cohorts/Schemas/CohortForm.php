@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\AuthorisationCohorts\Schemas;
+namespace App\Filament\Resources\Cohorts\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
-class AuthorisationCohortForm
+class CohortForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -15,7 +15,7 @@ class AuthorisationCohortForm
                 TextInput::make('name')
                     ->placeholder(now()->format('M, y'))
                     ->required(),
-                DatePicker::make('cohort_date')
+                DatePicker::make('completion_date')
                     ->required(),
             ]);
     }

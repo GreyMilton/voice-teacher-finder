@@ -16,10 +16,11 @@ class TeacherInfolist
                 TextEntry::make('name'),
                 IconEntry::make('isAuthorised')
                     ->boolean(),
-                TextEntry::make('authorisationStatus')
+                TextEntry::make('currentAuthorisationStatus.value')
+                    ->label('Authorisation status')
                     ->badge(),
-                TextEntry::make('authorisationCohort.name')
-                    ->label('Authorisation cohort')
+                TextEntry::make('firstAuthorisationCohort.name')
+                    ->label('First authorisation')
                     ->placeholder('-'),
                 TextEntry::make('latestUpdateCohort.name')
                     ->label('Latest update')

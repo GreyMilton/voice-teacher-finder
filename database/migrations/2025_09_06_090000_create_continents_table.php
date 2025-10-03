@@ -12,19 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('regions', function (Blueprint $table) {
+        Schema::create('continents', function (Blueprint $table) {
             $table->id();
             $table->string('english_name');
-            $table->foreignId('continent_id')
-                ->constrained()
-                ->cascadeOnDelete();
             $table->timestamps();
         });
 
-        $regions = require database_path('initial_data/regions.php');
+        $continents = require database_path('initial_data/continents.php');
 
-        DB::table('regions')->insert($regions);
+        DB::table('continents')->insert($continents);
     }
 
     /**
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('continents');
     }
 };

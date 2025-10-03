@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        /** @var array<int, array<string, mixed>> $territories */
         $territories = require database_path('initial_data/territories.php');
         $territoriesInAlphabeticalOrder = collect($territories)
             ->sortBy('english_name')

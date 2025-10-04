@@ -31,8 +31,6 @@ class TeacherInfolist
                         true => 'Near expiry',
                         false => 'No',
                     }),
-                IconEntry::make('isAuthorised')
-                    ->boolean(),
                 TextEntry::make('currentAuthorisationStatus.value')
                     ->label('Authorisation status')
                     ->badge(),

@@ -41,9 +41,6 @@ class TeachersTable
                         true => 'Near expiry',
                         false => 'No',
                     }),
-                IconColumn::make('isAuthorised')
-                    ->boolean()
-                    ->toggleable(),
                 TextColumn::make('currentAuthorisationStatus.value')
                     ->badge()
                     ->label('Authorisation status')

@@ -6,6 +6,8 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Model;
 
 class TeacherInfolist
 {
@@ -14,6 +16,21 @@ class TeacherInfolist
         return $schema
             ->components([
                 TextEntry::make('name'),
+                TextEntry::make('isNearAuthorisationExpiry')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Near expiry' => 'danger',
+                        'No' => 'gray',
+                    })
+                    ->icon(fn (string $state): Heroicon => match ($state) {
+                        'Near expiry' => Heroicon::ExclamationTriangle,
+                        'No' => Heroicon::OutlinedHandThumbUp,
+                    })
+                    ->label('Near expiry')
+                    ->state(fn (Model $record): string => match ($record->isNearAuthorisationExpiry) {
+                        true => 'Near expiry',
+                        false => 'No',
+                    }),
                 IconEntry::make('isAuthorised')
                     ->boolean(),
                 TextEntry::make('currentAuthorisationStatus.value')

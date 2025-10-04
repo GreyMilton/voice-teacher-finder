@@ -55,4 +55,15 @@ class Faq extends Model
             'is_visible_on_faqs_page' => 'boolean',
         ];
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'question',
+        'answer',
+        'is_visible_on_faqs_page',
+    ];
 }

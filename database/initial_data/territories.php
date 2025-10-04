@@ -808,7 +808,7 @@ return [
     ],
     [
         'geo_point' => '9.767584545477694, 28.39877462510127',
-        'iso_3_country_code' => '',
+        'iso_3_country_code' => '-',
         'english_name' => 'Abyei',
         'region_id' => 3,
         'french_name' => 'Abyei',

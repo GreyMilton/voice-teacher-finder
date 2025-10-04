@@ -47,6 +47,7 @@ class UsersTable
                     DeleteBulkAction::make(),
                 ]),
             ])
+            ->defaultSort('name')
             ->paginated([10, 25, 50, 100])
             ->defaultPaginationPageOption(25)
             ->extremePaginationLinks();

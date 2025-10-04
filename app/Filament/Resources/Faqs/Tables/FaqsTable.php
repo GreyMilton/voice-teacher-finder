@@ -16,6 +16,8 @@ class FaqsTable
     {
         return $table
             ->columns([
+                TextColumn::make('order')
+                    ->sortable(),
                 TextColumn::make('question')
                     ->limit(45)
                     ->searchable()
@@ -48,6 +50,8 @@ class FaqsTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('order')
+            ->reorderable('order');
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('question');
             $table->string('answer');
             $table->boolean('is_visible_on_faqs_page');
+            $table->integer('order');
             $table->timestamps();
         });
     }

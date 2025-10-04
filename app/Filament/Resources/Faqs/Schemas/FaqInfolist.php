@@ -12,10 +12,11 @@ class FaqInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('question'),
-                TextEntry::make('answer'),
+                TextEntry::make('order'),
                 IconEntry::make('is_visible_on_faqs_page')
                     ->boolean(),
+                TextEntry::make('question'),
+                TextEntry::make('answer'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

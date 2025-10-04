@@ -22,6 +22,10 @@ class CohortsTable
                     ->date()
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('cohort_type')
+                    ->badge()
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

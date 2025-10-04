@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Cohorts\Schemas;
 
+use App\Enums\CohortType;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -16,6 +18,9 @@ class CohortForm
                     ->placeholder(now()->format('M, y'))
                     ->required(),
                 DatePicker::make('completion_date')
+                    ->required(),
+                Select::make('cohort_type')
+                    ->options(CohortType::class)
                     ->required(),
             ]);
     }

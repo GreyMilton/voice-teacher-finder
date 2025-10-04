@@ -14,6 +14,8 @@ class CohortInfolist
                 TextEntry::make('name'),
                 TextEntry::make('completion_date')
                     ->date(),
+                TextEntry::make('cohort_type')
+                    ->badge(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

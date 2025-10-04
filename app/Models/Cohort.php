@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CohortType;
 use Database\Factories\CohortFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,7 +53,7 @@ class Cohort extends Model
      *
      * @var list<string>
      */
-    protected $fillable = ['completion_date', 'name'];
+    protected $fillable = ['completion_date', 'cohort_type', 'name'];
 
     /**
      * Get the attributes that should be cast.
@@ -63,6 +64,7 @@ class Cohort extends Model
     {
         return [
             'completion_date' => 'date',
+            'cohort_type' => CohortType::class,
         ];
     }
 

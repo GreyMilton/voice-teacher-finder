@@ -50,6 +50,18 @@ class TerritoriesTable
                     ->label('Teachers Residing')
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('geo_point')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('iso_3_country_code')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('french_name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -36,6 +36,9 @@ class TerritoryInfolist
                     })
                     ->counts('teachersResiding')
                     ->label('Teachers Residing'),
+                TextEntry::make('geo_point'),
+                TextEntry::make('iso_3_country_code'),
+                TextEntry::make('french_name'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

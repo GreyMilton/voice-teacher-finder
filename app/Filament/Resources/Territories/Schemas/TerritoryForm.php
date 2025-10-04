@@ -21,6 +21,12 @@ class TerritoryForm
                     })
                     ->relationship('region', 'english_name')
                     ->required(),
+                TextInput::make('geo_point')
+                    ->required(),
+                TextInput::make('iso_3_country_code')
+                    ->required(),
+                TextInput::make('french_name')
+                    ->required(),
             ]);
     }
 }

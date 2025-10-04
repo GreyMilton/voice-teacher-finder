@@ -8,11 +8,13 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class TeachersTable
@@ -24,10 +26,21 @@ class TeachersTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                IconColumn::make('isNearAuthorisationExpiry')
-                    ->boolean()
-                    ->label('Nearing expiry')
-                    ->toggleable(),
+                TextColumn::make('isNearAuthorisationExpiry')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Near expiry' => 'danger',
+                        'No' => 'gray',
+                    })
+                    ->icon(fn (string $state): Heroicon => match ($state) {
+                        'Near expiry' => Heroicon::ExclamationTriangle,
+                        'No' => Heroicon::OutlinedHandThumbUp,
+                    })
+                    ->label('Near expiry')
+                    ->state(fn (Model $model): string => match ($model->isNearAuthorisationExpiry) {
+                        true => 'Near expiry',
+                        false => 'No',
+                    }),
                 IconColumn::make('isAuthorised')
                     ->boolean()
                     ->toggleable(),

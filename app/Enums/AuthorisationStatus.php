@@ -26,7 +26,7 @@ enum AuthorisationStatus: string implements HasColor, HasIcon, HasLabel
         return match ($this) {
             self::Unauthorised => 'heroicon-c-book-open',
             self::Authorised => 'heroicon-c-check-badge',
-            self::Expired => 'heroicon-c-exclamation-triangle',
+            self::Expired => 'heroicon-c-x-mark',
         };
     }
 

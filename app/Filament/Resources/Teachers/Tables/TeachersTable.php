@@ -121,10 +121,12 @@ class TeachersTable
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('business_website')
+                    ->limit(45)
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('description')
+                    ->limit(45)
                     ->searchable()
                     ->toggleable(),
                 IconColumn::make('gives_video_lessons')

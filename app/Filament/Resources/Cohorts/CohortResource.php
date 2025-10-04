@@ -6,6 +6,7 @@ use App\Filament\Resources\Cohorts\Pages\CreateCohort;
 use App\Filament\Resources\Cohorts\Pages\EditCohort;
 use App\Filament\Resources\Cohorts\Pages\ListCohorts;
 use App\Filament\Resources\Cohorts\Pages\ViewCohort;
+use App\Filament\Resources\Cohorts\RelationManagers\TeachersRelationManager;
 use App\Filament\Resources\Cohorts\Schemas\CohortForm;
 use App\Filament\Resources\Cohorts\Schemas\CohortInfolist;
 use App\Filament\Resources\Cohorts\Tables\CohortsTable;
@@ -42,7 +43,7 @@ class CohortResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TeachersRelationManager::class,
         ];
     }
 

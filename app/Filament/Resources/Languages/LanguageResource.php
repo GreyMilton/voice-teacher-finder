@@ -6,6 +6,8 @@ use App\Filament\Resources\Languages\Pages\CreateLanguage;
 use App\Filament\Resources\Languages\Pages\EditLanguage;
 use App\Filament\Resources\Languages\Pages\ListLanguages;
 use App\Filament\Resources\Languages\Pages\ViewLanguage;
+use App\Filament\Resources\Languages\RelationManagers\TeachersWhoSingRelationManager;
+use App\Filament\Resources\Languages\RelationManagers\TeachersWhoTeachInRelationManager;
 use App\Filament\Resources\Languages\Schemas\LanguageForm;
 use App\Filament\Resources\Languages\Schemas\LanguageInfolist;
 use App\Filament\Resources\Languages\Tables\LanguagesTable;
@@ -42,7 +44,8 @@ class LanguageResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TeachersWhoSingRelationManager::class,
+            TeachersWhoTeachInRelationManager::class,
         ];
     }
 

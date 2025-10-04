@@ -6,6 +6,7 @@ use App\Filament\Resources\Instruments\Pages\CreateInstrument;
 use App\Filament\Resources\Instruments\Pages\EditInstrument;
 use App\Filament\Resources\Instruments\Pages\ListInstruments;
 use App\Filament\Resources\Instruments\Pages\ViewInstrument;
+use App\Filament\Resources\Instruments\RelationManagers\TeachersRelationManager;
 use App\Filament\Resources\Instruments\Schemas\InstrumentForm;
 use App\Filament\Resources\Instruments\Schemas\InstrumentInfolist;
 use App\Filament\Resources\Instruments\Tables\InstrumentsTable;
@@ -42,7 +43,7 @@ class InstrumentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TeachersRelationManager::class,
         ];
     }
 

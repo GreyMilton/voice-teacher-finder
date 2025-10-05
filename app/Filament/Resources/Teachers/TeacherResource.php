@@ -6,6 +6,12 @@ use App\Filament\Resources\Teachers\Pages\CreateTeacher;
 use App\Filament\Resources\Teachers\Pages\EditTeacher;
 use App\Filament\Resources\Teachers\Pages\ListTeachers;
 use App\Filament\Resources\Teachers\Pages\ViewTeacher;
+use App\Filament\Resources\Teachers\RelationManagers\AuthorisationStatusesRelationManager;
+use App\Filament\Resources\Teachers\RelationManagers\CohortsRelationManager;
+use App\Filament\Resources\Teachers\RelationManagers\InstrumentsRelationManager;
+use App\Filament\Resources\Teachers\RelationManagers\LanguagesSungRelationManager;
+use App\Filament\Resources\Teachers\RelationManagers\LanguagesTeachesInRelationManager;
+use App\Filament\Resources\Teachers\RelationManagers\TuitionLocationsRelationManager;
 use App\Filament\Resources\Teachers\Schemas\TeacherForm;
 use App\Filament\Resources\Teachers\Schemas\TeacherInfolist;
 use App\Filament\Resources\Teachers\Tables\TeachersTable;
@@ -42,7 +48,12 @@ class TeacherResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AuthorisationStatusesRelationManager::class,
+            CohortsRelationManager::class,
+            InstrumentsRelationManager::class,
+            LanguagesTeachesInRelationManager::class,
+            LanguagesSungRelationManager::class,
+            TuitionLocationsRelationManager::class,
         ];
     }
 

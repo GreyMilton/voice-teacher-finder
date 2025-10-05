@@ -18,6 +18,15 @@ class InstrumentsTable
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('teachers_count')
+                    ->badge()
+                    ->color(function (int $state) {
+                        return $state > 0 ? 'info' : 'gray';
+                    })
+                    ->counts('teachers')
+                    ->label('Teachers')
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

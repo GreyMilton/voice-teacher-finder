@@ -12,6 +12,13 @@ class InstrumentInfolist
         return $schema
             ->components([
                 TextEntry::make('english_name'),
+                TextEntry::make('teachers_count')
+                    ->badge()
+                    ->color(function (int $state) {
+                        return $state > 0 ? 'info' : 'gray';
+                    })
+                    ->counts('teachers')
+                    ->label('Teachers'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

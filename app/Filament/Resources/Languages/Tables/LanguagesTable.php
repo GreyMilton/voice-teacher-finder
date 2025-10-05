@@ -18,6 +18,24 @@ class LanguagesTable
                 TextColumn::make('english_name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('teachers_who_sing_count')
+                    ->badge()
+                    ->color(function (int $state) {
+                        return $state > 0 ? 'info' : 'gray';
+                    })
+                    ->counts('teachersWhoSing')
+                    ->label('Teachers Who Sing')
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('teachers_who_teach_in_count')
+                    ->badge()
+                    ->color(function (int $state) {
+                        return $state > 0 ? 'info' : 'gray';
+                    })
+                    ->counts('teachersWhoTeachIn')
+                    ->label('Teachers Who Teach In')
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

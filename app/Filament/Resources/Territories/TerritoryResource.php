@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Territories;
 
+use App\Filament\Resources\Languages\RelationManagers\TeachersWhoTeachInRelationManager;
 use App\Filament\Resources\Territories\Pages\CreateTerritory;
 use App\Filament\Resources\Territories\Pages\EditTerritory;
 use App\Filament\Resources\Territories\Pages\ListTerritories;
@@ -44,6 +45,7 @@ class TerritoryResource extends Resource
     public static function getRelations(): array
     {
         return [
+            TeachersWhoTeachInRelationManager::class,
             TeachersFromRelationManager::class,
             TeachersResidingRelationManager::class,
         ];

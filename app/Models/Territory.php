@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 /**
  * @property int $id
@@ -41,6 +43,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Territory extends Model
 {
+    use HasRelationships;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -103,6 +107,19 @@ class Territory extends Model
     public function teachersResiding(): HasMany
     {
         return $this->hasMany(Teacher::class, 'territory_of_residence_id');
+    }
+
+    /**
+     * Get the teachers who teach in the territory.
+     *
+     * @return HasManyDeep<Teacher, $this>
+     */
+    public function teachersWhoTeachIn(): HasManyDeep
+    {
+        return $this->hasManyDeep(
+            Teacher::class,
+            [TuitionLocation::class, 'teacher_tuition_location'],
+        );
     }
 
     /**

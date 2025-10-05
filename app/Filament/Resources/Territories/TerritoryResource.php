@@ -17,7 +17,6 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class TerritoryResource extends Resource
 {
@@ -26,24 +25,6 @@ class TerritoryResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMap;
 
     protected static ?string $recordTitleAttribute = 'english_name';
-
-    /**
-     * @return Builder<Territory>
-     */
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withCount([
-                'tuitionLocations as teachers_teaching_count' => function ($query) {
-                    $query->join(
-                        'teacher_tuition_location',
-                        'tuition_locations.id',
-                        '=',
-                        'teacher_tuition_location.tuition_location_id',
-                    );
-                },
-            ]);
-    }
 
     public static function form(Schema $schema): Schema
     {

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Teachers\Schemas;
 
+use App\Models\Teacher;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -18,18 +19,20 @@ class TeacherInfolist
                 TextEntry::make('name'),
                 TextEntry::make('isNearAuthorisationExpiry')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Near expiry' => 'danger',
-                        'No' => 'gray',
-                    })
-                    ->icon(fn (string $state): Heroicon => match ($state) {
-                        'Near expiry' => Heroicon::ExclamationTriangle,
-                        'No' => Heroicon::OutlinedHandThumbUp,
-                    })
+                    ->color(fn (string $state): string => $state === 'Near expiry'
+                        ? 'danger'
+                        : 'gray',
+                    )
+                    ->icon(fn (string $state): Heroicon => $state === 'Near expiry'
+                        ? Heroicon::ExclamationTriangle
+                        : Heroicon::OutlinedHandThumbUp,
+                    )
                     ->label('Near expiry')
-                    ->state(fn (Model $record): string => match ($record->isNearAuthorisationExpiry) {
-                        true => 'Near expiry',
-                        false => 'No',
+                    ->state(function (Model $record): string {
+                        /** @var Teacher $record */
+                        return $record->isNearAuthorisationExpiry
+                            ? 'Near expiry'
+                            : 'No';
                     }),
                 TextEntry::make('currentAuthorisationStatus.value')
                     ->label('Authorisation status')

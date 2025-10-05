@@ -336,7 +336,7 @@ class Teacher extends Model
     /**
      * Get the territories that the teacher teaches in.
      *
-     * @return HasManyDeep<Territory, $this>
+     * @return HasManyDeep<Model, $this>
      */
     public function territoriesTeachesIn(): HasManyDeep
     {

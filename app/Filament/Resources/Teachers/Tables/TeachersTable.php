@@ -28,18 +28,20 @@ class TeachersTable
                     ->sortable(),
                 TextColumn::make('isNearAuthorisationExpiry')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Near expiry' => 'danger',
-                        'No' => 'gray',
-                    })
-                    ->icon(fn (string $state): Heroicon => match ($state) {
-                        'Near expiry' => Heroicon::ExclamationTriangle,
-                        'No' => Heroicon::OutlinedHandThumbUp,
-                    })
+                    ->color(fn (string $state): string => $state === 'Near expiry'
+                        ? 'danger'
+                        : 'gray',
+                    )
+                    ->icon(fn (string $state): Heroicon => $state === 'Near expiry'
+                        ? Heroicon::ExclamationTriangle
+                        : Heroicon::OutlinedHandThumbUp,
+                    )
                     ->label('Near expiry')
-                    ->state(fn (Model $model): string => match ($model->isNearAuthorisationExpiry) {
-                        true => 'Near expiry',
-                        false => 'No',
+                    ->state(function (Model $record): string {
+                        /** @var Teacher $record */
+                        return $record->isNearAuthorisationExpiry
+                            ? 'Near expiry'
+                            : 'No';
                     }),
                 TextColumn::make('currentAuthorisationStatus.value')
                     ->badge()

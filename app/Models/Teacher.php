@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Carbon;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 /**
  * @property int $id
@@ -99,7 +101,7 @@ class Teacher extends Model
     /**
      * @use HasFactory<TeacherFactory>
      */
-    use HasFactory;
+    use HasFactory, HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -326,6 +328,19 @@ class Teacher extends Model
     public function authorisationStatuses(): HasMany
     {
         return $this->hasMany(ModelsAuthorisationStatus::class);
+    }
+
+    /**
+     * Get the territories that the teacher teaches in.
+     *
+     * @return HasManyDeep<Territory, $this>
+     */
+    public function territoriesTeachesIn(): HasManyDeep
+    {
+        return $this->hasManyDeepFromRelations(
+            $this->tuitionLocations(),
+            (new TuitionLocation)->territory(),
+        );
     }
 
     /**

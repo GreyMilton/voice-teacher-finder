@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $question
  * @property string $answer
  * @property bool $is_visible_on_faqs_page
+ * @property int $order
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  *
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereIsVisibleOnFaqsPage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereQuestion($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereUpdatedAt($value)
  *

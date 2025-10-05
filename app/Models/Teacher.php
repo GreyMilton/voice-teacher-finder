@@ -51,8 +51,8 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
  * @property-read int|null $initial_authorisation_cohorts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Instrument> $instruments
  * @property-read int|null $instruments_count
- * @property-read bool $is_near_authorisation_expiry
  * @property-read bool $is_authorised
+ * @property-read bool $is_near_authorisation_expiry
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesSung
  * @property-read int|null $languages_sung_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Language> $languagesTeachesIn
@@ -66,8 +66,13 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cohort> $updateCohorts
  * @property-read int|null $update_cohorts_count
  * @property-read \App\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Territory[] $territoriesTeachesIn
+ * @property-read int|null $territories_teaches_in_count
  *
+ * @method static Builder<static>|Teacher authorisationExpired()
+ * @method static Builder<static>|Teacher authorised()
  * @method static \Database\Factories\TeacherFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Teacher nearAuthorisationExpiry()
  * @method static Builder<static>|Teacher newModelQuery()
  * @method static Builder<static>|Teacher newQuery()
  * @method static Builder<static>|Teacher orderByCurrentAuthorisationStatus(string $direction = 'asc')
@@ -75,8 +80,6 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
  * @method static Builder<static>|Teacher orderByLatestUpdateCohort(string $column, string $direction = 'asc')
  * @method static Builder<static>|Teacher query()
  * @method static Builder<static>|Teacher unauthorised()
- * @method static Builder<static>|Teacher authorised()
- * @method static Builder<static>|Teacher expired()
  * @method static Builder<static>|Teacher whereBusinessEmail($value)
  * @method static Builder<static>|Teacher whereBusinessPhone($value)
  * @method static Builder<static>|Teacher whereBusinessWebsite($value)

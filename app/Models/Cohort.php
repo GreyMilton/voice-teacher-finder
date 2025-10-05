@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
- * @property string $cohort_type
+ * @property CohortType $cohort_type
  * @property \Illuminate\Support\Carbon $completion_date
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at

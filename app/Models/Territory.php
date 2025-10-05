@@ -26,6 +26,8 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
  * @property-read mixed $title
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TuitionLocation> $tuitionLocations
  * @property-read int|null $tuition_locations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Teacher[] $teachersWhoTeachIn
+ * @property-read int|null $teachers_who_teach_in_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Territory newQuery()

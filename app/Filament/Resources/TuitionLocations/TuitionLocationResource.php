@@ -6,6 +6,7 @@ use App\Filament\Resources\TuitionLocations\Pages\CreateTuitionLocation;
 use App\Filament\Resources\TuitionLocations\Pages\EditTuitionLocation;
 use App\Filament\Resources\TuitionLocations\Pages\ListTuitionLocations;
 use App\Filament\Resources\TuitionLocations\Pages\ViewTuitionLocation;
+use App\Filament\Resources\TuitionLocations\RelationManagers\TeachersRelationManager;
 use App\Filament\Resources\TuitionLocations\Schemas\TuitionLocationForm;
 use App\Filament\Resources\TuitionLocations\Schemas\TuitionLocationInfolist;
 use App\Filament\Resources\TuitionLocations\Tables\TuitionLocationsTable;
@@ -47,7 +48,7 @@ class TuitionLocationResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TeachersRelationManager::class,
         ];
     }
 

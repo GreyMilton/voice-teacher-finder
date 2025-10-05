@@ -9,6 +9,7 @@ use App\Filament\Resources\Territories\Pages\ListTerritories;
 use App\Filament\Resources\Territories\Pages\ViewTerritory;
 use App\Filament\Resources\Territories\RelationManagers\TeachersFromRelationManager;
 use App\Filament\Resources\Territories\RelationManagers\TeachersResidingRelationManager;
+use App\Filament\Resources\Territories\RelationManagers\TuitionLocationsRelationManager;
 use App\Filament\Resources\Territories\Schemas\TerritoryForm;
 use App\Filament\Resources\Territories\Schemas\TerritoryInfolist;
 use App\Filament\Resources\Territories\Tables\TerritoriesTable;
@@ -45,6 +46,7 @@ class TerritoryResource extends Resource
     public static function getRelations(): array
     {
         return [
+            TuitionLocationsRelationManager::class,
             TeachersWhoTeachInRelationManager::class,
             TeachersFromRelationManager::class,
             TeachersResidingRelationManager::class,

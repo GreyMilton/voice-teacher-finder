@@ -29,7 +29,12 @@ class ListTerritories extends ListRecords
                         ->has('teachersFrom')
                         ->orHas('teachersResiding')
                         ->orHas('teachersWhoTeachIn')
+                        ->orHas('tuitionLocations')
                     )
+                ),
+            'have tuition locations' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->has('tuitionLocations')
                 ),
             'have teachers teaching in' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query

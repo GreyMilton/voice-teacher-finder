@@ -23,23 +23,28 @@ class ListTeachers extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make(),
+            'all' => Tab::make()
+                ->badge(Teacher::count()),
             'unauthorised' => Tab::make()
+                ->badge(Teacher::unauthorised()->count())
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Teacher> $query */
                     $query->unauthorised();
                 }),
             'authorised' => Tab::make()
+                ->badge(Teacher::authorised()->count())
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Teacher> $query */
                     $query->authorised();
                 }),
             'near expiry' => Tab::make()
+                ->badge(Teacher::nearAuthorisationExpiry()->count())
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Teacher> $query */
                     $query->nearAuthorisationExpiry();
                 }),
             'expired' => Tab::make()
+                ->badge(Teacher::authorisationExpired()->count())
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Teacher> $query */
                     $query->authorisationExpired();

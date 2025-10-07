@@ -24,13 +24,16 @@ class ListCohorts extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make(),
+            'all' => Tab::make()
+                ->badge(Cohort::count()),
             'Initial Authorisation' => Tab::make()
+                ->badge(Cohort::whereCohortType(CohortType::InitialAuthorisation)->count())
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Cohort> $query */
                     $query->whereCohortType(CohortType::InitialAuthorisation);
                 }),
             'Update' => Tab::make()
+                ->badge(Cohort::whereCohortType(CohortType::Update)->count())
                 ->modifyQueryUsing(function (Builder $query) {
                     /** @var Builder<Cohort> $query */
                     $query->whereCohortType(CohortType::Update);

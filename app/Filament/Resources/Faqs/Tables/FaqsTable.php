@@ -17,7 +17,8 @@ class FaqsTable
         return $table
             ->columns([
                 TextColumn::make('order')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('question')
                     ->limit(45)
                     ->searchable()

@@ -20,10 +20,12 @@ class TerritoriesTable
                     ->sortable(),
                 TextColumn::make('region.english_name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('region.continent.english_name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('tuition_locations_count')
                     ->badge()
                     ->color(function (int $state) {

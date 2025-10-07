@@ -42,10 +42,12 @@ class TeachersTable
                         return $record->isNearAuthorisationExpiry
                             ? 'Near expiry'
                             : 'No';
-                    }),
+                    })
+                    ->toggleable(),
                 TextColumn::make('currentAuthorisationStatus.value')
                     ->badge()
                     ->label('Authorisation status')
+                    ->searchable()
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         /** @var Builder<Teacher> $query */
                         return $query->orderByCurrentAuthorisationStatus($direction);
@@ -139,6 +141,7 @@ class TeachersTable
                     ->toggleable(),
                 TextColumn::make('user.name')
                     ->searchable()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()

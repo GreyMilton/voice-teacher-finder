@@ -20,13 +20,16 @@ class TuitionLocationsTable
                     ->sortable(),
                 TextColumn::make('territory.english_name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('territory.region.english_name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('territory.region.continent.english_name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('teachers_count')
                     ->badge()
                     ->color(fn (int $state) => $state > 0 ? 'info' : 'gray')

@@ -46,7 +46,7 @@ class ListTerritories extends ListRecords
                 ),
             'have teachers residing' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query
-                    ->has('teachersFrom')
+                    ->has('teachersResiding')
                 ),
         ];
     }

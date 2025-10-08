@@ -19,7 +19,7 @@ Route::get('/teachers/{teacher}', [TeacherController::class, 'show'])
 Route::get('/faqs', function () {
     return Inertia::render('FaqsPage', [
         'faqs' => FaqResource::collection(
-            Faq::whereIsVisibleOnFaqsPage(true)->get(),
+            Faq::whereIsVisibleOnFaqsPage(true)->orderBy('order')->get(),
         ),
     ]);
 })->name('faqs');

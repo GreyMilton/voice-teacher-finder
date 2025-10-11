@@ -36,6 +36,7 @@ class AuthorisationStatus extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'teacher_id',
         'value',
     ];
 

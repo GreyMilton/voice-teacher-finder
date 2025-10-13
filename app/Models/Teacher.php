@@ -159,12 +159,9 @@ class Teacher extends Model
                 return false;
             }
 
-            $expirationDate = $this
-                ->latestCohort
-                ?->completion_date
-                ->addMonths(Cohort::MONTHS_VALIDITY);
-
-            return $expirationDate->startOfDay()->timestamp === now()->startOfDay()->timestamp;
+            return $this->latestCohort
+                ?->authorisationExpirationDate
+                ->timestamp === now()->startOfDay()->timestamp;
         });
     }
 
@@ -182,8 +179,7 @@ class Teacher extends Model
 
             $expirationDate = $this
                 ->latestCohort
-                ?->completion_date
-                ->addMonths(Cohort::MONTHS_VALIDITY);
+                ?->authorisationExpirationDate;
 
             return $expirationDate > now()
                 && $expirationDate < now()->addMonths(Cohort::MONTHS_WARNING);

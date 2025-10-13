@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ExpireTeachers
 {
-    public function __invoke()
+    public function __invoke(): void
     {
         // Fetch all authorised teachers that are due for expiry today.
         $teachers = Teacher::authorised()

@@ -23,6 +23,8 @@ class CohortInfolist
                     })
                     ->counts('teachers')
                     ->label('Teachers'),
+                TextEntry::make('authorisationExpirationDate')
+                    ->date(),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

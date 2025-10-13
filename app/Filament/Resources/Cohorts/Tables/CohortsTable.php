@@ -38,6 +38,10 @@ class CohortsTable
                     ->label('Teachers')
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('authorisationExpirationDate')
+                    ->date()
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

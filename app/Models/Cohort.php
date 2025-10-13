@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Enums\CohortType;
 use Database\Factories\CohortFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -66,6 +68,22 @@ class Cohort extends Model
             'completion_date' => 'date',
             'cohort_type' => CohortType::class,
         ];
+    }
+
+    /**
+     * Get cohort's authorisation expiration date.
+     *
+     * @return Attribute<Carbon, null>
+     */
+    protected function authorisationExpirationDate(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes): Carbon {
+                return Carbon::parse($attributes['completion_date'])
+                    ->addMonths(Cohort::MONTHS_VALIDITY)
+                    ->startOfDay();
+            }
+        );
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\Authorisation;
 use App\Models\Cohort;
 use App\Models\Instrument;
 use App\Models\Language;
@@ -33,7 +34,7 @@ test('guests can visit the teacher show for an updated teacher', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
@@ -70,7 +71,7 @@ test('authenticated users can visit the teacher show for an updated teacher', fu
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
@@ -96,11 +97,11 @@ test('teacher show receives all required teacher data', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY + 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY + 1)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
@@ -189,7 +190,7 @@ test('teacher show for teacher whose authorisation has expired returns 404', fun
         ->has(
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
         )
         ->create();
 
@@ -205,15 +206,15 @@ test('teacher show for teacher whose latest update has expired returns 404', fun
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 3)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY + 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY + 1)->timestamp)
                 ->create(),
         ])
         ->create();

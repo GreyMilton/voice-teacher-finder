@@ -2,9 +2,9 @@
 
 namespace App\Tasks;
 
+use App\Constants\Authorisation;
 use App\Enums\AuthorisationStatus as EnumsAuthorisationStatus;
 use App\Models\AuthorisationStatus;
-use App\Models\Cohort;
 use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -17,7 +17,7 @@ class ExpireTeachers
             ->whereHas('latestCohort', fn (Builder $query) => $query
                 ->where(
                     'completion_date',
-                    now()->subMonths(Cohort::MONTHS_VALIDITY)->startOfDay(),
+                    now()->subMonths(Authorisation::MONTHS_VALIDITY)->startOfDay(),
                 )
             )
             ->get();

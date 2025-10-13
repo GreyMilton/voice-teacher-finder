@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\Authorisation;
 use App\Enums\AuthorisationStatus;
 use App\Models\Cohort;
 use App\Models\Teacher;
@@ -14,7 +15,7 @@ test('expires teachers due for expiry', function () {
         ->has(
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY)->timestamp)
         )
         ->create();
 
@@ -23,11 +24,11 @@ test('expires teachers due for expiry', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY)->timestamp)
                 ->create(),
         ])
         ->create();
@@ -59,7 +60,7 @@ test('doesn\'t expire teachers not yet due for expiry', function () {
         ->has(
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY - 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY - 1)->timestamp)
         )
         ->create();
 
@@ -68,11 +69,11 @@ test('doesn\'t expire teachers not yet due for expiry', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY - 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY - 1)->timestamp)
                 ->create(),
         ])
         ->create();
@@ -104,7 +105,7 @@ test('doesn\'t expire teachers no longer due for expiry', function () {
         ->has(
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY + 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY + 1)->timestamp)
         )
         ->create();
 
@@ -113,11 +114,11 @@ test('doesn\'t expire teachers no longer due for expiry', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY + 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY + 1)->timestamp)
                 ->create(),
         ])
         ->create();

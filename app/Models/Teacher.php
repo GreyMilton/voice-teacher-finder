@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\Authorisation;
 use App\Enums\AuthorisationStatus;
 use App\Enums\CohortType;
 use App\Enums\Gender;
@@ -182,7 +183,7 @@ class Teacher extends Model
                 ?->authorisationExpirationDate;
 
             return $expirationDate > now()
-                && $expirationDate < now()->addMonths(Cohort::MONTHS_WARNING);
+                && $expirationDate < now()->addMonths(Authorisation::MONTHS_WARNING);
         });
     }
 
@@ -241,14 +242,14 @@ class Teacher extends Model
                     'completion_date',
                     '>',
                     // oldest completion date possible for validity
-                    now()->subMonths(Cohort::MONTHS_VALIDITY),
+                    now()->subMonths(Authorisation::MONTHS_VALIDITY),
                 )
                 ->where(
                     'completion_date',
                     '<',
                     // latest completion date possible for warning
-                    now()->subMonths(Cohort::MONTHS_VALIDITY)
-                        ->addMonths(Cohort::MONTHS_WARNING),
+                    now()->subMonths(Authorisation::MONTHS_VALIDITY)
+                        ->addMonths(Authorisation::MONTHS_WARNING),
                 )
             )
         );
@@ -269,7 +270,7 @@ class Teacher extends Model
             ->whereHas('latestCohort', fn ($query) => $query
                 ->where(
                     'completion_date',
-                    now()->subMonths(Cohort::MONTHS_VALIDITY)->startOfDay(),
+                    now()->subMonths(Authorisation::MONTHS_VALIDITY)->startOfDay(),
                 )
             )
         );

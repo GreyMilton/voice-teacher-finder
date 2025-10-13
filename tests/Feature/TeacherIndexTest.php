@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants\Authorisation;
 use App\Models\Cohort;
 use App\Models\Teacher;
 use App\Models\User;
@@ -47,7 +48,7 @@ test('authorised teachers are visible on the teacher index', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
@@ -62,11 +63,11 @@ test('authorised teachers are visible on the teacher index', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY - 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY - 1)->timestamp)
                 ->create(),
         ])
         ->create();
@@ -77,11 +78,11 @@ test('authorised teachers are visible on the teacher index', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 3)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
@@ -103,11 +104,11 @@ test('authorised teachers are visible on the teacher index', function () {
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 3)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
         ])
         ->create();
@@ -129,7 +130,7 @@ test('expired authorisation teachers are hidden from the teacher index', functio
         ->has(
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY)->timestamp)
         )
         ->create();
 
@@ -140,7 +141,7 @@ test('expired authorisation teachers are hidden from the teacher index', functio
         ->has(
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 3)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 3)->timestamp)
         )
         ->create();
 
@@ -151,11 +152,11 @@ test('expired authorisation teachers are hidden from the teacher index', functio
         ->hasAttached([
             Cohort::factory()
                 ->initialAuthorisation()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY * 2)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY * 2)->timestamp)
                 ->create(),
             Cohort::factory()
                 ->updateCohort()
-                ->date(now()->subMonths(Cohort::MONTHS_VALIDITY + 1)->timestamp)
+                ->date(now()->subMonths(Authorisation::MONTHS_VALIDITY + 1)->timestamp)
                 ->create(),
         ])
         ->create();

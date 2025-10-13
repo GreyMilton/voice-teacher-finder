@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\Authorisation;
 use App\Enums\CohortType;
 use App\Models\AuthorisationStatus;
 use App\Models\Cohort;
@@ -138,14 +139,14 @@ class DatabaseSeeder extends Seeder
         $cohorts->prepend($authorisationCohort);
         $teacher->cohorts()->sync($cohorts);
 
-        if ($teacher->latestCohort->completion_date >= now()->subMonths(Cohort::MONTHS_VALIDITY)) {
+        if ($teacher->latestCohort->completion_date >= now()->subMonths(Authorisation::MONTHS_VALIDITY)) {
             $teacher->authorisationStatuses()->create(
                 AuthorisationStatus::factory()
                     ->authorised()
                     ->make()
                     ->toArray()
             );
-        } elseif ($teacher->latestCohort->completion_date < now()->subMonths(Cohort::MONTHS_VALIDITY)) {
+        } elseif ($teacher->latestCohort->completion_date < now()->subMonths(Authorisation::MONTHS_VALIDITY)) {
             $teacher->authorisationStatuses()->create(
                 AuthorisationStatus::factory()
                     ->expired()

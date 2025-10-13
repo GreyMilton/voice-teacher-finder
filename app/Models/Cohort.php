@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\Authorisation;
 use App\Enums\CohortType;
 use Database\Factories\CohortFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -41,16 +42,6 @@ class Cohort extends Model
     use HasFactory;
 
     /**
-     * The months of validity given to an authorisation or update.
-     */
-    const int MONTHS_VALIDITY = 36;
-
-    /**
-     * The months of warning given to admins of an expiring authorisation / update.
-     */
-    const int MONTHS_WARNING = 6;
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -80,7 +71,7 @@ class Cohort extends Model
         return Attribute::make(
             get: function (mixed $value, array $attributes): Carbon {
                 return Carbon::parse($attributes['completion_date'])
-                    ->addMonths(Cohort::MONTHS_VALIDITY)
+                    ->addMonths(Authorisation::MONTHS_VALIDITY)
                     ->startOfDay();
             }
         );

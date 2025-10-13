@@ -26,6 +26,24 @@ class TeachersTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('isExpiringToday')
+                    ->badge()
+                    ->color(fn (string $state): string => $state === 'Expiring today'
+                        ? 'danger'
+                        : 'gray',
+                    )
+                    ->icon(fn (string $state): Heroicon => $state === 'Expiring today'
+                        ? Heroicon::ExclamationTriangle
+                        : Heroicon::OutlinedHandThumbUp,
+                    )
+                    ->label('Expiring today')
+                    ->state(function (Model $record): string {
+                        /** @var Teacher $record */
+                        return $record->isExpiringToday
+                            ? 'Expiring today'
+                            : 'No';
+                    })
+                    ->toggleable(),
                 TextColumn::make('isNearAuthorisationExpiry')
                     ->badge()
                     ->color(fn (string $state): string => $state === 'Near expiry'

@@ -148,6 +148,27 @@ class Teacher extends Model
     }
 
     /**
+     * Get whether the teacher's authorisation is due to expire today.
+     *
+     * @return Attribute<bool, null>
+     */
+    protected function isExpiringToday(): Attribute
+    {
+        return Attribute::make(get: function (): bool {
+            if (! $this->isAuthorised) {
+                return false;
+            }
+
+            $expirationDate = $this
+                ->latestCohort
+                ?->completion_date
+                ->addMonths(Cohort::MONTHS_VALIDITY);
+
+            return $expirationDate->startOfDay()->timestamp === now()->startOfDay()->timestamp;
+        });
+    }
+
+    /**
      * Get whether the teacher's authorisation is almost expired.
      *
      * @return Attribute<bool, null>
@@ -232,6 +253,27 @@ class Teacher extends Model
                     // latest completion date possible for warning
                     now()->subMonths(Cohort::MONTHS_VALIDITY)
                         ->addMonths(Cohort::MONTHS_WARNING),
+                )
+            )
+        );
+    }
+
+    /**
+     * Scope a query to only include authorised teachers that are due to expire today.
+     *
+     * @param  Builder<Teacher>  $query
+     */
+    #[Scope]
+    protected function expiringToday(Builder $query): void
+    {
+        $query->where(fn ($query) => $query
+            ->whereHas('currentAuthorisationStatus', fn ($query) => $query
+                ->where('value', AuthorisationStatus::Authorised)
+            )
+            ->whereHas('latestCohort', fn ($query) => $query
+                ->where(
+                    'completion_date',
+                    now()->subMonths(Cohort::MONTHS_VALIDITY)->startOfDay(),
                 )
             )
         );

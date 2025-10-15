@@ -33,6 +33,27 @@ class UserFactory extends Factory
     }
 
     /**
+     * Indicate the user has an admin email address.
+     * This will give admin panel access if user email is verified.
+     * Optionally accepts a local part for the email address,
+     * otherwise a fake first name will be generated and used in its place.
+     */
+    public function adminEmail(string $localPart = ''): static
+    {
+        $emailLocalPart = $localPart
+            ? $localPart
+            : fake()->unique()->firstName();
+
+        $emailDomainPart = config('app.admin_email_domain')
+            ? config('app.admin_email_domain')
+            : 'admin.com';
+
+        return $this->state(fn (array $attributes) => [
+            'email' => $emailLocalPart.'@'.$emailDomainPart,
+        ]);
+    }
+
+    /**
      * Indicate that the model's email address should be unverified.
      */
     public function unverified(): static

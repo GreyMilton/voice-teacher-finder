@@ -2,6 +2,8 @@
 
 use App\Filament\Resources\Cohorts\Pages\EditCohort;
 use App\Models\Cohort;
+use App\Models\User;
+use Filament\Facades\Filament;
 
 use function Pest\Livewire\livewire;
 
@@ -13,4 +15,25 @@ test('page can be loaded', function () {
     livewire(EditCohort::class, [
         'record' => $cohort->id,
     ])->assertOk();
+});
+
+test('admin can access page', function () {
+    $admin = User::factory()->adminEmail()->create();
+    $cohort = Cohort::factory()->create();
+
+    $this->actingAs($admin)
+        ->get(EditCohort::getUrl([
+            'record' => $cohort->id,
+        ]))
+        ->assertOk();
+});
+
+test('guest cannot access page and is redirected to login', function () {
+    $cohort = Cohort::factory()->create();
+
+    $this->assertGuest()
+        ->get(EditCohort::getUrl([
+            'record' => $cohort->id,
+        ]))
+        ->assertRedirect(Filament::getLoginUrl());
 });

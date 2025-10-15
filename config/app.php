@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Email Domain
+    |--------------------------------------------------------------------------
+    |
+    | This value defines the domain used for admin users' email addresses.
+    | For authorisation to access the admin panel, a user must have an
+    | email address with this domain, and it must have been verified.
+    |
+    */
+
+    'admin_email_domain' => env('APP_ADMIN_EMAIL_DOMAIN', ''),
+
 ];

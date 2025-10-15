@@ -2,6 +2,8 @@
 
 use App\Filament\Resources\Languages\Pages\EditLanguage;
 use App\Models\Language;
+use App\Models\User;
+use Filament\Facades\Filament;
 
 use function Pest\Livewire\livewire;
 
@@ -13,4 +15,25 @@ test('page can be loaded', function () {
     livewire(EditLanguage::class, [
         'record' => $language->id,
     ])->assertOk();
+});
+
+test('admin can access page', function () {
+    $admin = User::factory()->adminEmail()->create();
+    $language = Language::inRandomOrder()->first();
+
+    $this->actingAs($admin)
+        ->get(EditLanguage::getUrl([
+            'record' => $language->id,
+        ]))
+        ->assertOk();
+});
+
+test('guest cannot access page and is redirected to login', function () {
+    $language = Language::inRandomOrder()->first();
+
+    $this->assertGuest()
+        ->get(EditLanguage::getUrl([
+            'record' => $language->id,
+        ]))
+        ->assertRedirect(Filament::getLoginUrl());
 });

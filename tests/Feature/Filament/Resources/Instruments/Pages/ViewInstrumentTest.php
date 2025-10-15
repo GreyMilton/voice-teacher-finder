@@ -2,6 +2,8 @@
 
 use App\Filament\Resources\Instruments\Pages\ViewInstrument;
 use App\Models\Instrument;
+use App\Models\User;
+use Filament\Facades\Filament;
 
 use function Pest\Livewire\livewire;
 
@@ -13,4 +15,25 @@ test('page can be loaded', function () {
     livewire(ViewInstrument::class, [
         'record' => $instrument->id,
     ])->assertOk();
+});
+
+test('admin can access page', function () {
+    $admin = User::factory()->adminEmail()->create();
+    $instrument = Instrument::inRandomOrder()->first();
+
+    $this->actingAs($admin)
+        ->get(ViewInstrument::getUrl([
+            'record' => $instrument->id,
+        ]))
+        ->assertOk();
+});
+
+test('guest cannot access page and is redirected to login', function () {
+    $instrument = Instrument::inRandomOrder()->first();
+
+    $this->assertGuest()
+        ->get(ViewInstrument::getUrl([
+            'record' => $instrument->id,
+        ]))
+        ->assertRedirect(Filament::getLoginUrl());
 });

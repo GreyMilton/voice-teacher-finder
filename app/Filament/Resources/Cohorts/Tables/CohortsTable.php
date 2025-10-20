@@ -40,7 +40,6 @@ class CohortsTable
                     ->toggleable(),
                 TextColumn::make('authorisationExpirationDate')
                     ->date()
-                    ->searchable()
                     ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()

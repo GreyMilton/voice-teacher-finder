@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Teachers\Tables;
 
 use App\Models\Teacher;
-use Carbon\Exceptions\InvalidFormatException;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -15,7 +14,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 class TeachersTable
 {
@@ -73,20 +71,7 @@ class TeachersTable
                     ->toggleable(),
                 TextColumn::make('firstAuthorisationCohort.name')
                     ->label('First authorisation')
-                    ->searchable(query: function (Builder $query, string $search): Builder {
-                        try {
-                            // If month can be parsed, search by month of Authorisation Cohort.
-                            $month = Carbon::parse($search)->format('m');
-
-                            return $query->whereHas('firstAuthorisationCohort',
-                                fn (Builder $query): Builder => $query
-                                    ->whereMonth('completion_date', $month)
-                            );
-                        } catch (InvalidFormatException $error) {
-                            // If month cannot be parsed, do not modify query.
-                            return $query;
-                        }
-                    })
+                    ->searchable()
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         /** @var Builder<Teacher> $query */
                         return $query->orderByFirstAuthorisationCohort('name', $direction);
@@ -94,20 +79,7 @@ class TeachersTable
                     ->toggleable(),
                 TextColumn::make('latestUpdateCohort.name')
                     ->label('Latest update')
-                    ->searchable(query: function (Builder $query, string $search): Builder {
-                        try {
-                            // If month can be parsed, search by month of the latest Update Cohort.
-                            $month = Carbon::parse($search)->format('m');
-
-                            return $query->whereHas('latestUpdateCohort',
-                                fn (Builder $query): Builder => $query
-                                    ->whereMonth('completion_date', $month)
-                            );
-                        } catch (InvalidFormatException $error) {
-                            // If month cannot be parsed, do not modify query.
-                            return $query;
-                        }
-                    })
+                    ->searchable()
                     ->sortable(query: function (Builder $query, string $direction): Builder {
                         /** @var Builder<Teacher> $query */
                         return $query->orderByLatestUpdateCohort('name', $direction);
@@ -169,12 +141,6 @@ class TeachersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->searchable([
-                'firstAuthorisationCohort.completion_date',
-                'firstAuthorisationCohort.name',
-                'latestUpdateCohort.completion_date',
-                'latestUpdateCohort.name',
             ])
             ->filters([
                 //

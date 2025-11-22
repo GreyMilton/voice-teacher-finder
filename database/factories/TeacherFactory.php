@@ -30,8 +30,8 @@ class TeacherFactory extends Factory
 
         return [
             // 'authorisation_status' => '',
-            'business_email' => fake()->email(),
-            'business_phone' => fake()->phoneNumber(),
+            'business_email' => fake()->unique()->email(),
+            'business_phone' => fake()->unique()->phoneNumber(),
             'business_website' => fake()->url(),
             // 'territory_of_origin_id' => '',
             // 'territory_of_residence_id' => '',
